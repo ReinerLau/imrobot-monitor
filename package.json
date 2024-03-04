@@ -1,0 +1,12 @@
+{
+  "name": "imrobot-monitor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "pnpm -F test-example dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
