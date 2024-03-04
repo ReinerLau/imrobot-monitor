@@ -5,14 +5,18 @@
   "main": "index.js",
   "scripts": {
     "dev": "pnpm -F test-example dev",
-    "commit": "cz"
+    "commit": "cz",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@commitlint/cli": "^19.0.3",
+    "@commitlint/config-conventional": "^19.0.3",
     "commitizen": "^4.3.0",
-    "cz-conventional-changelog": "^3.3.0"
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^9.0.11"
   },
   "config": {
     "commitizen": {
