@@ -7,18 +7,18 @@
     "dev": "pnpm -F test-example dev",
     "commit": "cz",
     "prepare": "husky",
-    "release": "release-it"
+    "changeset": "changeset"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@changesets/cli": "^2.27.1",
     "@commitlint/cli": "^19.0.3",
     "@commitlint/config-conventional": "^19.0.3",
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
-    "husky": "^9.0.11",
-    "release-it": "^17.1.1"
+    "husky": "^9.0.11"
   },
   "config": {
     "commitizen": {
