@@ -10,9 +10,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/md5": "^2.3.5",
     "vue": "^3.4.15"
   },
   "dependencies": {
-    "error-stack-parser": "^2.1.4"
+    "error-stack-parser": "^2.1.4",
+    "md5": "^2.3.0"
   }
 }

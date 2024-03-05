@@ -1,3 +1,5 @@
+import md5 from "md5";
+
 /**
  * 返回当前时间戳
  * @returns {number} 当前时间戳
@@ -12,5 +14,5 @@ export const getTimestamp = (): number => {
  * @returns 唯一编码
  */
 export const getErrorUid = (input: string): string => {
-  return window.btoa(encodeURIComponent(input));
+  return md5(input);
 };
