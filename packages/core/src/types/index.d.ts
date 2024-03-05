@@ -1,5 +1,4 @@
-export interface ResourceTarget {
+export interface ResourceErrorTarget {
   src?: string;
-  href?: string;
   localName?: string;
 }

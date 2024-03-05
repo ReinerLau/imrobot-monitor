@@ -1,5 +1,6 @@
 import type { App } from "vue";
 import { handleError, handleResourceError } from "./handleEvents";
+import type { ResourceErrorTarget } from "./types";
 
 /**
  * 插件安装方法
@@ -12,7 +13,12 @@ export const install = (app: App) => {
   window.addEventListener(
     "error",
     (err) => {
-      handleResourceError(err);
+      const target = err.target as ResourceErrorTarget;
+      if (target?.localName) {
+        handleResourceError(target);
+      } else {
+        handleError(err.error);
+      }
     },
     true
   );
