@@ -46,3 +46,27 @@ export const handleResourceError = ({
   console.log(errorData);
   // TODO: 上报
 };
+
+/**
+ * 处理 Promise 错误
+ * @param ev 错误信息
+ */
+export const handleUnhandleRejection = (ev: PromiseRejectionEvent): void => {
+  const { fileName, columnNumber, lineNumber } = errorStackParser.parse(
+    ev.reason
+  )[0];
+  const errorData = {
+    type: eventTypes.UNHANDLEDREJECTION,
+    message: ev.reason.message,
+    fileName,
+    lineNumber,
+    columnNumber,
+    time: getTimestamp(),
+  };
+  const hash = getErrorUid(
+    `${errorData.type}-${errorData.message}-${errorData.fileName}-${errorData.columnNumber}`
+  );
+  console.log(hash);
+  console.log(errorData);
+  // TODO: 上报
+};

@@ -12,12 +12,20 @@ const onAsync = () => {
     test1()
   }, 0)
 }
+
+const onPromise = () => {
+  new Promise((resolve) => {
+    test1()
+    resolve('test')
+  })
+}
 </script>
 
 <template>
   <button @click="onClick">运行错误</button>
   <button @click="visible = true">资源加载错误</button>
   <button @click="onAsync">异步错误</button>
+  <button @click="onPromise">promise 错误</button>
   <img v-if="visible" src="http://www.abc.com/test.png" />
 </template>
 

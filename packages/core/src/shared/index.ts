@@ -6,4 +6,5 @@
 export enum eventTypes {
   ERROR = "error",
   RESOURCE = "resource",
+  UNHANDLEDREJECTION = "unhandledrejection",
 }

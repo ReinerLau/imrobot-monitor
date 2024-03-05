@@ -1,8 +1,8 @@
 {
   "recommendations": [
-    "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "vue.volar",
-    "pmneo.tsimporter"
+    "pmneo.tsimporter",
+    "gruntfuggly.todo-tree"
   ]
 }
