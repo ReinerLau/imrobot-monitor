@@ -46,10 +46,9 @@ const showSource = async (fileName: string, lineNumber: number, columnNumber: nu
       fileName: handleFileName(fileName)
     }
   })
-  console.log(res)
   const result = await parseSourceMap(res.data, lineNumber, columnNumber)
-  sourceCode.value = result
-  console.log(sourceCode.value)
+
+  sourceCodeRef.value!.innerHTML = result
 }
 
 const handleFileName = (str: string) => {
@@ -60,7 +59,7 @@ const handleFileName = (str: string) => {
   }
 }
 
-const sourceCode = ref('')
+const sourceCodeRef = ref<HTMLDivElement>()
 
 const errorList = ref<
   { time: number; fileName: string; lineNumber: number; columnNumber: number }[]
@@ -92,7 +91,7 @@ onMounted(getErrorList)
     </button>
   </div>
   <img v-if="visible" src="http://www.abc.com/test.png" />
-  <div v-show="sourceCode">{{ sourceCode }}</div>
+  <div ref="sourceCodeRef"></div>
 </template>
 
 <style scoped></style>

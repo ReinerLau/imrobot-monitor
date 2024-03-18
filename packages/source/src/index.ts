@@ -18,6 +18,18 @@ export const parseSourceMap = async (
   const code = sourcesContent[index];
   const codeList = code.split("\n");
 
-  //   return codeList.join("");
-  return code;
+  return codeList
+    .map((item: string) => {
+      return !item
+        ? '<div style="height:22px"></div>'
+        : `<div>${replaceAll(item)}</div>`;
+    })
+    .join("");
+};
+
+const replaceAll = (str: string) => {
+  return str
+    .replace(new RegExp(" ", "gm"), "&nbsp;")
+    .replace(new RegExp("<", "gm"), "&lt")
+    .replace(new RegExp(">", "gm"), "&gt");
 };
