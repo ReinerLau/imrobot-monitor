@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "pnpm -F test-example dev",
+    "dev": "pnpm -F test-example -F server dev",
     "commit": "cz",
     "prepare": "husky",
     "changeset": "changeset"

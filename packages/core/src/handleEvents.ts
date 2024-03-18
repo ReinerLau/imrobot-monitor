@@ -23,6 +23,13 @@ export const handleError = (err: Error): void => {
   console.log(hash);
   console.log(errorData);
   // TODO: 上报
+  fetch("/reportData", {
+    method: "POST",
+    body: JSON.stringify(errorData),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 };
 
 /**

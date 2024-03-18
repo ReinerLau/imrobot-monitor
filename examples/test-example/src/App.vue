@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import axios from 'axios'
 
 const onClick = () => {
+  getErrorList()
   test1()
 }
 
@@ -37,6 +38,31 @@ const onAxios = () => {
     }
   })
 }
+
+const showSource = (fileName: string) => {
+  axios.get('/getMap', {
+    params: {
+      fileName: handleFileName(fileName)
+    }
+  })
+}
+
+const handleFileName = (str: string) => {
+  const reg = /\/assets\/.*/
+  const res = str.match(reg)
+  if (res && Array.isArray(res)) {
+    return res[0]
+  }
+}
+
+const errorList = ref<{ time: number; fileName: string }[]>([])
+
+const getErrorList = () => {
+  setTimeout(async () => {
+    const res = await axios.get('/getErrorList')
+    errorList.value = res.data.data
+  }, 500)
+}
 </script>
 
 <template>
@@ -46,6 +72,12 @@ const onAxios = () => {
   <button @click="onPromise">promise 错误</button>
   <button @click="onXHR">xhr 请求错误</button>
   <button @click="onAxios">axios 请求错误</button>
+  <div v-for="item in errorList" :key="item.time">
+    <div>
+      {{ item.fileName }}
+    </div>
+    <button @click="() => showSource(item.fileName)">查看源码</button>
+  </div>
   <img v-if="visible" src="http://www.abc.com/test.png" />
 </template>
 
