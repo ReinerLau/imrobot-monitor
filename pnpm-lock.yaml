@@ -59,6 +59,9 @@ importers:
       '@imrobot/core':
         specifier: workspace:^
         version: link:../../packages/core
+      '@imrobot/source':
+        specifier: workspace:^
+        version: link:../../packages/source
       axios:
         specifier: ^1.6.8
         version: 1.6.8
@@ -177,6 +180,12 @@ importers:
       element-plus:
         specifier: ^2.6.1
         version: 2.6.1(vue@3.4.21)
+
+  packages/source:
+    dependencies:
+      source-map-js:
+        specifier: ^1.1.0
+        version: 1.1.0
 
 packages:
 
@@ -9447,6 +9456,11 @@ packages:
   /source-map-js@1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
     engines: {node: '>=0.10.0'}
+
+  /source-map-js@1.1.0:
+    resolution: {integrity: sha512-9vC2SfsJzlej6MAaMPLu8HiBSHGdRAJ9hVFYN1ibZoNkeanmDmLUcIrj6G9DGL7XMJ54AKg/G75akXl1/izTOw==}
+    engines: {node: '>=0.10.0'}
+    dev: false
 
   /source-map-support@0.5.21:
     resolution: {integrity: sha512-uBHU3L3czsIyYXKX88fdrGovxdSCoTGDRZ6SYXtSRxLZUzHg5P/66Ht6uoUlHu9EZod+inXhKo3qQgwXUT/y1w==}

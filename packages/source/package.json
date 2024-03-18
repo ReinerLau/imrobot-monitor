@@ -1,0 +1,15 @@
+{
+  "name": "@imrobot/source",
+  "version": "0.1.0",
+  "description": "源码定位模块",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "source-map-js": "^1.1.0"
+  }
+}

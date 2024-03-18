@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import axios from 'axios'
+import { parseSourceMap } from '@imrobot/source'
 
 const onClick = () => {
   getErrorList()
@@ -39,12 +40,16 @@ const onAxios = () => {
   })
 }
 
-const showSource = (fileName: string) => {
-  axios.get('/getMap', {
+const showSource = async (fileName: string, lineNumber: number, columnNumber: number) => {
+  const res = await axios.get('/getMap', {
     params: {
       fileName: handleFileName(fileName)
     }
   })
+  console.log(res)
+  const result = await parseSourceMap(res.data, lineNumber, columnNumber)
+  sourceCode.value = result
+  console.log(sourceCode.value)
 }
 
 const handleFileName = (str: string) => {
@@ -55,7 +60,11 @@ const handleFileName = (str: string) => {
   }
 }
 
-const errorList = ref<{ time: number; fileName: string }[]>([])
+const sourceCode = ref('')
+
+const errorList = ref<
+  { time: number; fileName: string; lineNumber: number; columnNumber: number }[]
+>([])
 
 const getErrorList = () => {
   setTimeout(async () => {
@@ -63,6 +72,8 @@ const getErrorList = () => {
     errorList.value = res.data.data
   }, 500)
 }
+
+onMounted(getErrorList)
 </script>
 
 <template>
@@ -76,9 +87,12 @@ const getErrorList = () => {
     <div>
       {{ item.fileName }}
     </div>
-    <button @click="() => showSource(item.fileName)">查看源码</button>
+    <button @click="() => showSource(item.fileName, item.lineNumber, item.columnNumber)">
+      查看源码
+    </button>
   </div>
   <img v-if="visible" src="http://www.abc.com/test.png" />
+  <div v-show="sourceCode">{{ sourceCode }}</div>
 </template>
 
 <style scoped></style>

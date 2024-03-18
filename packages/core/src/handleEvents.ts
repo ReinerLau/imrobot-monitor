@@ -1,7 +1,7 @@
 import errorStackParser from "error-stack-parser";
 import { getErrorUid, getTimestamp } from "./utlis";
 import { eventTypes } from "./shared";
-import type { ResourceErrorTarget, XHRData, XHRInstance } from "./types";
+import type { ResourceErrorTarget, XHRData } from "./types";
 
 /**
  * 处理代码运行错误和异步错误
