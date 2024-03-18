@@ -6,6 +6,7 @@ import {
 } from "./handleEvents";
 import type { ResourceErrorTarget } from "./types";
 import { eventTypes } from "./shared";
+import { xhrReplace } from "./replace";
 
 /**
  * 监听 vue 代码运行错误
@@ -44,6 +45,10 @@ const onPromiseError = (): void => {
   });
 };
 
+const onXHRError = () => {
+  xhrReplace();
+};
+
 /**
  * 插件安装方法
  * @param app vue 实例
@@ -52,4 +57,5 @@ export const install = (app: App): void => {
   onVueError(app);
   onError();
   onPromiseError();
+  onXHRError();
 };

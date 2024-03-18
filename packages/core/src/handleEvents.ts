@@ -1,7 +1,7 @@
 import errorStackParser from "error-stack-parser";
 import { getErrorUid, getTimestamp } from "./utlis";
 import { eventTypes } from "./shared";
-import type { ResourceErrorTarget } from "./types";
+import type { ResourceErrorTarget, XHRData, XHRInstance } from "./types";
 
 /**
  * 处理代码运行错误和异步错误
@@ -67,6 +67,32 @@ export const handleUnhandleRejection = (ev: PromiseRejectionEvent): void => {
     `${errorData.type}-${errorData.message}-${errorData.fileName}-${errorData.columnNumber}`
   );
   console.log(hash);
+  console.log(errorData);
+  // TODO: 上报
+};
+
+/**
+ * 处理请求错误信息
+ * @param data 请求信息
+ */
+export const handleHTTPRequest = (data: XHRData) => {
+  const { url, sendTime, status, elapsedTime, response, requestData, method } =
+    data;
+  let message = "";
+  if (status! >= 500) {
+    message = `接口报错，报错信息为：${response}`;
+  } else {
+    message = `请求失败，status 值为：${status}`;
+  }
+  const errorData = {
+    url,
+    sendTime,
+    status,
+    message,
+    elapsedTime,
+    method,
+    requestData,
+  };
   console.log(errorData);
   // TODO: 上报
 };
