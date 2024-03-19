@@ -5,9 +5,16 @@ export const events: any[] = [];
 
 export const onScreen = (options?: ScreenOptions) => {
   record({
-    emit(event, isCheckout) {
+    async emit(event, isCheckout) {
       if (isCheckout) {
-        console.log("test");
+        console.log("test1");
+        fetch("/reportEvent", {
+          method: "POST",
+          body: JSON.stringify(events),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
         events.length = 0;
       }
       events.push(event);

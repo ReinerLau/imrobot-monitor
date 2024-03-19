@@ -10,3 +10,12 @@ export const play = (el: HTMLElement) => {
     },
   });
 };
+
+export const playTest = (el: HTMLElement, events: any[]) => {
+  new rrwebPlayer({
+    target: el,
+    props: {
+      events,
+    },
+  });
+};

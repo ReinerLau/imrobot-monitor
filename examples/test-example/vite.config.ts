@@ -16,7 +16,8 @@ export default defineConfig({
       '/test': 'http://127.0.0.1:4523/m1/884115-0-default',
       '/getMap': 'http://127.0.0.1:5174',
       '/reportData': 'http://127.0.0.1:5174',
-      '/getErrorList': 'http://127.0.0.1:5174'
+      '/getErrorList': 'http://127.0.0.1:5174',
+      '/reportEvent': 'http://127.0.0.1:5174'
     }
   },
   build: {

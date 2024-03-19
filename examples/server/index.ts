@@ -44,6 +44,24 @@ app.get("/getErrorList", (req, res) => {
   });
 });
 
+let screenEvents: any[] = [];
+
+app.post("/reportEvent", (req, res) => {
+  screenEvents = req.body;
+
+  res.send({
+    code: 200,
+    message: "上报成功",
+  });
+});
+
+app.get("/getEvent", (req, res) => {
+  res.send({
+    code: 200,
+    message: screenEvents,
+  });
+});
+
 app.listen(5174, () => {
   console.log("Server is running at http://localhost:5174");
 });
