@@ -1,8 +1,9 @@
-import type { Plugin } from "vue";
-import { install } from "./install";
+import { install, use } from "./install";
+import { Monitor } from "./types";
 
-const plugin: Plugin = {
+const monitor: Monitor = {
   install,
+  use,
 };
 
-export default plugin;
+export default monitor;

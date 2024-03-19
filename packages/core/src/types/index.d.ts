@@ -1,3 +1,5 @@
+import { Plugin } from "vue";
+
 export interface ResourceErrorTarget {
   src?: string;
   localName?: string;
@@ -15,4 +17,14 @@ export interface XHRData {
   status?: number;
   sendTime: number;
   elapsedTime?: number;
+}
+
+export type Monitor = {
+  use: (extension: Extension, options?: any) => void;
+} & Plugin;
+
+export type PluginInstallEvent = (options?: any) => void;
+
+export interface Extension {
+  install: PluginInstallEvent;
 }

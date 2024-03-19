@@ -4,9 +4,14 @@ import {
   handleResourceError,
   handleUnhandleRejection,
 } from "./handleEvents";
-import type { ResourceErrorTarget } from "./types";
+import type {
+  Extension,
+  PluginInstallEvent as extensionInstallEvent,
+  ResourceErrorTarget,
+} from "./types";
 import { eventTypes } from "./shared";
 import { xhrReplace } from "./replace";
+import plugin from "../../screen/src/index";
 
 /**
  * 监听 vue 代码运行错误
@@ -58,4 +63,27 @@ export const install = (app: App): void => {
   onError();
   onPromiseError();
   onXHRError();
+  extensionTrigger();
+};
+
+/**
+ * 已注册拓展集合
+ */
+export const extensionInstallEvents: extensionInstallEvent[] = [];
+
+/**
+ * 注册拓展
+ * @param extension 拓展实例
+ */
+export const use = (extension: Extension, options?: any) => {
+  extensionInstallEvents.push(() => extension.install(options));
+};
+
+/**
+ * 触发拓展初始化方法
+ */
+const extensionTrigger = () => {
+  extensionInstallEvents.forEach((event) => {
+    event();
+  });
 };

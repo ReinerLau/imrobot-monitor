@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import { parseSourceMap } from '@imrobot/source'
+import { play } from '@imrobot/screen'
 
 const onClick = () => {
   getErrorList()
@@ -59,7 +60,7 @@ const handleFileName = (str: string) => {
   }
 }
 
-const sourceCodeRef = ref<HTMLDivElement>()
+const sourceCodeRef = ref<HTMLElement>()
 
 const errorList = ref<
   { time: number; fileName: string; lineNumber: number; columnNumber: number }[]
@@ -72,6 +73,10 @@ const getErrorList = () => {
   }, 500)
 }
 
+const onScreen = () => {
+  play(sourceCodeRef.value!)
+}
+
 onMounted(getErrorList)
 </script>
 
@@ -82,6 +87,7 @@ onMounted(getErrorList)
   <button @click="onPromise">promise 错误</button>
   <button @click="onXHR">xhr 请求错误</button>
   <button @click="onAxios">axios 请求错误</button>
+  <button @click="onScreen">查看录屏</button>
   <div v-for="item in errorList" :key="item.time">
     <div>
       {{ item.fileName }}
