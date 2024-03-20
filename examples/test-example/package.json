@@ -13,6 +13,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@imrobot/behavior": "workspace:^",
     "@imrobot/core": "workspace:^",
     "@imrobot/screen": "workspace:^",
     "@imrobot/source": "workspace:^",

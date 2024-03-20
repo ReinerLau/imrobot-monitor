@@ -1,7 +1,7 @@
+import { getTimestamp } from "@imrobot/shared";
 import { eventTypes } from "./shared";
 import { notify } from "./subscribe";
 import { XHRInstance } from "./types";
-import { getTimestamp } from "./utlis";
 
 /**
  * 重写 xmlhttprequset 原型方法

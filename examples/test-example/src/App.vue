@@ -85,7 +85,7 @@ onMounted(getErrorList)
   <button @click="onClick">运行错误</button>
   <button @click="visible = true">资源加载错误</button>
   <button @click="onAsync">异步错误</button>
-  <button @click="onPromise">promise 错误</button>
+  <button id="promise" class="promise" @click="onPromise">promise 错误</button>
   <button @click="onXHR">xhr 请求错误</button>
   <button @click="onAxios">axios 请求错误</button>
   <button @click="onScreen">查看录屏</button>
