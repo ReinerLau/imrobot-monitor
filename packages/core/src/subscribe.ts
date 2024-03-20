@@ -13,6 +13,7 @@ const events: { [key in eventTypes]?: Function } = {};
 
 const on: { [key in eventTypes]?: Function } = {
   [eventTypes.VUEERROR]: (app: App) => onVueError(app),
+  [eventTypes.ERROR]: () => onError(),
 };
 
 /**
@@ -55,4 +56,15 @@ const onVueError = (app: App) => {
   app.config.errorHandler = (err) => {
     notify(eventTypes.VUEERROR, err);
   };
+};
+
+/**
+ * 监听加载资源错误和异步错误
+ */
+const onError = () => {
+  window.addEventListener(
+    eventTypes.ERROR,
+    (ev) => notify(eventTypes.ERROR, ev),
+    true
+  );
 };

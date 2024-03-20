@@ -10,24 +10,6 @@ import { xhrReplace } from "./replace";
 import { subscribeEvent } from "./subscribe";
 
 /**
- * 监听加载资源错误和异步错误
- */
-const onError = (): void => {
-  window.addEventListener(
-    eventTypes.ERROR,
-    (ev) => {
-      const target = ev.target as ResourceErrorTarget;
-      if (target?.localName) {
-        handleResourceError(target);
-      } else {
-        handleError(ev.error);
-      }
-    },
-    true
-  );
-};
-
-/**
  * 监听 Promise 错误
  */
 const onPromiseError = (): void => {
@@ -52,7 +34,14 @@ export const install = (app: App): void => {
     },
     app
   );
-  onError();
+  subscribeEvent(eventTypes.ERROR, (ev: ErrorEvent) => {
+    const target = ev.target as ResourceErrorTarget;
+    if (target?.localName) {
+      handleResourceError(target);
+    } else {
+      handleError(ev.error);
+    }
+  });
   onPromiseError();
   onXHRError();
   extensionTrigger();
