@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import { parseSourceMap } from '@imrobot/source'
-import { play } from '@imrobot/screen'
+import { playScreen } from '@imrobot/screen'
 
 const onClick = () => {
   getErrorList()
@@ -73,8 +73,9 @@ const getErrorList = () => {
   }, 500)
 }
 
-const onScreen = () => {
-  play(sourceCodeRef.value!)
+const onScreen = async () => {
+  const res = await axios.get('/getEvent')
+  playScreen(sourceCodeRef.value!, res.data.data)
 }
 
 onMounted(getErrorList)

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { playTest } from "@imrobot/screen";
+import { playScreen } from "@imrobot/screen";
 import { ref } from "vue";
 import axios from "axios";
 
 const onClick = async () => {
   const res = await axios.get("/getEvent");
-  playTest(videoRef.value!, res.data.message);
+  playScreen(videoRef.value!, res.data.message);
 };
 
 const videoRef = ref<HTMLElement>();

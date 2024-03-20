@@ -58,7 +58,7 @@ app.post("/reportEvent", (req, res) => {
 app.get("/getEvent", (req, res) => {
   res.send({
     code: 200,
-    message: screenEvents,
+    data: screenEvents,
   });
 });
 
