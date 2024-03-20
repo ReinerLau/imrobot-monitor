@@ -6,8 +6,9 @@ import {
 } from "./handleEvents";
 import type {
   Extension,
-  PluginInstallEvent as extensionInstallEvent,
+  extensionInstallEvent,
   ResourceErrorTarget,
+  Use,
 } from "./types";
 import { eventTypes } from "./shared";
 import { xhrReplace } from "./replace";
@@ -75,7 +76,7 @@ export const extensionInstallEvents: extensionInstallEvent[] = [];
  * 注册拓展
  * @param extension 拓展实例
  */
-export const use = (extension: Extension, options?: any) => {
+export const use: Use = (extension, options) => {
   extensionInstallEvents.push(() => extension.install(options));
 };
 

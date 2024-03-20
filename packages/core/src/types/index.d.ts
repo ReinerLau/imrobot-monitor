@@ -19,12 +19,17 @@ export interface XHRData {
   elapsedTime?: number;
 }
 
+type Use = <T extends Extension>(
+  extension: T,
+  options?: Parameters<T["install"]>[0]
+) => void;
+
 export type Monitor = {
-  use: (extension: Extension, options?: any) => void;
+  use: Use;
 } & Plugin;
 
-export type PluginInstallEvent = (options?: any) => void;
+export type extensionInstallEvent = (options?: any) => void;
 
 export interface Extension {
-  install: PluginInstallEvent;
+  install: extensionInstallEvent;
 }
