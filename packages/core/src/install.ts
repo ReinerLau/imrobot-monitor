@@ -4,15 +4,9 @@ import {
   handleResourceError,
   handleUnhandleRejection,
 } from "./handleEvents";
-import type {
-  Extension,
-  extensionInstallEvent,
-  ResourceErrorTarget,
-  Use,
-} from "./types";
+import type { extensionInstallEvent, ResourceErrorTarget, Use } from "./types";
 import { eventTypes } from "./shared";
 import { xhrReplace } from "./replace";
-import plugin from "../../screen/src/index";
 
 /**
  * 监听 vue 代码运行错误

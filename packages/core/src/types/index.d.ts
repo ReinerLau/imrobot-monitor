@@ -19,7 +19,7 @@ export interface XHRData {
   elapsedTime?: number;
 }
 
-type Use = <T extends Extension>(
+export type Use = <T extends Extension>(
   extension: T,
   options?: Parameters<T["install"]>[0]
 ) => void;
