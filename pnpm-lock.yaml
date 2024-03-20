@@ -188,6 +188,9 @@ importers:
 
   packages/core:
     dependencies:
+      '@imrobot/shared':
+        specifier: workspace:^
+        version: link:../shared
       error-stack-parser:
         specifier: ^2.1.4
         version: 2.1.4
@@ -226,12 +229,17 @@ importers:
 
   packages/screen:
     dependencies:
+      '@imrobot/shared':
+        specifier: workspace:^
+        version: link:../shared
       rrweb:
         specifier: 2.0.0-alpha.4
         version: 2.0.0-alpha.4
       rrweb-player:
         specifier: 1.0.0-alpha.4
         version: 1.0.0-alpha.4
+
+  packages/shared: {}
 
   packages/source:
     dependencies:
@@ -3472,7 +3480,7 @@ packages:
     dependencies:
       '@vue/compiler-ssr': 3.4.21
       '@vue/shared': 3.4.21
-      vue: 3.4.21(typescript@5.4.2)
+      vue: 3.4.21(typescript@5.3.3)
 
   /@vue/shared@3.4.21:
     resolution: {integrity: sha512-PuJe7vDIi6VYSinuEbUIQgMIRZGgM8e4R+G+/dQTk0X1NEdvgvvgv7m+rfmDH1gZzyA1OjjoWskvHlfRNfQf3g==}

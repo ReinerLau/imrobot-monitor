@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@imrobot/shared": "workspace:^",
     "rrweb": "2.0.0-alpha.4",
     "rrweb-player": "1.0.0-alpha.4"
   }

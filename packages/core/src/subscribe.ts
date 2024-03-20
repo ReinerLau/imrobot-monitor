@@ -1,11 +1,7 @@
 import { App } from "vue";
 import { eventTypes } from "./shared";
 import { xhrReplace } from "./replace";
-
-/**
- * 出现错误
- */
-export let hasError = false;
+import { global } from "@imrobot/shared";
 
 /**
  * 所有错误事件集合
@@ -46,7 +42,7 @@ export const subscribeEvent = (
  * @param eventType 事件类型
  */
 export const notify = (eventType: eventTypes, ...args: any[]) => {
-  hasError = true;
+  global.hasError = true;
   const event = events[eventType];
   event && event(...args);
 };
