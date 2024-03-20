@@ -7,7 +7,6 @@ export const onScreen = (options?: ScreenOptions) => {
   record({
     async emit(event, isCheckout) {
       if (isCheckout) {
-        console.log("test1");
         fetch("/reportEvent", {
           method: "POST",
           body: JSON.stringify(events),
@@ -20,5 +19,6 @@ export const onScreen = (options?: ScreenOptions) => {
       events.push(event);
     },
     checkoutEveryNth: options?.checkoutEveryNth,
+    checkoutEveryNms: options?.checkoutEveryNms,
   });
 };
