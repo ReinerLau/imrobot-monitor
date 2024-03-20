@@ -1,4 +1,5 @@
-import { handleHTTPRequest } from "./handleEvents";
+import { eventTypes } from "./shared";
+import { notify } from "./subscribe";
 import { XHRInstance } from "./types";
 import { getTimestamp } from "./utlis";
 
@@ -44,7 +45,7 @@ const xhrSendReplace = () => {
         instance.data.elapsedTime = getTimestamp() - instance.data.sendTime;
       }
       if (status !== 200) {
-        handleHTTPRequest(instance.data);
+        notify(eventTypes.XHR, instance.data);
       }
     });
     originalSend.apply(instance, args);

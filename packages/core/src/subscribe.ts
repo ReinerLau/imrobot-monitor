@@ -1,5 +1,6 @@
 import { App } from "vue";
 import { eventTypes } from "./shared";
+import { xhrReplace } from "./replace";
 
 /**
  * 出现错误
@@ -15,6 +16,7 @@ const on: { [key in eventTypes]?: Function } = {
   [eventTypes.VUEERROR]: (app: App) => onVueError(app),
   [eventTypes.ERROR]: () => onError(),
   [eventTypes.UNHANDLEDREJECTION]: () => onPromiseError(),
+  [eventTypes.XHR]: () => xhrReplace(),
 };
 
 /**

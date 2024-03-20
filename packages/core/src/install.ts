@@ -1,17 +1,18 @@
 import type { App } from "vue";
 import {
   handleError,
+  handleHTTPRequest,
   handleResourceError,
   handleUnhandleRejection,
 } from "./handleEvents";
-import type { extensionInstallEvent, ResourceErrorTarget, Use } from "./types";
+import type {
+  extensionInstallEvent,
+  ResourceErrorTarget,
+  Use,
+  XHRData,
+} from "./types";
 import { eventTypes } from "./shared";
-import { xhrReplace } from "./replace";
 import { subscribeEvent } from "./subscribe";
-
-const onXHRError = () => {
-  xhrReplace();
-};
 
 /**
  * 插件安装方法
@@ -36,7 +37,9 @@ export const install = (app: App): void => {
   subscribeEvent(eventTypes.UNHANDLEDREJECTION, (ev: PromiseRejectionEvent) => {
     handleUnhandleRejection(ev);
   });
-  onXHRError();
+  subscribeEvent(eventTypes.XHR, (xhrData: XHRData) => {
+    handleHTTPRequest(xhrData);
+  });
   extensionTrigger();
 };
 
