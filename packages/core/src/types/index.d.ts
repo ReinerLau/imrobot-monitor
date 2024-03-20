@@ -32,4 +32,5 @@ export type extensionInstallEvent = (options?: any) => void;
 
 export interface Extension {
   install: extensionInstallEvent;
+  afterErrorEvent?: Function;
 }

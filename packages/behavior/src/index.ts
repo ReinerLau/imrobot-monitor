@@ -25,7 +25,6 @@ const pushBehaviorStack = (data: Behavior) => {
   if (behaviorStack.length > maxStackNum) {
     behaviorStack.shift();
   }
-  console.log(behaviorStack);
 };
 
 /**
@@ -53,6 +52,9 @@ const plugin = {
   install(options?: BehaviorOptions) {
     maxStackNum = options?.maxStackNum || 20;
     onClick();
+  },
+  afterErrorEvent() {
+    console.log(behaviorStack);
   },
 };
 

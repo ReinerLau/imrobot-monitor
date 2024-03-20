@@ -12,7 +12,7 @@ import type {
   XHRData,
 } from "./types";
 import { eventTypes } from "./shared";
-import { subscribeEvent } from "./subscribe";
+import { subscribeAfterErrorEvent, subscribeEvent } from "./subscribe";
 
 /**
  * 插件安装方法
@@ -54,6 +54,8 @@ export const extensionInstallEvents: extensionInstallEvent[] = [];
  */
 export const use: Use = (extension, options) => {
   extensionInstallEvents.push(() => extension.install(options));
+  extension.afterErrorEvent &&
+    subscribeAfterErrorEvent(extension.afterErrorEvent);
 };
 
 /**

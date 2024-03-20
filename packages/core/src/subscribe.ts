@@ -43,6 +43,7 @@ export const subscribeEvent = (
  */
 export const notify = (eventType: eventTypes, ...args: any[]) => {
   global.hasError = true;
+  notifyAfterErrorEvent();
   const event = events[eventType];
   event && event(...args);
 };
@@ -71,8 +72,20 @@ const onError = () => {
 /**
  * 监听 Promise 错误
  */
-const onPromiseError = (): void => {
+const onPromiseError = () => {
   window.addEventListener(eventTypes.UNHANDLEDREJECTION, (ev) =>
     notify(eventTypes.UNHANDLEDREJECTION, ev)
   );
+};
+
+const afterErrorEvents: Function[] = [];
+
+export const subscribeAfterErrorEvent = (event: Function) => {
+  afterErrorEvents.push(event);
+};
+
+export const notifyAfterErrorEvent = () => {
+  afterErrorEvents.forEach((event) => {
+    event();
+  });
 };
