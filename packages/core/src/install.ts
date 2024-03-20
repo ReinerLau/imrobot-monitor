@@ -9,15 +9,6 @@ import { eventTypes } from "./shared";
 import { xhrReplace } from "./replace";
 import { subscribeEvent } from "./subscribe";
 
-/**
- * 监听 Promise 错误
- */
-const onPromiseError = (): void => {
-  window.addEventListener(eventTypes.UNHANDLEDREJECTION, (ev) => {
-    handleUnhandleRejection(ev);
-  });
-};
-
 const onXHRError = () => {
   xhrReplace();
 };
@@ -42,7 +33,9 @@ export const install = (app: App): void => {
       handleError(ev.error);
     }
   });
-  onPromiseError();
+  subscribeEvent(eventTypes.UNHANDLEDREJECTION, (ev: PromiseRejectionEvent) => {
+    handleUnhandleRejection(ev);
+  });
   onXHRError();
   extensionTrigger();
 };

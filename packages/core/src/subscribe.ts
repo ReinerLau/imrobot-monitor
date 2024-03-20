@@ -14,6 +14,7 @@ const events: { [key in eventTypes]?: Function } = {};
 const on: { [key in eventTypes]?: Function } = {
   [eventTypes.VUEERROR]: (app: App) => onVueError(app),
   [eventTypes.ERROR]: () => onError(),
+  [eventTypes.UNHANDLEDREJECTION]: () => onPromiseError(),
 };
 
 /**
@@ -66,5 +67,14 @@ const onError = () => {
     eventTypes.ERROR,
     (ev) => notify(eventTypes.ERROR, ev),
     true
+  );
+};
+
+/**
+ * 监听 Promise 错误
+ */
+const onPromiseError = (): void => {
+  window.addEventListener(eventTypes.UNHANDLEDREJECTION, (ev) =>
+    notify(eventTypes.UNHANDLEDREJECTION, ev)
   );
 };
