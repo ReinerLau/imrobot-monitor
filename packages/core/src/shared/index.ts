@@ -5,6 +5,7 @@
  * @property UNHANDLEDREJECTION - promise 错误
  */
 export enum eventTypes {
+  VUEERROR = "vue_error",
   ERROR = "error",
   RESOURCE = "resource",
   UNHANDLEDREJECTION = "unhandledrejection",

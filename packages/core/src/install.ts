@@ -7,16 +7,7 @@ import {
 import type { extensionInstallEvent, ResourceErrorTarget, Use } from "./types";
 import { eventTypes } from "./shared";
 import { xhrReplace } from "./replace";
-
-/**
- * 监听 vue 代码运行错误
- * @param app vue 实例
- */
-const onVueError = (app: App) => {
-  app.config.errorHandler = (err) => {
-    handleError(err as Error);
-  };
-};
+import { subscribeEvent } from "./subscribe";
 
 /**
  * 监听加载资源错误和异步错误
@@ -54,7 +45,13 @@ const onXHRError = () => {
  * @param app vue 实例
  */
 export const install = (app: App): void => {
-  onVueError(app);
+  subscribeEvent(
+    eventTypes.VUEERROR,
+    (err: Error) => {
+      handleError(err);
+    },
+    app
+  );
   onError();
   onPromiseError();
   onXHRError();
