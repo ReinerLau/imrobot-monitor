@@ -22,23 +22,23 @@ export const install = (app: App): void => {
   subscribeEvent(
     eventTypes.VUEERROR,
     (err: Error) => {
-      handleError(err);
+      return handleError(err);
     },
     app
   );
   subscribeEvent(eventTypes.ERROR, (ev: ErrorEvent) => {
     const target = ev.target as ResourceErrorTarget;
     if (target?.localName) {
-      handleResourceError(target);
+      return handleResourceError(target);
     } else {
-      handleError(ev.error);
+      return handleError(ev.error);
     }
   });
   subscribeEvent(eventTypes.UNHANDLEDREJECTION, (ev: PromiseRejectionEvent) => {
-    handleUnhandleRejection(ev);
+    return handleUnhandleRejection(ev);
   });
   subscribeEvent(eventTypes.XHR, (xhrData: XHRData) => {
-    handleHTTPRequest(xhrData);
+    return handleHTTPRequest(xhrData);
   });
   extensionTrigger();
 };

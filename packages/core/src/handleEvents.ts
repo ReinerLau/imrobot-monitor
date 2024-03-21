@@ -8,7 +8,7 @@ import { getTimestamp } from "@imrobot/shared";
  * 处理代码运行错误和异步错误
  * @param err 错误详情
  */
-export const handleError = (err: Error): void => {
+export const handleError = (err: Error) => {
   const { fileName, columnNumber, lineNumber } = errorStackParser.parse(err)[0];
   const errorData = {
     type: eventTypes.ERROR,
@@ -21,8 +21,6 @@ export const handleError = (err: Error): void => {
   const hash = getErrorUid(
     `${errorData.type}-${errorData.message}-${errorData.fileName}-${errorData.columnNumber}`
   );
-  console.log(hash);
-  console.log(errorData);
   // TODO: 上报
   fetch("/reportData", {
     method: "POST",
@@ -31,6 +29,8 @@ export const handleError = (err: Error): void => {
       "Content-Type": "application/json",
     },
   });
+
+  return errorData;
 };
 
 /**
@@ -40,7 +40,7 @@ export const handleError = (err: Error): void => {
 export const handleResourceError = ({
   src,
   localName,
-}: ResourceErrorTarget): void => {
+}: ResourceErrorTarget) => {
   const errorData = {
     type: eventTypes.RESOURCE,
     message: src,
@@ -50,16 +50,15 @@ export const handleResourceError = ({
   const hash = getErrorUid(
     `${errorData.type}-${errorData.message}-${errorData.name}`
   );
-  console.log(hash);
-  console.log(errorData);
   // TODO: 上报
+  return errorData;
 };
 
 /**
  * 处理 Promise 错误
  * @param ev 错误信息
  */
-export const handleUnhandleRejection = (ev: PromiseRejectionEvent): void => {
+export const handleUnhandleRejection = (ev: PromiseRejectionEvent) => {
   const { fileName, columnNumber, lineNumber } = errorStackParser.parse(
     ev.reason
   )[0];
@@ -74,9 +73,8 @@ export const handleUnhandleRejection = (ev: PromiseRejectionEvent): void => {
   const hash = getErrorUid(
     `${errorData.type}-${errorData.message}-${errorData.fileName}-${errorData.columnNumber}`
   );
-  console.log(hash);
-  console.log(errorData);
   // TODO: 上报
+  return errorData;
 };
 
 /**
@@ -94,13 +92,13 @@ export const handleHTTPRequest = (data: XHRData) => {
   }
   const errorData = {
     url,
-    sendTime,
+    time: sendTime,
     status,
     message,
     elapsedTime,
     method,
     requestData,
   };
-  console.log(errorData);
   // TODO: 上报
+  return errorData;
 };

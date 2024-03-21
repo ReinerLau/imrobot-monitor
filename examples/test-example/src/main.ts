@@ -7,7 +7,7 @@ import screen from '@imrobot/screen'
 import behavior from '@imrobot/behavior'
 
 monitor.use(behavior, {
-  maxStackNum: 3
+  maxStackNum: 10
 })
 
 monitor.use(screen, {

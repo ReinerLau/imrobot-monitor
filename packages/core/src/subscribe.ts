@@ -8,6 +8,9 @@ import { global } from "@imrobot/shared";
  */
 const events: { [key in eventTypes]?: Function } = {};
 
+/**
+ * 开始监听对应错误事件的集合
+ */
 const on: { [key in eventTypes]?: Function } = {
   [eventTypes.VUEERROR]: (app: App) => onVueError(app),
   [eventTypes.ERROR]: () => onError(),
@@ -43,9 +46,11 @@ export const subscribeEvent = (
  */
 export const notify = (eventType: eventTypes, ...args: any[]) => {
   global.hasError = true;
-  notifyAfterErrorEvent();
   const event = events[eventType];
-  event && event(...args);
+  if (event) {
+    const errorData = event(...args);
+    notifyAfterErrorEvent(errorData);
+  }
 };
 
 /**
@@ -84,8 +89,11 @@ export const subscribeAfterErrorEvent = (event: Function) => {
   afterErrorEvents.push(event);
 };
 
-export const notifyAfterErrorEvent = () => {
+export const notifyAfterErrorEvent = (errorData: any) => {
   afterErrorEvents.forEach((event) => {
-    event();
+    // 变成宏任务, 防止在其他插件事件之前执行
+    setTimeout(() => {
+      event(errorData);
+    }, 0);
   });
 };

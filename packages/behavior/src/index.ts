@@ -53,7 +53,12 @@ const plugin = {
     maxStackNum = options?.maxStackNum || 20;
     onClick();
   },
-  afterErrorEvent() {
+  afterErrorEvent(errorData: any) {
+    pushBehaviorStack({
+      type: BEHAVIORTYPES.ERROR,
+      data: errorData.message,
+      time: errorData.time,
+    });
     console.log(behaviorStack);
   },
 };
