@@ -1,5 +1,4 @@
-import { getTimestamp } from "@imrobot/shared";
-import { eventTypes } from "./shared";
+import { EventTypes, getTimestamp } from "@imrobot/shared";
 import { notify } from "./subscribe";
 import { XHRInstance } from "./types";
 
@@ -44,7 +43,7 @@ const xhrSendReplace = () => {
         instance.data.status = status;
         instance.data.elapsedTime = getTimestamp() - instance.data.sendTime;
       }
-      notify(eventTypes.XHR, instance.data);
+      notify(EventTypes.XHR, instance.data);
     });
     originalSend.apply(instance, args);
   };

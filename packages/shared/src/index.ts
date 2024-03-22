@@ -25,3 +25,30 @@ export enum BEHAVIORTYPES {
 export const getTimestamp = () => {
   return Date.now();
 };
+
+export type extensionInstallEvent = (options?: any) => void;
+
+export interface Extension {
+  install: extensionInstallEvent;
+  afterEvent?: Function;
+}
+
+export enum EventTypes {
+  VUE = "vue",
+  ERROR = "error",
+  RESOURCE = "resource",
+  UNHANDLEDREJECTION = "unhandledrejection",
+  XHR = "xhr",
+}
+
+export enum ErrorEventTypes {
+  VUE = "vue_error",
+  ERROR = "error",
+  RESOURCE = "resource_error",
+  UNHANDLEDREJECTION = "unhandledrejection_error",
+  XHR = "xhr_error",
+}
+
+export enum NormalEventTypes {
+  XHR = "xhr_normal",
+}

@@ -1,4 +1,11 @@
-import { BEHAVIORTYPES, getTimestamp } from "@imrobot/shared";
+import {
+  BEHAVIORTYPES,
+  ErrorEventTypes,
+  EventTypes,
+  Extension,
+  getTimestamp,
+  NormalEventTypes,
+} from "@imrobot/shared";
 import { Behavior, BehaviorOptions } from "../types";
 
 /**
@@ -48,28 +55,27 @@ const elementToString = (target: HTMLElement) => {
  */
 let maxStackNum: number;
 
-const plugin = {
+const extension: Extension = {
   install(options?: BehaviorOptions) {
     maxStackNum = options?.maxStackNum || 20;
     onClick();
   },
-  afterErrorEvent(errorData: any) {
+  afterEvent(errorData: any) {
     const data: Behavior = {
-      type: BEHAVIORTYPES.ERROR,
+      type: errorData.type,
       data: errorData.message,
       time: errorData.time,
     };
-    if (errorData.type === BEHAVIORTYPES.XHR) {
+    if ([ErrorEventTypes.XHR, NormalEventTypes.XHR].includes(errorData.type)) {
       data.method = errorData.method;
       data.url = errorData.url;
       data.status = errorData.status;
-      if (errorData.status < 400 && errorData.status !== 0) {
-        data.type = BEHAVIORTYPES.XHR;
-      }
     }
     pushBehaviorStack(data);
-    console.log(behaviorStack);
+    if (Object.values(ErrorEventTypes).includes(errorData.type)) {
+      console.log(behaviorStack);
+    }
   },
 };
 
-export default plugin;
+export default extension;

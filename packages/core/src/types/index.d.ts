@@ -1,3 +1,4 @@
+import { Extension } from "@imrobot/shared";
 import { Plugin } from "vue";
 
 export interface ResourceErrorTarget {
@@ -27,10 +28,3 @@ export type Use = <T extends Extension>(
 export type Monitor = {
   use: Use;
 } & Plugin;
-
-export type extensionInstallEvent = (options?: any) => void;
-
-export interface Extension {
-  install: extensionInstallEvent;
-  afterErrorEvent?: Function;
-}

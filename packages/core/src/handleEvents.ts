@@ -1,8 +1,12 @@
 import errorStackParser from "error-stack-parser";
 import { getErrorUid } from "./utlis";
-import { eventTypes } from "./shared";
 import type { ResourceErrorTarget, XHRData } from "./types";
-import { getTimestamp } from "@imrobot/shared";
+import {
+  ErrorEventTypes,
+  EventTypes,
+  getTimestamp,
+  NormalEventTypes,
+} from "@imrobot/shared";
 
 /**
  * 处理代码运行错误和异步错误
@@ -11,7 +15,7 @@ import { getTimestamp } from "@imrobot/shared";
 export const handleError = (err: Error) => {
   const { fileName, columnNumber, lineNumber } = errorStackParser.parse(err)[0];
   const errorData = {
-    type: eventTypes.ERROR,
+    type: ErrorEventTypes.ERROR,
     fileName,
     message: err.message,
     lineNumber,
@@ -42,7 +46,7 @@ export const handleResourceError = ({
   localName,
 }: ResourceErrorTarget) => {
   const errorData = {
-    type: eventTypes.RESOURCE,
+    type: ErrorEventTypes.RESOURCE,
     message: src,
     name: localName,
     time: getTimestamp(),
@@ -63,7 +67,7 @@ export const handleUnhandleRejection = (ev: PromiseRejectionEvent) => {
     ev.reason
   )[0];
   const errorData = {
-    type: eventTypes.UNHANDLEDREJECTION,
+    type: ErrorEventTypes.UNHANDLEDREJECTION,
     message: ev.reason.message,
     fileName,
     lineNumber,
@@ -85,15 +89,19 @@ export const handleHTTPRequest = (data: XHRData) => {
   const { url, sendTime, status, elapsedTime, response, requestData, method } =
     data;
   let message = "";
+  let type = "";
   if (status === 0) {
     message = `请求失败，status 值为：${status}`;
+    type = ErrorEventTypes.XHR;
   } else if (status! < 400) {
     message = `请求成功，status 值为：${status}`;
+    type = NormalEventTypes.XHR;
   } else {
     message = `请求失败，status 值为：${status}，报错信息为：${response}`;
+    type = ErrorEventTypes.XHR;
   }
   const errorData = {
-    type: eventTypes.XHR,
+    type,
     url,
     time: sendTime,
     status,

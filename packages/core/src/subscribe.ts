@@ -1,21 +1,20 @@
 import { App } from "vue";
-import { eventTypes } from "./shared";
 import { xhrReplace } from "./replace";
-import { global } from "@imrobot/shared";
+import { EventTypes, global } from "@imrobot/shared";
 
 /**
  * 所有错误事件集合
  */
-const events: { [key in eventTypes]?: Function } = {};
+const events: { [key in EventTypes]?: Function } = {};
 
 /**
  * 开始监听对应错误事件的集合
  */
-const on: { [key in eventTypes]?: Function } = {
-  [eventTypes.VUEERROR]: (app: App) => onVueError(app),
-  [eventTypes.ERROR]: () => onError(),
-  [eventTypes.UNHANDLEDREJECTION]: () => onPromiseError(),
-  [eventTypes.XHR]: () => xhrReplace(),
+const on: { [key in EventTypes]?: Function } = {
+  [EventTypes.VUE]: (app: App) => onVueError(app),
+  [EventTypes.ERROR]: () => onError(),
+  [EventTypes.UNHANDLEDREJECTION]: () => onPromiseError(),
+  [EventTypes.XHR]: () => xhrReplace(),
 };
 
 /**
@@ -25,7 +24,7 @@ const on: { [key in eventTypes]?: Function } = {
  * @returns 是否订阅成功
  */
 export const subscribeEvent = (
-  eventType: eventTypes,
+  eventType: EventTypes,
   event: Function,
   vueInstance?: App
 ) => {
@@ -44,7 +43,7 @@ export const subscribeEvent = (
  * 通知事件触发
  * @param eventType 事件类型
  */
-export const notify = (eventType: eventTypes, ...args: any[]) => {
+export const notify = (eventType: EventTypes, ...args: any[]) => {
   global.hasError = true;
   const event = events[eventType];
   if (event) {
@@ -59,7 +58,7 @@ export const notify = (eventType: eventTypes, ...args: any[]) => {
  */
 const onVueError = (app: App) => {
   app.config.errorHandler = (err) => {
-    notify(eventTypes.VUEERROR, err);
+    notify(EventTypes.VUE, err);
   };
 };
 
@@ -68,8 +67,8 @@ const onVueError = (app: App) => {
  */
 const onError = () => {
   window.addEventListener(
-    eventTypes.ERROR,
-    (ev) => notify(eventTypes.ERROR, ev),
+    EventTypes.ERROR,
+    (ev) => notify(EventTypes.ERROR, ev),
     true
   );
 };
@@ -78,8 +77,8 @@ const onError = () => {
  * 监听 Promise 错误
  */
 const onPromiseError = () => {
-  window.addEventListener(eventTypes.UNHANDLEDREJECTION, (ev) =>
-    notify(eventTypes.UNHANDLEDREJECTION, ev)
+  window.addEventListener(EventTypes.UNHANDLEDREJECTION, (ev) =>
+    notify(EventTypes.UNHANDLEDREJECTION, ev)
   );
 };
 

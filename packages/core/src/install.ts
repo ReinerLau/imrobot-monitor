@@ -5,14 +5,9 @@ import {
   handleResourceError,
   handleUnhandleRejection,
 } from "./handleEvents";
-import type {
-  extensionInstallEvent,
-  ResourceErrorTarget,
-  Use,
-  XHRData,
-} from "./types";
-import { eventTypes } from "./shared";
+import type { ResourceErrorTarget, Use, XHRData } from "./types";
 import { subscribeAfterErrorEvent, subscribeEvent } from "./subscribe";
+import { EventTypes, extensionInstallEvent } from "@imrobot/shared";
 
 /**
  * 插件安装方法
@@ -20,13 +15,13 @@ import { subscribeAfterErrorEvent, subscribeEvent } from "./subscribe";
  */
 export const install = (app: App): void => {
   subscribeEvent(
-    eventTypes.VUEERROR,
+    EventTypes.VUE,
     (err: Error) => {
       return handleError(err);
     },
     app
   );
-  subscribeEvent(eventTypes.ERROR, (ev: ErrorEvent) => {
+  subscribeEvent(EventTypes.ERROR, (ev: ErrorEvent) => {
     const target = ev.target as ResourceErrorTarget;
     if (target?.localName) {
       return handleResourceError(target);
@@ -34,10 +29,10 @@ export const install = (app: App): void => {
       return handleError(ev.error);
     }
   });
-  subscribeEvent(eventTypes.UNHANDLEDREJECTION, (ev: PromiseRejectionEvent) => {
+  subscribeEvent(EventTypes.UNHANDLEDREJECTION, (ev: PromiseRejectionEvent) => {
     return handleUnhandleRejection(ev);
   });
-  subscribeEvent(eventTypes.XHR, (xhrData: XHRData) => {
+  subscribeEvent(EventTypes.XHR, (xhrData: XHRData) => {
     return handleHTTPRequest(xhrData);
   });
   extensionTrigger();
@@ -54,8 +49,7 @@ export const extensionInstallEvents: extensionInstallEvent[] = [];
  */
 export const use: Use = (extension, options) => {
   extensionInstallEvents.push(() => extension.install(options));
-  extension.afterErrorEvent &&
-    subscribeAfterErrorEvent(extension.afterErrorEvent);
+  extension.afterEvent && subscribeAfterErrorEvent(extension.afterEvent);
 };
 
 /**
