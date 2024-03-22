@@ -7,6 +7,9 @@ export interface Behavior {
   type: BEHAVIORTYPES;
   data: string;
   time: number;
+  url?: string;
+  method?: string;
+  status?: number;
 }
 
 /**

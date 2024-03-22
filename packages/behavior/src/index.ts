@@ -54,11 +54,20 @@ const plugin = {
     onClick();
   },
   afterErrorEvent(errorData: any) {
-    pushBehaviorStack({
+    const data: Behavior = {
       type: BEHAVIORTYPES.ERROR,
       data: errorData.message,
       time: errorData.time,
-    });
+    };
+    if (errorData.type === BEHAVIORTYPES.XHR) {
+      data.method = errorData.method;
+      data.url = errorData.url;
+      data.status = errorData.status;
+      if (errorData.status < 400 && errorData.status !== 0) {
+        data.type = BEHAVIORTYPES.XHR;
+      }
+    }
+    pushBehaviorStack(data);
     console.log(behaviorStack);
   },
 };

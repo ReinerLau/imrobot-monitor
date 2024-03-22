@@ -44,9 +44,7 @@ const xhrSendReplace = () => {
         instance.data.status = status;
         instance.data.elapsedTime = getTimestamp() - instance.data.sendTime;
       }
-      if (status !== 200) {
-        notify(eventTypes.XHR, instance.data);
-      }
+      notify(eventTypes.XHR, instance.data);
     });
     originalSend.apply(instance, args);
   };

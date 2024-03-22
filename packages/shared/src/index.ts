@@ -15,6 +15,7 @@ export const global = {
 export enum BEHAVIORTYPES {
   CLICK = "click",
   ERROR = "error",
+  XHR = "xhr",
 }
 
 /**

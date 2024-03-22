@@ -85,12 +85,15 @@ export const handleHTTPRequest = (data: XHRData) => {
   const { url, sendTime, status, elapsedTime, response, requestData, method } =
     data;
   let message = "";
-  if (status! >= 500) {
-    message = `接口报错，报错信息为：${response}`;
-  } else {
+  if (status === 0) {
     message = `请求失败，status 值为：${status}`;
+  } else if (status! < 400) {
+    message = `请求成功，status 值为：${status}`;
+  } else {
+    message = `请求失败，status 值为：${status}，报错信息为：${response}`;
   }
   const errorData = {
+    type: eventTypes.XHR,
     url,
     time: sendTime,
     status,
