@@ -1,6 +1,6 @@
 import { BEHAVIORTYPES, getTimestamp } from "@imrobot/shared";
 import { Behavior } from "../types";
-import { pushBehaviorStack } from "./shared";
+import { behaviorStack, pushBehaviorStack } from "./shared";
 
 /**
  * 获取当前 URL
@@ -16,11 +16,11 @@ const getLocationHref = () => {
 let lastHref = getLocationHref();
 
 /**
- * 监听路由跳转
+ * 重写 popstate 事件
  */
-export const onNavigation = () => {
-  const oldOnpopstate = window.onpopstate;
-  window.onpopstate = (...args: any[]) => {
+const replacePopstate = () => {
+  const originalPopstate = window.onpopstate;
+  window.onpopstate = function (...args: any[]) {
     const from = lastHref;
     const to = getLocationHref();
     lastHref = to;
@@ -33,6 +33,41 @@ export const onNavigation = () => {
 
     pushBehaviorStack(data);
 
-    oldOnpopstate && oldOnpopstate.apply(this, args);
+    console.log(behaviorStack);
+
+    originalPopstate && originalPopstate.apply(this, args);
   };
+};
+
+/**
+ * 重写 pushstate 方法
+ */
+const replacePushstate = () => {
+  const orginalPushstate = history.pushState;
+
+  history.pushState = function (...args: any[]) {
+    const from = lastHref;
+    const to = args[2];
+    lastHref = to;
+
+    const data: Behavior = {
+      type: BEHAVIORTYPES.NAVIGATION,
+      data: `${from} - ${to}`,
+      time: getTimestamp(),
+    };
+
+    pushBehaviorStack(data);
+
+    console.log(behaviorStack);
+
+    orginalPushstate.apply(this, args);
+  };
+};
+
+/**
+ * 监听路由跳转
+ */
+export const onNavigation = () => {
+  replacePopstate();
+  replacePushstate();
 };
