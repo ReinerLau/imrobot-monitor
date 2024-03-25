@@ -16,6 +16,7 @@ export enum BEHAVIORTYPES {
   CLICK = "click",
   ERROR = "error",
   XHR = "xhr",
+  NAVIGATION = "navigation",
 }
 
 /**

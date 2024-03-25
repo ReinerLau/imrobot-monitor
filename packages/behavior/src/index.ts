@@ -7,6 +7,7 @@ import {
 } from "@imrobot/shared";
 import { Behavior, BehaviorOptions } from "../types";
 import { onNavigation } from "./navigation";
+import { behaviorStack, pushBehaviorStack, setMaxStackNum } from "./shared";
 
 /**
  * 监听点击行为
@@ -24,22 +25,6 @@ const onClick = () => {
 };
 
 /**
- * 新增行为
- * @param data 行为数据
- */
-const pushBehaviorStack = (data: Behavior) => {
-  behaviorStack.push(data);
-  if (behaviorStack.length > maxStackNum) {
-    behaviorStack.shift();
-  }
-};
-
-/**
- * 行为栈
- */
-const behaviorStack: Behavior[] = [];
-
-/**
  * 元素转字符串
  * @param target 元素对象
  * @returns 标签字符串
@@ -50,14 +35,9 @@ const elementToString = (target: HTMLElement) => {
   return `<${tagName}>${innerText}</${tagName}>`;
 };
 
-/**
- * 最大行为栈数量
- */
-let maxStackNum: number;
-
 const extension: Extension = {
   install(options?: BehaviorOptions) {
-    maxStackNum = options?.maxStackNum || 20;
+    setMaxStackNum(options?.maxStackNum);
     onClick();
     onNavigation();
   },

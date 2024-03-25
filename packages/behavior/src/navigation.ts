@@ -1,3 +1,7 @@
+import { BEHAVIORTYPES, getTimestamp } from "@imrobot/shared";
+import { Behavior } from "../types";
+import { pushBehaviorStack } from "./shared";
+
 /**
  * 获取当前 URL
  * @returns 当前 URL
@@ -21,8 +25,13 @@ export const onNavigation = () => {
     const to = getLocationHref();
     lastHref = to;
 
-    console.log(from);
-    console.log(to);
+    const data: Behavior = {
+      type: BEHAVIORTYPES.NAVIGATION,
+      data: `${from} - ${to}`,
+      time: getTimestamp(),
+    };
+
+    pushBehaviorStack(data);
 
     oldOnpopstate && oldOnpopstate.apply(this, args);
   };
