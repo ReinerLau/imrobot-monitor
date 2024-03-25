@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "pnpm -F test-example -F server dev",
+    "dev:client": "pnpm -F client dev",
     "commit": "cz",
     "prepare": "husky",
     "changeset": "changeset"
