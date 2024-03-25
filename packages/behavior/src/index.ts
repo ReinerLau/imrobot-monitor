@@ -21,6 +21,14 @@ const onClick = () => {
       time: getTimestamp(),
     };
     pushBehaviorStack(data);
+
+    fetch("/reportBehavior", {
+      method: "POST",
+      body: JSON.stringify(behaviorStack),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   });
 };
 
@@ -53,6 +61,15 @@ const extension: Extension = {
       data.status = errorData.status;
     }
     pushBehaviorStack(data);
+
+    fetch("/reportBehavior", {
+      method: "POST",
+      body: JSON.stringify(behaviorStack),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
     if (Object.values(ErrorEventTypes).includes(errorData.type)) {
       console.log(behaviorStack);
     }

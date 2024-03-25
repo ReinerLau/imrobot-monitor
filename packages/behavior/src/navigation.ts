@@ -33,7 +33,13 @@ const replacePopstate = () => {
 
     pushBehaviorStack(data);
 
-    console.log(behaviorStack);
+    fetch("/reportBehavior", {
+      method: "POST",
+      body: JSON.stringify(behaviorStack),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     originalPopstate && originalPopstate.apply(this, args);
   };
@@ -58,7 +64,13 @@ const replacePushstate = () => {
 
     pushBehaviorStack(data);
 
-    console.log(behaviorStack);
+    fetch("/reportBehavior", {
+      method: "POST",
+      body: JSON.stringify(behaviorStack),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     orginalPushstate.apply(this, args);
   };

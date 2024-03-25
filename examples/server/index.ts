@@ -62,6 +62,24 @@ app.get("/getEvent", (req, res) => {
   });
 });
 
+let behaviorStack: any[] = [];
+
+app.post("/reportBehavior", (req, res) => {
+  behaviorStack = req.body;
+
+  res.send({
+    code: 200,
+    message: "上报成功",
+  });
+});
+
+app.get("/getBehavior", (req, res) => {
+  res.send({
+    code: 200,
+    data: behaviorStack,
+  });
+});
+
 app.listen(5174, () => {
   console.log("Server is running at http://localhost:5174");
 });

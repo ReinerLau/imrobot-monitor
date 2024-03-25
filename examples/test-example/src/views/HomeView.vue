@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import { parseSourceMap } from '@imrobot/source'
 import { playScreen } from '@imrobot/screen'
+import type { Behavior } from '@imrobot/behavior/types'
 
 const onClick = () => {
   getErrorList()
@@ -78,6 +79,12 @@ const onScreen = async () => {
   playScreen(sourceCodeRef.value!, res.data.data)
 }
 
+const behaviorStack = ref<Behavior[]>([])
+const onBehavior = async () => {
+  const res = await axios.get('/getBehavior')
+  behaviorStack.value = res.data.data
+}
+
 onMounted(getErrorList)
 </script>
 <template>
@@ -88,6 +95,7 @@ onMounted(getErrorList)
   <button @click="onXHR">xhr 请求错误</button>
   <button @click="onAxios">axios 请求错误</button>
   <button @click="onScreen">查看录屏</button>
+  <button @click="onBehavior">查看行为栈</button>
   <div v-for="item in errorList" :key="item.time">
     <div>
       {{ item.fileName }}
@@ -95,6 +103,9 @@ onMounted(getErrorList)
     <button @click="() => showSource(item.fileName, item.lineNumber, item.columnNumber)">
       查看源码
     </button>
+  </div>
+  <div v-for="item in behaviorStack" :key="item.time">
+    <div>{{ item.type }} - {{ item.data }}</div>
   </div>
   <img v-if="visible" src="http://www.abc.com/test.png" />
   <div ref="sourceCodeRef"></div>
