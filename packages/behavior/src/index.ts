@@ -1,12 +1,12 @@
 import {
   BEHAVIORTYPES,
   ErrorEventTypes,
-  EventTypes,
   Extension,
   getTimestamp,
   NormalEventTypes,
 } from "@imrobot/shared";
 import { Behavior, BehaviorOptions } from "../types";
+import { onNavigation } from "./navigation";
 
 /**
  * 监听点击行为
@@ -59,6 +59,7 @@ const extension: Extension = {
   install(options?: BehaviorOptions) {
     maxStackNum = options?.maxStackNum || 20;
     onClick();
+    onNavigation();
   },
   afterEvent(errorData: any) {
     const data: Behavior = {
