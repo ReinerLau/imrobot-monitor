@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.3.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: imrobot_monitor
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3308:3306"
+  redis:
+    image: redis:5-alpine
+    restart: always
+    ports:
+      - 6381:6379

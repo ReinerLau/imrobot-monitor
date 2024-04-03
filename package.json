@@ -8,7 +8,8 @@
     "dev:client": "pnpm -F client dev",
     "commit": "cz",
     "prepare": "husky",
-    "changeset": "changeset"
+    "changeset": "changeset",
+    "docker:start": "docker-compose up -d"
   },
   "keywords": [],
   "author": "",
