@@ -1,0 +1,12 @@
+{
+  "name": "@imrobot/db",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "init": "drizzle-kit push:mysql"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.20.14"
+  }
+}
