@@ -53,3 +53,10 @@ export enum ErrorEventTypes {
 export enum NormalEventTypes {
   XHR = "xhr_normal",
 }
+
+export function reportData(url: string, data: Record<string, any>) {
+  const headers = {
+    type: "application/json",
+  };
+  navigator.sendBeacon(url, new Blob([JSON.stringify(data)], headers));
+}

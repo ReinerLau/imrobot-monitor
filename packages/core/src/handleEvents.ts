@@ -1,11 +1,12 @@
 import errorStackParser from "error-stack-parser";
-import { getErrorUid } from "./utlis";
+import { getErrorUid, hasHash } from "./utlis";
 import type { ResourceErrorTarget, XHRData } from "./types";
 import {
   ErrorEventTypes,
   EventTypes,
   getTimestamp,
   NormalEventTypes,
+  reportData,
 } from "@imrobot/shared";
 
 /**
@@ -25,13 +26,10 @@ export const handleError = (err: Error) => {
   const hash = getErrorUid(
     `${errorData.type}-${errorData.message}-${errorData.fileName}-${errorData.columnNumber}`
   );
-  const headers = {
-    type: "application/json",
-  };
-  navigator.sendBeacon(
-    "/error",
-    new Blob([JSON.stringify(errorData)], headers)
-  );
+
+  if (!hasHash(hash)) {
+    reportData("/error", errorData);
+  }
 
   return errorData;
 };
@@ -53,7 +51,11 @@ export const handleResourceError = ({
   const hash = getErrorUid(
     `${errorData.type}-${errorData.message}-${errorData.name}`
   );
-  // TODO: 上报
+
+  if (!hasHash(hash)) {
+    reportData("/error", errorData);
+  }
+
   return errorData;
 };
 
@@ -76,7 +78,11 @@ export const handleUnhandleRejection = (ev: PromiseRejectionEvent) => {
   const hash = getErrorUid(
     `${errorData.type}-${errorData.message}-${errorData.fileName}-${errorData.columnNumber}`
   );
-  // TODO: 上报
+
+  if (!hasHash(hash)) {
+    reportData("/error", errorData);
+  }
+
   return errorData;
 };
 
@@ -109,6 +115,13 @@ export const handleHTTPRequest = (data: XHRData) => {
     method,
     requestData,
   };
-  // TODO: 上报
+  const hash = getErrorUid(
+    `${errorData.type}-${errorData.message}-${errorData.method}-${errorData.status}`
+  );
+
+  if (!hasHash(hash)) {
+    reportData("/error", errorData);
+  }
+
   return errorData;
 };
