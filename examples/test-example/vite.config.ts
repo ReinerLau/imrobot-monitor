@@ -20,7 +20,8 @@ export default defineConfig({
       '/reportEvent': 'http://127.0.0.1:5174',
       '/getEvent': 'http://127.0.0.1:5174',
       '/reportBehavior': 'http://127.0.0.1:5174',
-      '/getBehavior': 'http://127.0.0.1:5174'
+      '/getBehavior': 'http://127.0.0.1:5174',
+      '/error': 'http://localhost:3001'
     }
   },
   build: {

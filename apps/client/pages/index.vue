@@ -44,9 +44,7 @@ const columns: Column[] = [
     title: "源码",
     width: 150,
     align: "center",
-    cellRenderer: ({ rowData }) => (
-      <el-button type="primary">{rowData.message}</el-button>
-    ),
+    cellRenderer: ({ rowData }) => <el-button type="primary">查看</el-button>,
   },
   {
     dataKey: "behavior",

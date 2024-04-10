@@ -13,6 +13,7 @@ export class ErrorController {
 
   @Post()
   createOne(@Body() dto: CreateErrorDto) {
+    console.log(dto);
     return this.errorService.createOne(dto.message);
   }
 }

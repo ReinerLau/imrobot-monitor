@@ -6,7 +6,7 @@
   "scripts": {
     "schema:build": "pnpm -F @imrobot/schema build",
     "db:init": "pnpm schema:build && pnpm -F @imrobot/db run init",
-    "dev": "pnpm -F test-example -F server dev",
+    "dev:test": "pnpm -F test-example dev",
     "dev:client": "pnpm -F client dev",
     "dev:serve": "pnpm -F api run start:dev",
     "commit": "cz",

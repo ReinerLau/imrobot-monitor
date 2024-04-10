@@ -22,13 +22,13 @@ const onClick = () => {
     };
     pushBehaviorStack(data);
 
-    fetch("/reportBehavior", {
-      method: "POST",
-      body: JSON.stringify(behaviorStack),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    // fetch("/reportBehavior", {
+    //   method: "POST",
+    //   body: JSON.stringify(behaviorStack),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
   });
 };
 

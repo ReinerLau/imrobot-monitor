@@ -25,14 +25,13 @@ export const handleError = (err: Error) => {
   const hash = getErrorUid(
     `${errorData.type}-${errorData.message}-${errorData.fileName}-${errorData.columnNumber}`
   );
-  // TODO: 上报
-  fetch("/reportData", {
-    method: "POST",
-    body: JSON.stringify(errorData),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const headers = {
+    type: "application/json",
+  };
+  navigator.sendBeacon(
+    "/error",
+    new Blob([JSON.stringify(errorData)], headers)
+  );
 
   return errorData;
 };

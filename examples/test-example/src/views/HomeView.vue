@@ -6,7 +6,7 @@ import { playScreen } from '@imrobot/screen'
 import type { Behavior } from '@imrobot/behavior/types'
 
 const onClick = () => {
-  getErrorList()
+  // getErrorList()
   test1()
 }
 
@@ -85,7 +85,7 @@ const onBehavior = async () => {
   behaviorStack.value = res.data.data
 }
 
-onMounted(getErrorList)
+// onMounted(getErrorList)
 </script>
 <template>
   <button @click="onClick">运行错误</button>
