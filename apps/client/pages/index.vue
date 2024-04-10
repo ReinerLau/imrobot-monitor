@@ -1,5 +1,6 @@
 <script lang="tsx" setup>
 import type { Column } from "element-plus";
+import axios from "axios";
 
 const columns: Column[] = [
   {
@@ -60,27 +61,36 @@ const columns: Column[] = [
     align: "center",
   },
 ];
-const data: any[] = [
-  {
-    message: "test",
-  },
-];
+const data = ref<any[]>([]);
 
 const tableWidth = ref(0);
 const tableHeight = ref(0);
 
 const tableContainerRef = ref<HTMLElement>();
 
+async function getErrors() {
+  const res = await axios.get("http://localhost:3001/error");
+  data.value = res.data;
+}
+
+async function uploadError() {
+  const res = await axios.post("http://localhost:3001/error", {
+    message: "test",
+  });
+  getErrors();
+}
+
 onMounted(() => {
   tableWidth.value = tableContainerRef.value!.clientWidth;
   tableHeight.value = tableContainerRef.value!.clientHeight;
+  getErrors();
 });
 </script>
 
 <template>
   <div class="flex flex-col h-screen">
     <div class="flex justify-end p-1">
-      <el-button type="primary">上传</el-button>
+      <el-button type="primary" @click="uploadError">上传</el-button>
       <el-button type="primary">导出</el-button>
     </div>
     <div ref="tableContainerRef" class="flex-1 h-full">
