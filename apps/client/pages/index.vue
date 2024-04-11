@@ -44,7 +44,11 @@ const columns: Column[] = [
     title: "源码",
     width: 150,
     align: "center",
-    cellRenderer: ({ rowData }) => <el-button type="primary">查看</el-button>,
+    cellRenderer: ({ rowData }) => (
+      <el-button type="primary" onClick={() => showSource(rowData)}>
+        查看
+      </el-button>
+    ),
   },
   {
     dataKey: "behavior",
@@ -71,13 +75,6 @@ async function getErrors() {
   data.value = res.data;
 }
 
-async function uploadError() {
-  await axios.post("http://localhost:3001/error", {
-    message: "test",
-  });
-  getErrors();
-}
-
 onMounted(() => {
   tableWidth.value = tableContainerRef.value!.clientWidth;
   tableHeight.value = tableContainerRef.value!.clientHeight;
@@ -97,6 +94,39 @@ function handleUploadSuccess(res: any) {
 function handleUploadError(error: Error) {
   loading.value = false;
 }
+
+interface Data {
+  fileName: string;
+  lineNumber: number;
+  columnNumber: number;
+}
+
+const handleFileName = (str: string) => {
+  const reg = /\/([^/]+)$/;
+  const match = str.match(reg);
+  return match ? match[1] : "";
+};
+
+// const codes = ref<string[]>([]);
+
+const code = ref<string>("");
+
+async function showSource(rowData: Data) {
+  const res = await axios.get("http://localhost:3001/error/getMap", {
+    params: {
+      fileName: handleFileName(rowData.fileName),
+    },
+  });
+  dialogVisible.value = true;
+  console.log(rowData.lineNumber);
+  code.value = await parseSourceMap({
+    sourceMap: res.data,
+    lineNumber: rowData.lineNumber,
+    columnNumber: rowData.columnNumber,
+  });
+}
+
+const dialogVisible = ref(false);
 </script>
 
 <template>
@@ -115,7 +145,7 @@ function handleUploadError(error: Error) {
         <el-button type="primary" :loading="loading">上传 sourcemap</el-button>
       </el-upload>
       <div>
-        <el-button type="primary" @click="uploadError">上传</el-button>
+        <el-button type="primary">上传</el-button>
         <el-button type="primary">导出</el-button>
       </div>
     </div>
@@ -128,5 +158,15 @@ function handleUploadError(error: Error) {
         fixed
       />
     </div>
+    <el-dialog v-model="dialogVisible">
+      <span v-html="code"></span>
+    </el-dialog>
   </div>
 </template>
+
+<style>
+code.hljs .hljs-addition {
+  background-color: red !important;
+  color: white;
+}
+</style>

@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Post, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ErrorService } from './error.service';
 import { CreateErrorDto } from './model/error.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -24,7 +31,7 @@ export class ErrorController {
 
   @Post()
   createOne(@Body() dto: CreateErrorDto) {
-    return this.errorService.createOne(dto.message);
+    return this.errorService.createOne(dto);
   }
 
   @Post('uploadSourceMap')
@@ -34,4 +41,9 @@ export class ErrorController {
     }),
   )
   uploadSource() {}
+
+  @Get('getMap')
+  findMap(@Query('fileName') fileName: any) {
+    return this.errorService.findMap(fileName);
+  }
 }

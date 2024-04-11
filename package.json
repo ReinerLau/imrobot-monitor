@@ -12,7 +12,8 @@
     "commit": "cz",
     "prepare": "husky",
     "changeset": "changeset",
-    "docker:start": "docker-compose up -d"
+    "docker:start": "docker-compose up -d",
+    "test": "pnpm -F test-example build-only && pnpm -F test-example preview"
   },
   "keywords": [],
   "author": "",
