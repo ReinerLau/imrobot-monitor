@@ -72,7 +72,7 @@ async function getErrors() {
 }
 
 async function uploadError() {
-  const res = await axios.post("http://localhost:3001/error", {
+  await axios.post("http://localhost:3001/error", {
     message: "test",
   });
   getErrors();
@@ -83,13 +83,41 @@ onMounted(() => {
   tableHeight.value = tableContainerRef.value!.clientHeight;
   getErrors();
 });
+
+const loading = ref(false);
+
+function handleUploadProgress() {
+  loading.value = true;
+}
+
+function handleUploadSuccess(res: any) {
+  loading.value = false;
+}
+
+function handleUploadError(error: Error) {
+  loading.value = false;
+}
 </script>
 
 <template>
   <div class="flex flex-col h-screen">
-    <div class="flex justify-end p-1">
-      <el-button type="primary" @click="uploadError">上传</el-button>
-      <el-button type="primary">导出</el-button>
+    <div class="flex justify-between p-1">
+      <el-upload
+        action="http://localhost:3001/error/uploadSourceMap"
+        name="files"
+        accept=".map"
+        :multiple="true"
+        :show-file-list="false"
+        @progress="handleUploadProgress"
+        @success="handleUploadSuccess"
+        @error="handleUploadError"
+      >
+        <el-button type="primary" :loading="loading">上传 sourcemap</el-button>
+      </el-upload>
+      <div>
+        <el-button type="primary" @click="uploadError">上传</el-button>
+        <el-button type="primary">导出</el-button>
+      </div>
     </div>
     <div ref="tableContainerRef" class="flex-1 h-full">
       <el-table-v2
