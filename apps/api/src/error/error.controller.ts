@@ -1,19 +1,21 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Post,
   Query,
   UseInterceptors,
 } from '@nestjs/common';
-import { ErrorService } from './error.service';
+import { ensureUploadPath, ErrorService, uploadPath } from './error.service';
 import { CreateErrorDto } from './model/error.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 
 const storage = diskStorage({
   destination(req, file, cb) {
-    cb(null, 'uploads');
+    ensureUploadPath();
+    cb(null, uploadPath);
   },
   filename(req, file, cb) {
     cb(null, file.originalname);
@@ -45,5 +47,10 @@ export class ErrorController {
   @Get('getMap')
   findMap(@Query('fileName') fileName: any) {
     return this.errorService.findMap(fileName);
+  }
+
+  @Delete('clearMap')
+  clearMap() {
+    this.errorService.clearMap();
   }
 }

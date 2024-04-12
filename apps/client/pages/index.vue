@@ -128,24 +128,38 @@ async function showSource(rowData: Data) {
   code.value = result.code;
 }
 
+async function clearMap() {
+  const res = await axios.delete("http://localhost:3001/error/clearMap");
+  if (res.status === 200) {
+    ElMessage.success({
+      message: "清空成功",
+    });
+  }
+}
+
 const dialogVisible = ref(false);
 </script>
 
 <template>
   <div class="flex flex-col h-screen">
     <div class="flex justify-between p-1">
-      <el-upload
-        action="http://localhost:3001/error/uploadSourceMap"
-        name="files"
-        accept=".map"
-        :multiple="true"
-        :show-file-list="false"
-        @progress="handleUploadProgress"
-        @success="handleUploadSuccess"
-        @error="handleUploadError"
-      >
-        <el-button type="primary" :loading="loading">上传 sourcemap</el-button>
-      </el-upload>
+      <div class="flex">
+        <el-upload
+          action="http://localhost:3001/error/uploadSourceMap"
+          name="files"
+          accept=".map"
+          :multiple="true"
+          :show-file-list="false"
+          @progress="handleUploadProgress"
+          @success="handleUploadSuccess"
+          @error="handleUploadError"
+        >
+          <el-button class="mr-2" type="primary" :loading="loading"
+            >上传 sourcemap</el-button
+          >
+        </el-upload>
+        <el-button type="primary" @click="clearMap">清空 sourcemap</el-button>
+      </div>
       <div>
         <el-button type="primary">上传</el-button>
         <el-button type="primary">导出</el-button>

@@ -3,6 +3,13 @@ import { DB, DBType } from '../global/providers/db.provider';
 import { errors } from '@imrobot/schema';
 import { CreateErrorDto } from './model/error.dto';
 import { createReadStream } from 'fs';
+import { removeSync, ensureDirSync } from 'fs-extra';
+
+export const uploadPath = 'uploads';
+
+export function ensureUploadPath() {
+  ensureDirSync(uploadPath);
+}
 
 @Injectable()
 export class ErrorService {
@@ -27,5 +34,9 @@ export class ErrorService {
   findMap(fileName: string) {
     const file = createReadStream(`uploads/${fileName}.map`);
     return new StreamableFile(file);
+  }
+
+  clearMap() {
+    removeSync(uploadPath);
   }
 }
