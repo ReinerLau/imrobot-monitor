@@ -14,7 +14,12 @@ import {
  * @param err 错误详情
  */
 export const handleError = (err: Error) => {
+  console.log(err);
+
   const { fileName, columnNumber, lineNumber } = errorStackParser.parse(err)[0];
+
+  console.log(errorStackParser.parse(err));
+
   const errorData = {
     type: ErrorEventTypes.ERROR,
     fileName,

@@ -4,12 +4,29 @@ import markdownit from "markdown-it";
 import markdownitHighlight from "markdown-it-highlightjs";
 import hljs from "highlight.js";
 
-const md = markdownit().use(markdownitHighlight);
+const md: any = markdownit({
+  highlight: function (str, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return (
+          '<pre><code class="hljs">' +
+          hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
+          "</code></pre>"
+        );
+      } catch (__) {}
+    }
+
+    return (
+      '<pre><code class="hljs">' + md.utils.escapeHtml(str) + "</code></pre>"
+    );
+  },
+}).use(markdownitHighlight);
 
 export async function parseSourceMap({
   sourceMap,
   lineNumber,
   columnNumber,
+  sliceNumber = 10,
 }: SourceInfo) {
   const { sourcesContent, sources } = sourceMap;
 
@@ -22,17 +39,29 @@ export async function parseSourceMap({
   let index = sources.indexOf(result.source);
 
   let code: string = sourcesContent[index];
-  const codeList = code.split("\n");
+  let codeList = code.split("\n");
 
-  codeList[lineNumber] = "+ " + codeList[lineNumber];
+  const realLine = result.line - 1;
+
+  codeList = codeList.map((code, index) => `   ${index + 1}  ${code}`);
+
+  codeList[realLine] = "-" + codeList[realLine].substring(1);
+
+  const upperNumber = realLine - sliceNumber > 0 ? realLine - sliceNumber : 0;
+  const lowerNumber =
+    realLine + sliceNumber <= codeList.length - 1
+      ? realLine + sliceNumber
+      : codeList.length - 1;
+
+  codeList = [
+    ...codeList.slice(upperNumber, realLine),
+    ...codeList.slice(realLine, lowerNumber),
+  ];
 
   code = codeList.join("\n");
 
-  return md.render("```diff\n" + code + "```");
-
-  // console.log(test.replace("<pre>", "").replace("<code>", ""));
-
-  // return codeList.map((item: string) => replaceAll(item));
-  // return codeList;
-  // return test.replace("<pre>", "").replace("<code>", "");
+  return {
+    file: result.source,
+    code: md.render("```diff\n" + code + "\n```"),
+  };
 }

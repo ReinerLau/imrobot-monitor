@@ -110,6 +110,7 @@ const handleFileName = (str: string) => {
 // const codes = ref<string[]>([]);
 
 const code = ref<string>("");
+const file = ref<string>("");
 
 async function showSource(rowData: Data) {
   const res = await axios.get("http://localhost:3001/error/getMap", {
@@ -118,12 +119,13 @@ async function showSource(rowData: Data) {
     },
   });
   dialogVisible.value = true;
-  console.log(rowData.lineNumber);
-  code.value = await parseSourceMap({
+  const result = await parseSourceMap({
     sourceMap: res.data,
     lineNumber: rowData.lineNumber,
     columnNumber: rowData.columnNumber,
   });
+  file.value = result.file;
+  code.value = result.code;
 }
 
 const dialogVisible = ref(false);
@@ -159,14 +161,16 @@ const dialogVisible = ref(false);
       />
     </div>
     <el-dialog v-model="dialogVisible">
-      <span v-html="code"></span>
+      <div class="bg-green-500 mb-2 text-white">{{ file }}</div>
+      <div class="bg-slate-900 text-white">
+        <span v-html="code"></span>
+      </div>
     </el-dialog>
   </div>
 </template>
 
 <style>
-code.hljs .hljs-addition {
+code.hljs .hljs-deletion {
   background-color: red !important;
-  color: white;
 }
 </style>
