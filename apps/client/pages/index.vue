@@ -110,7 +110,6 @@ watch(activeTab, (val: errorTypes) => {
         label="资源加载错误"
         :name="errorTypes.RESOURCE"
       ></el-tab-pane>
-      <el-tab-pane label="promise 错误" name="promise"></el-tab-pane>
       <el-tab-pane label="请求错误" name="request"></el-tab-pane>
     </el-tabs>
     <el-card ref="tableContainerRef" class="flex-1">
