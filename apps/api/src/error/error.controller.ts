@@ -10,7 +10,8 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { CodeService } from './code.service';
-import { CreateCodeDto } from './model/error.dto';
+import { CreateCodeDto, CreateResourceDto } from './model/error.dto';
+import { ResourceService } from './resource.service';
 import { ensureUploadPath, SourceService, uploadPath } from './source.service';
 
 const storage = diskStorage({
@@ -28,6 +29,7 @@ export class ErrorController {
   constructor(
     private codeService: CodeService,
     private sourceService: SourceService,
+    private resourceService: ResourceService,
   ) {}
 
   @Get('code')
@@ -61,5 +63,15 @@ export class ErrorController {
   @Get('export')
   async export() {
     return await this.sourceService.export();
+  }
+
+  @Get('resource')
+  findAllResource() {
+    return this.resourceService.findAll();
+  }
+
+  @Post('resource')
+  createOneResource(@Body() dto: CreateResourceDto) {
+    return this.resourceService.createOne(dto);
   }
 }

@@ -1,68 +1,10 @@
 <script lang="tsx" setup>
 import axios from "axios";
-import type { CardInstance, Column } from "element-plus";
+import type { CardInstance } from "element-plus";
+import { generateCodeColumns } from "~/helpers/code";
+import { generateResourceColumns } from "~/helpers/resource";
+const { code, file, dialogVisible } = useSource();
 
-const columns: Column[] = [
-  {
-    dataKey: "url",
-    title: "URL",
-    width: 150,
-    align: "center",
-  },
-  {
-    dataKey: "fileName",
-    title: "文件",
-    width: 150,
-    align: "center",
-  },
-  {
-    dataKey: "message",
-    title: "信息",
-    width: 150,
-    align: "center",
-  },
-  {
-    dataKey: "time",
-    title: "时间",
-    width: 150,
-    align: "center",
-  },
-  {
-    dataKey: "lineNumber",
-    title: "行",
-    width: 150,
-    align: "center",
-  },
-  {
-    dataKey: "columnNumber",
-    title: "列",
-    width: 150,
-    align: "center",
-  },
-  {
-    dataKey: "source",
-    title: "源码",
-    width: 150,
-    align: "center",
-    cellRenderer: ({ rowData }) => (
-      <el-button type="primary" onClick={() => showSource(rowData)}>
-        查看
-      </el-button>
-    ),
-  },
-  {
-    dataKey: "behavior",
-    title: "行为",
-    width: 150,
-    align: "center",
-  },
-  {
-    dataKey: "screen",
-    title: "录屏",
-    width: 150,
-    align: "center",
-  },
-];
 const data = ref<any[]>([]);
 
 const tableWidth = ref(0);
@@ -70,15 +12,18 @@ const tableHeight = ref(0);
 
 const tableContainerRef = ref<CardInstance>();
 
-async function getErrors() {
-  const res = await axios.get("http://localhost:3001/error/code");
+const codeColumns = generateCodeColumns();
+const resourceColumns = generateResourceColumns();
+
+async function getErrors(type: errorTypes) {
+  const res = await axios.get(`http://localhost:3001/error/${type}`);
   data.value = res.data;
 }
 
 onMounted(() => {
   tableWidth.value = tableContainerRef.value!.$el.clientWidth;
   tableHeight.value = tableContainerRef.value!.$el.clientHeight;
-  getErrors();
+  getErrors(errorTypes.CODE);
 });
 
 const loading = ref(false);
@@ -95,42 +40,11 @@ function handleUploadError(error: Error) {
   loading.value = false;
 }
 
-interface Data {
-  url: string;
-  lineNumber: number;
-  columnNumber: number;
-  fileName: string;
-}
-
 const handleFileName = (str: string) => {
   const reg = /\/([^/]+)$/;
   const match = str.match(reg);
   return match ? match[1] : "";
 };
-
-const code = ref<string>("");
-const file = ref<string>("");
-
-async function showSource(rowData: Data) {
-  const res = await axios.get("http://localhost:3001/error/getMap", {
-    params: {
-      fileName: rowData.fileName,
-    },
-  });
-  dialogVisible.value = true;
-  if (process.env.NODE_ENV === "development") {
-    file.value = rowData.fileName;
-    code.value = renderCode({ code: res.data, line: rowData.lineNumber - 1 });
-  } else {
-    const result = await parseSourceMap({
-      sourceMap: res.data,
-      lineNumber: rowData.lineNumber,
-      columnNumber: rowData.columnNumber,
-    });
-    file.value = result.file;
-    code.value = result.code;
-  }
-}
 
 async function clearMap() {
   const res = await axios.delete("http://localhost:3001/error/clearMap");
@@ -153,8 +67,16 @@ async function exportFile() {
   link.click();
 }
 
-const dialogVisible = ref(false);
-const activeTab = ref("code");
+enum errorTypes {
+  CODE = "code",
+  RESOURCE = "resource",
+}
+
+const activeTab = ref(errorTypes.CODE);
+
+watch(activeTab, (val: errorTypes) => {
+  getErrors(val);
+});
 </script>
 
 <template>
@@ -189,9 +111,18 @@ const activeTab = ref("code");
       <el-tab-pane label="promise 错误" name="promise"></el-tab-pane>
       <el-tab-pane label="请求错误" name="request"></el-tab-pane>
     </el-tabs>
-    <el-card v-if="activeTab === 'code'" ref="tableContainerRef" class="flex-1">
+    <el-card ref="tableContainerRef" class="flex-1">
       <el-table-v2
-        :columns="columns"
+        v-if="activeTab === 'code'"
+        :columns="codeColumns"
+        :data="data"
+        :width="tableWidth"
+        :height="tableHeight"
+        fixed
+      />
+      <el-table-v2
+        v-if="activeTab === 'resource'"
+        :columns="resourceColumns"
         :data="data"
         :width="tableWidth"
         :height="tableHeight"

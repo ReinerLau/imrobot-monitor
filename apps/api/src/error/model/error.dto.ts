@@ -13,3 +13,10 @@ export class CreateCodeDto {
   columnNumber: number;
   time: string;
 }
+
+export class CreateResourceDto {
+  source: string;
+  url: string;
+  target: string;
+  time: string;
+}

@@ -9,6 +9,14 @@ var code = mysqlTable("code", {
   lineNumber: int("lineNumber").notNull(),
   time: text("time").notNull()
 });
+var resource = mysqlTable("resource", {
+  id: int("id").autoincrement().primaryKey(),
+  source: text("source").notNull(),
+  target: text("target").notNull(),
+  url: text("url").notNull(),
+  time: text("time").notNull()
+});
 export {
-  code
+  code,
+  resource
 };

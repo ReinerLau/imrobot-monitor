@@ -1,13 +1,12 @@
-import errorStackParser from "error-stack-parser";
-import { getErrorUid, hasHash } from "./utlis";
-import type { ResourceErrorTarget, XHRData } from "./types";
 import {
   ErrorEventTypes,
-  EventTypes,
   getTimestamp,
   NormalEventTypes,
   reportData,
 } from "@imrobot/shared";
+import errorStackParser from "error-stack-parser";
+import type { ResourceErrorTarget, XHRData } from "./types";
+import { getErrorUid, hasHash } from "./utlis";
 
 /**
  * 处理代码运行错误和异步错误
@@ -43,21 +42,21 @@ export const handleError = (err: Error) => {
 export const handleResourceError = ({
   src,
   localName,
+  href,
 }: ResourceErrorTarget) => {
   const errorData = {
     url: location.href,
     type: ErrorEventTypes.RESOURCE,
-    message: src,
-    name: localName,
+    source: src || href,
+    target: localName,
     time: getTimestamp(),
   };
-  console.log(errorData);
   const hash = getErrorUid(
-    `${errorData.type}-${errorData.message}-${errorData.url}-${errorData.name}`
+    `${errorData.type}-${errorData.source}-${errorData.url}-${errorData.target}`
   );
 
   if (!hasHash(hash)) {
-    reportData("/error", errorData);
+    reportData("/error/resource", errorData);
   }
 
   return errorData;

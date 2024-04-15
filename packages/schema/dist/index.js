@@ -19,7 +19,8 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/index.ts
 var src_exports = {};
 __export(src_exports, {
-  code: () => code
+  code: () => code,
+  resource: () => resource
 });
 module.exports = __toCommonJS(src_exports);
 
@@ -34,7 +35,15 @@ var code = (0, import_mysql_core.mysqlTable)("code", {
   lineNumber: (0, import_mysql_core.int)("lineNumber").notNull(),
   time: (0, import_mysql_core.text)("time").notNull()
 });
+var resource = (0, import_mysql_core.mysqlTable)("resource", {
+  id: (0, import_mysql_core.int)("id").autoincrement().primaryKey(),
+  source: (0, import_mysql_core.text)("source").notNull(),
+  target: (0, import_mysql_core.text)("target").notNull(),
+  url: (0, import_mysql_core.text)("url").notNull(),
+  time: (0, import_mysql_core.text)("time").notNull()
+});
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  code
+  code,
+  resource
 });

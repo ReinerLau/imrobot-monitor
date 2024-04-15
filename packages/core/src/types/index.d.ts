@@ -4,6 +4,7 @@ import { Plugin } from "vue";
 export interface ResourceErrorTarget {
   src?: string;
   localName?: string;
+  href?: string;
 }
 
 export interface XHRInstance extends XMLHttpRequest {
