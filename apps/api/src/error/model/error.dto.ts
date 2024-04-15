@@ -20,3 +20,14 @@ export class CreateResourceDto {
   target: string;
   time: string;
 }
+
+export class CreateRequestDto {
+  status: number;
+  response?: string;
+  elapsedTime: number;
+  url: string;
+  time: string;
+  method: string;
+  requestData: string;
+  requestURL: string;
+}

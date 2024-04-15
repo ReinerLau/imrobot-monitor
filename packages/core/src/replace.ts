@@ -41,7 +41,9 @@ const xhrSendReplace = () => {
       if (["", "json", "text"].includes(responseType)) {
         instance.data.response = response;
         instance.data.status = status;
-        instance.data.elapsedTime = getTimestamp() - instance.data.sendTime;
+        instance.data.elapsedTime =
+          new Date(getTimestamp()).getTime() -
+          new Date(instance.data.sendTime).getTime();
       }
       notify(EventTypes.XHR, instance.data);
     });

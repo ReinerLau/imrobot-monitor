@@ -1,9 +1,4 @@
-import {
-  ErrorEventTypes,
-  getTimestamp,
-  NormalEventTypes,
-  reportData,
-} from "@imrobot/shared";
+import { ErrorEventTypes, getTimestamp, reportData } from "@imrobot/shared";
 import errorStackParser from "error-stack-parser";
 import type { ResourceErrorTarget, XHRData } from "./types";
 import { getErrorUid, hasHash } from "./utlis";
@@ -97,35 +92,26 @@ export const handleUnhandleRejection = (ev: PromiseRejectionEvent) => {
 export const handleHTTPRequest = (data: XHRData) => {
   const { url, sendTime, status, elapsedTime, response, requestData, method } =
     data;
-  let message = "";
-  let type = "";
-  if (status === 0) {
-    message = `请求失败，status 值为：${status}`;
-    type = ErrorEventTypes.XHR;
-  } else if (status! < 400) {
-    message = `请求成功，status 值为：${status}`;
-    type = NormalEventTypes.XHR;
+  if (status === 0 || status! >= 400) {
+    const errorData = {
+      type: ErrorEventTypes.XHR,
+      url: location.href,
+      requestURL: url,
+      time: sendTime,
+      status,
+      response,
+      elapsedTime,
+      method,
+      requestData,
+    };
+    const hash = getErrorUid(
+      `${errorData.type}-${errorData.response}-${errorData.method}-${errorData.status}`
+    );
+
+    if (!hasHash(hash)) {
+      reportData("/error/request", errorData);
+    }
   } else {
-    message = `请求失败，status 值为：${status}，报错信息为：${response}`;
-    type = ErrorEventTypes.XHR;
+    return {};
   }
-  const errorData = {
-    type,
-    url,
-    time: sendTime,
-    status,
-    message,
-    elapsedTime,
-    method,
-    requestData,
-  };
-  const hash = getErrorUid(
-    `${errorData.type}-${errorData.message}-${errorData.method}-${errorData.status}`
-  );
-
-  if (!hasHash(hash)) {
-    reportData("/error", errorData);
-  }
-
-  return errorData;
 };

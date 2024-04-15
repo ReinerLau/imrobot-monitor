@@ -2,6 +2,7 @@
 import axios from "axios";
 import type { CardInstance } from "element-plus";
 import { generateCodeColumns } from "~/helpers/code";
+import { generateRequestColumns } from "~/helpers/request";
 import { generateResourceColumns } from "~/helpers/resource";
 const { code, file, dialogVisible } = useSource();
 
@@ -14,6 +15,7 @@ const tableContainerRef = ref<CardInstance>();
 
 const codeColumns = generateCodeColumns();
 const resourceColumns = generateResourceColumns();
+const requestColumns = generateRequestColumns();
 
 async function getErrors(type: errorTypes) {
   const res = await axios.get(`http://localhost:3001/error/${type}`);
@@ -70,6 +72,7 @@ async function exportFile() {
 enum errorTypes {
   CODE = "code",
   RESOURCE = "resource",
+  REQUEST = "request",
 }
 
 const activeTab = ref(errorTypes.CODE);
@@ -110,11 +113,11 @@ watch(activeTab, (val: errorTypes) => {
         label="资源加载错误"
         :name="errorTypes.RESOURCE"
       ></el-tab-pane>
-      <el-tab-pane label="请求错误" name="request"></el-tab-pane>
+      <el-tab-pane label="请求错误" :name="errorTypes.REQUEST"></el-tab-pane>
     </el-tabs>
     <el-card ref="tableContainerRef" class="flex-1">
       <el-table-v2
-        v-if="activeTab === 'code'"
+        v-if="activeTab === errorTypes.CODE"
         :columns="codeColumns"
         :data="data"
         :width="tableWidth"
@@ -122,8 +125,16 @@ watch(activeTab, (val: errorTypes) => {
         fixed
       />
       <el-table-v2
-        v-if="activeTab === 'resource'"
+        v-if="activeTab === errorTypes.RESOURCE"
         :columns="resourceColumns"
+        :data="data"
+        :width="tableWidth"
+        :height="tableHeight"
+        fixed
+      />
+      <el-table-v2
+        v-if="activeTab === errorTypes.REQUEST"
+        :columns="requestColumns"
         :data="data"
         :width="tableWidth"
         :height="tableHeight"

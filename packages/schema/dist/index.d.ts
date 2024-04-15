@@ -158,5 +158,120 @@ declare const resource: drizzle_orm_mysql_core.MySqlTableWithColumns<{
     };
     dialect: "mysql";
 }>;
+declare const request: drizzle_orm_mysql_core.MySqlTableWithColumns<{
+    name: "request";
+    schema: undefined;
+    columns: {
+        id: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "id";
+            tableName: "request";
+            dataType: "number";
+            columnType: "MySqlInt";
+            data: number;
+            driverParam: string | number;
+            notNull: true;
+            hasDefault: true;
+            enumValues: undefined;
+            baseColumn: never;
+        }, object>;
+        status: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "status";
+            tableName: "request";
+            dataType: "number";
+            columnType: "MySqlInt";
+            data: number;
+            driverParam: string | number;
+            notNull: true;
+            hasDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+        }, object>;
+        response: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "response";
+            tableName: "request";
+            dataType: "string";
+            columnType: "MySqlText";
+            data: string;
+            driverParam: string;
+            notNull: false;
+            hasDefault: false;
+            enumValues: [string, ...string[]];
+            baseColumn: never;
+        }, object>;
+        elapsedTime: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "elapsedTime";
+            tableName: "request";
+            dataType: "number";
+            columnType: "MySqlBigInt53";
+            data: number;
+            driverParam: string | number;
+            notNull: true;
+            hasDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+        }, object>;
+        url: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "url";
+            tableName: "request";
+            dataType: "string";
+            columnType: "MySqlText";
+            data: string;
+            driverParam: string;
+            notNull: true;
+            hasDefault: false;
+            enumValues: [string, ...string[]];
+            baseColumn: never;
+        }, object>;
+        requestURL: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "requestURL";
+            tableName: "request";
+            dataType: "string";
+            columnType: "MySqlText";
+            data: string;
+            driverParam: string;
+            notNull: true;
+            hasDefault: false;
+            enumValues: [string, ...string[]];
+            baseColumn: never;
+        }, object>;
+        time: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "time";
+            tableName: "request";
+            dataType: "string";
+            columnType: "MySqlText";
+            data: string;
+            driverParam: string;
+            notNull: true;
+            hasDefault: false;
+            enumValues: [string, ...string[]];
+            baseColumn: never;
+        }, object>;
+        method: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "method";
+            tableName: "request";
+            dataType: "string";
+            columnType: "MySqlText";
+            data: string;
+            driverParam: string;
+            notNull: true;
+            hasDefault: false;
+            enumValues: [string, ...string[]];
+            baseColumn: never;
+        }, object>;
+        requestData: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "requestData";
+            tableName: "request";
+            dataType: "string";
+            columnType: "MySqlText";
+            data: string;
+            driverParam: string;
+            notNull: true;
+            hasDefault: false;
+            enumValues: [string, ...string[]];
+            baseColumn: never;
+        }, object>;
+    };
+    dialect: "mysql";
+}>;
 
-export { code, resource };
+export { code, request, resource };
