@@ -137,6 +137,18 @@ async function clearMap() {
   }
 }
 
+async function exportFile() {
+  const res = await axios.get("http://localhost:3001/error/export", {
+    responseType: "arraybuffer",
+  });
+  const content = new Blob([res.data], { type: res.headers["content-type"] });
+  const url = URL.createObjectURL(content);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "data.zip";
+  link.click();
+}
+
 const dialogVisible = ref(false);
 </script>
 
@@ -162,7 +174,7 @@ const dialogVisible = ref(false);
       </div>
       <div>
         <el-button type="primary">上传</el-button>
-        <el-button type="primary">导出</el-button>
+        <el-button type="primary" @click="exportFile">导出</el-button>
       </div>
     </div>
     <div ref="tableContainerRef" class="flex-1 h-full">

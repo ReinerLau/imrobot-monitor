@@ -45,12 +45,17 @@ export class ErrorController {
   uploadSource() {}
 
   @Get('getMap')
-  findMap(@Query('fileName') fileName: any) {
+  findMap(@Query('fileName') fileName: string) {
     return this.errorService.findMap(fileName);
   }
 
   @Delete('clearMap')
   clearMap() {
     this.errorService.clearMap();
+  }
+
+  @Get('export')
+  async export() {
+    return await this.errorService.export();
   }
 }
