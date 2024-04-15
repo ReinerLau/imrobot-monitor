@@ -105,9 +105,11 @@ watch(activeTab, (val: errorTypes) => {
       </div>
     </div>
     <el-tabs v-model="activeTab">
-      <el-tab-pane label="运行错误" name="code"></el-tab-pane>
-      <el-tab-pane label="资源加载错误" name="resource"></el-tab-pane>
-      <el-tab-pane label="异步错误" name="async"></el-tab-pane>
+      <el-tab-pane label="运行错误" :name="errorTypes.CODE"></el-tab-pane>
+      <el-tab-pane
+        label="资源加载错误"
+        :name="errorTypes.RESOURCE"
+      ></el-tab-pane>
       <el-tab-pane label="promise 错误" name="promise"></el-tab-pane>
       <el-tab-pane label="请求错误" name="request"></el-tab-pane>
     </el-tabs>
