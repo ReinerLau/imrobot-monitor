@@ -25,7 +25,7 @@ export class ErrorService {
       .select({
         id: errors.id,
         message: errors.message,
-        fileName: errors.fileName,
+        url: errors.url,
         lineNumber: errors.lineNumber,
         columnNumber: errors.columnNumber,
       })

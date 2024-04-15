@@ -96,7 +96,7 @@ function handleUploadError(error: Error) {
 }
 
 interface Data {
-  fileName: string;
+  url: string;
   lineNumber: number;
   columnNumber: number;
 }
@@ -115,7 +115,7 @@ const file = ref<string>("");
 async function showSource(rowData: Data) {
   const res = await axios.get("http://localhost:3001/error/getMap", {
     params: {
-      fileName: handleFileName(rowData.fileName),
+      fileName: handleFileName(rowData.url),
     },
   });
   dialogVisible.value = true;

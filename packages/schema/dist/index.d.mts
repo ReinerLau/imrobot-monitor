@@ -28,8 +28,8 @@ declare const errors: drizzle_orm_mysql_core.MySqlTableWithColumns<{
             enumValues: [string, ...string[]];
             baseColumn: never;
         }, object>;
-        fileName: drizzle_orm_mysql_core.MySqlColumn<{
-            name: "fileName";
+        url: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "url";
             tableName: "errors";
             dataType: "string";
             columnType: "MySqlText";
@@ -47,7 +47,7 @@ declare const errors: drizzle_orm_mysql_core.MySqlTableWithColumns<{
             columnType: "MySqlInt";
             data: number;
             driverParam: string | number;
-            notNull: true;
+            notNull: false;
             hasDefault: false;
             enumValues: undefined;
             baseColumn: never;
@@ -59,7 +59,7 @@ declare const errors: drizzle_orm_mysql_core.MySqlTableWithColumns<{
             columnType: "MySqlInt";
             data: number;
             driverParam: string | number;
-            notNull: true;
+            notNull: false;
             hasDefault: false;
             enumValues: undefined;
             baseColumn: never;

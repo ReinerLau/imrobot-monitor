@@ -14,22 +14,18 @@ import {
  * @param err 错误详情
  */
 export const handleError = (err: Error) => {
-  console.log(err);
-
   const { fileName, columnNumber, lineNumber } = errorStackParser.parse(err)[0];
-
-  console.log(errorStackParser.parse(err));
 
   const errorData = {
     type: ErrorEventTypes.ERROR,
-    fileName,
+    url: fileName,
     message: err.message,
     lineNumber,
     columnNumber,
     time: getTimestamp(),
   };
   const hash = getErrorUid(
-    `${errorData.type}-${errorData.message}-${errorData.fileName}-${errorData.columnNumber}`
+    `${errorData.type}-${errorData.message}-${errorData.url}-${errorData.columnNumber}`
   );
 
   if (!hasHash(hash)) {
@@ -48,13 +44,15 @@ export const handleResourceError = ({
   localName,
 }: ResourceErrorTarget) => {
   const errorData = {
+    url: location.href,
     type: ErrorEventTypes.RESOURCE,
     message: src,
     name: localName,
     time: getTimestamp(),
   };
+  console.log(errorData);
   const hash = getErrorUid(
-    `${errorData.type}-${errorData.message}-${errorData.name}`
+    `${errorData.type}-${errorData.message}-${errorData.url}-${errorData.name}`
   );
 
   if (!hasHash(hash)) {
@@ -75,13 +73,13 @@ export const handleUnhandleRejection = (ev: PromiseRejectionEvent) => {
   const errorData = {
     type: ErrorEventTypes.UNHANDLEDREJECTION,
     message: ev.reason.message,
-    fileName,
+    url: fileName,
     lineNumber,
     columnNumber,
     time: getTimestamp(),
   };
   const hash = getErrorUid(
-    `${errorData.type}-${errorData.message}-${errorData.fileName}-${errorData.columnNumber}`
+    `${errorData.type}-${errorData.message}-${errorData.url}-${errorData.columnNumber}`
   );
 
   if (!hasHash(hash)) {

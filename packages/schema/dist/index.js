@@ -28,9 +28,9 @@ var import_mysql_core = require("drizzle-orm/mysql-core");
 var errors = (0, import_mysql_core.mysqlTable)("errors", {
   id: (0, import_mysql_core.int)("id").autoincrement().primaryKey(),
   message: (0, import_mysql_core.text)("message").notNull(),
-  fileName: (0, import_mysql_core.text)("fileName").notNull(),
-  columnNumber: (0, import_mysql_core.int)("columnNumber").notNull(),
-  lineNumber: (0, import_mysql_core.int)("lineNumber").notNull()
+  url: (0, import_mysql_core.text)("url").notNull(),
+  columnNumber: (0, import_mysql_core.int)("columnNumber"),
+  lineNumber: (0, import_mysql_core.int)("lineNumber")
 });
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
