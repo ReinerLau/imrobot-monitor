@@ -1,4 +1,4 @@
-import { bigint, int, mysqlTable, text } from "drizzle-orm/mysql-core";
+import { int, mysqlTable, text } from "drizzle-orm/mysql-core";
 
 export const code = mysqlTable("code", {
   id: int("id").autoincrement().primaryKey(),
@@ -7,5 +7,5 @@ export const code = mysqlTable("code", {
   url: text("url").notNull(),
   columnNumber: int("columnNumber").notNull(),
   lineNumber: int("lineNumber").notNull(),
-  time: bigint("time", { mode: "number" }).notNull(),
+  time: text("time").notNull(),
 });

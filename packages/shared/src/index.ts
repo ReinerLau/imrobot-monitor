@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 /**
  * 共享变量
  */
@@ -24,7 +26,7 @@ export enum BEHAVIORTYPES {
  * @returns 当前时间戳
  */
 export const getTimestamp = () => {
-  return Date.now();
+  return dayjs().toString();
 };
 
 export type extensionInstallEvent = (options?: any) => void;

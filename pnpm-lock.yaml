@@ -384,7 +384,11 @@ importers:
         specifier: 1.0.0-alpha.4
         version: 1.0.0-alpha.4
 
-  packages/shared: {}
+  packages/shared:
+    dependencies:
+      dayjs:
+        specifier: ^1.11.10
+        version: 1.11.10
 
   packages/source:
     dependencies:
@@ -6935,7 +6939,6 @@ packages:
 
   /dayjs@1.11.10:
     resolution: {integrity: sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==}
-    dev: true
 
   /db0@0.1.4:
     resolution: {integrity: sha512-Ft6eCwONYxlwLjBXSJxw0t0RYtA5gW9mq8JfBXn9TtC0nDPlqePAhpv9v4g9aONBi6JI1OXHTKKkUYGd+BOrCA==}

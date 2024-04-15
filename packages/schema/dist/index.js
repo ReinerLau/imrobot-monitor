@@ -32,7 +32,7 @@ var code = (0, import_mysql_core.mysqlTable)("code", {
   url: (0, import_mysql_core.text)("url").notNull(),
   columnNumber: (0, import_mysql_core.int)("columnNumber").notNull(),
   lineNumber: (0, import_mysql_core.int)("lineNumber").notNull(),
-  time: (0, import_mysql_core.bigint)("time", { mode: "number" }).notNull()
+  time: (0, import_mysql_core.text)("time").notNull()
 });
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {

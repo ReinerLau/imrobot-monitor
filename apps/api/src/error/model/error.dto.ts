@@ -11,5 +11,5 @@ export class CreateCodeDto {
   fileName: string;
   lineNumber: number;
   columnNumber: number;
-  time: number;
+  time: string;
 }

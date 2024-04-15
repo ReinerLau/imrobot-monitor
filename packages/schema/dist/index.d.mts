@@ -79,13 +79,13 @@ declare const code: drizzle_orm_mysql_core.MySqlTableWithColumns<{
         time: drizzle_orm_mysql_core.MySqlColumn<{
             name: "time";
             tableName: "code";
-            dataType: "number";
-            columnType: "MySqlBigInt53";
-            data: number;
-            driverParam: string | number;
+            dataType: "string";
+            columnType: "MySqlText";
+            data: string;
+            driverParam: string;
             notNull: true;
             hasDefault: false;
-            enumValues: undefined;
+            enumValues: [string, ...string[]];
             baseColumn: never;
         }, object>;
     };
