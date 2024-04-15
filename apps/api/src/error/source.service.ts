@@ -27,7 +27,7 @@ export class SourceService {
         '..',
         'examples',
         'test-example',
-        fileName.match(/\/src(.*)/)[0],
+        fileName.match(/\/src([^?]+)/)[0],
       );
       const file = createReadStream(filePath);
       return new StreamableFile(file);
