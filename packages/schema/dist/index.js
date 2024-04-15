@@ -19,20 +19,22 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/index.ts
 var src_exports = {};
 __export(src_exports, {
-  errors: () => errors
+  code: () => code
 });
 module.exports = __toCommonJS(src_exports);
 
 // src/schema/errors.ts
 var import_mysql_core = require("drizzle-orm/mysql-core");
-var errors = (0, import_mysql_core.mysqlTable)("errors", {
+var code = (0, import_mysql_core.mysqlTable)("code", {
   id: (0, import_mysql_core.int)("id").autoincrement().primaryKey(),
   message: (0, import_mysql_core.text)("message").notNull(),
+  fileName: (0, import_mysql_core.text)("fileName").notNull(),
   url: (0, import_mysql_core.text)("url").notNull(),
-  columnNumber: (0, import_mysql_core.int)("columnNumber"),
-  lineNumber: (0, import_mysql_core.int)("lineNumber")
+  columnNumber: (0, import_mysql_core.int)("columnNumber").notNull(),
+  lineNumber: (0, import_mysql_core.int)("lineNumber").notNull(),
+  time: (0, import_mysql_core.bigint)("time", { mode: "number" }).notNull()
 });
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  errors
+  code
 });

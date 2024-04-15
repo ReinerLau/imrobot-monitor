@@ -1,41 +1,41 @@
 <script lang="tsx" setup>
-import type { Column } from "element-plus";
 import axios from "axios";
+import type { CardInstance, Column } from "element-plus";
 
 const columns: Column[] = [
   {
-    dataKey: "message",
-    title: "报错信息",
+    dataKey: "url",
+    title: "URL",
     width: 150,
     align: "center",
   },
   {
-    dataKey: "url",
-    title: "报错页面",
+    dataKey: "fileName",
+    title: "文件",
+    width: 150,
+    align: "center",
+  },
+  {
+    dataKey: "message",
+    title: "信息",
     width: 150,
     align: "center",
   },
   {
     dataKey: "time",
-    title: "报错时间",
+    title: "时间",
     width: 150,
     align: "center",
   },
   {
-    dataKey: "user",
-    title: "用户",
+    dataKey: "lineNumber",
+    title: "行",
     width: 150,
     align: "center",
   },
   {
-    dataKey: "sdkVersion",
-    title: "SDK版本",
-    width: 150,
-    align: "center",
-  },
-  {
-    dataKey: "system",
-    title: "操作系统",
+    dataKey: "columnNumber",
+    title: "列",
     width: 150,
     align: "center",
   },
@@ -68,16 +68,16 @@ const data = ref<any[]>([]);
 const tableWidth = ref(0);
 const tableHeight = ref(0);
 
-const tableContainerRef = ref<HTMLElement>();
+const tableContainerRef = ref<CardInstance>();
 
 async function getErrors() {
-  const res = await axios.get("http://localhost:3001/error");
+  const res = await axios.get("http://localhost:3001/error/code");
   data.value = res.data;
 }
 
 onMounted(() => {
-  tableWidth.value = tableContainerRef.value!.clientWidth;
-  tableHeight.value = tableContainerRef.value!.clientHeight;
+  tableWidth.value = tableContainerRef.value!.$el.clientWidth;
+  tableHeight.value = tableContainerRef.value!.$el.clientHeight;
   getErrors();
 });
 
@@ -99,6 +99,7 @@ interface Data {
   url: string;
   lineNumber: number;
   columnNumber: number;
+  fileName: string;
 }
 
 const handleFileName = (str: string) => {
@@ -107,25 +108,28 @@ const handleFileName = (str: string) => {
   return match ? match[1] : "";
 };
 
-// const codes = ref<string[]>([]);
-
 const code = ref<string>("");
 const file = ref<string>("");
 
 async function showSource(rowData: Data) {
   const res = await axios.get("http://localhost:3001/error/getMap", {
     params: {
-      fileName: handleFileName(rowData.url),
+      fileName: rowData.fileName,
     },
   });
   dialogVisible.value = true;
-  const result = await parseSourceMap({
-    sourceMap: res.data,
-    lineNumber: rowData.lineNumber,
-    columnNumber: rowData.columnNumber,
-  });
-  file.value = result.file;
-  code.value = result.code;
+  if (process.env.NODE_ENV === "development") {
+    file.value = rowData.fileName;
+    code.value = renderCode({ code: res.data, line: rowData.lineNumber - 1 });
+  } else {
+    const result = await parseSourceMap({
+      sourceMap: res.data,
+      lineNumber: rowData.lineNumber,
+      columnNumber: rowData.columnNumber,
+    });
+    file.value = result.file;
+    code.value = result.code;
+  }
 }
 
 async function clearMap() {
@@ -150,10 +154,11 @@ async function exportFile() {
 }
 
 const dialogVisible = ref(false);
+const activeTab = ref("code");
 </script>
 
 <template>
-  <div class="flex flex-col h-screen">
+  <div class="flex flex-col h-screen p-2">
     <div class="flex justify-between p-1">
       <div class="flex">
         <el-upload
@@ -177,7 +182,14 @@ const dialogVisible = ref(false);
         <el-button type="primary" @click="exportFile">导出</el-button>
       </div>
     </div>
-    <div ref="tableContainerRef" class="flex-1 h-full">
+    <el-tabs v-model="activeTab">
+      <el-tab-pane label="运行错误" name="code"></el-tab-pane>
+      <el-tab-pane label="资源加载错误" name="resource"></el-tab-pane>
+      <el-tab-pane label="异步错误" name="async"></el-tab-pane>
+      <el-tab-pane label="promise 错误" name="promise"></el-tab-pane>
+      <el-tab-pane label="请求错误" name="request"></el-tab-pane>
+    </el-tabs>
+    <el-card v-if="activeTab === 'code'" ref="tableContainerRef" class="flex-1">
       <el-table-v2
         :columns="columns"
         :data="data"
@@ -185,7 +197,7 @@ const dialogVisible = ref(false);
         :height="tableHeight"
         fixed
       />
-    </div>
+    </el-card>
     <el-dialog v-model="dialogVisible">
       <div class="bg-green-500 mb-2 text-white">{{ file }}</div>
       <div class="bg-slate-900 text-white">

@@ -1,8 +1,8 @@
-import { SourceMapConsumer } from "source-map-js";
-import type { SourceInfo } from "~/types";
+import hljs from "highlight.js";
 import markdownit from "markdown-it";
 import markdownitHighlight from "markdown-it-highlightjs";
-import hljs from "highlight.js";
+import { SourceMapConsumer } from "source-map-js";
+import type { SourceInfo } from "~/types";
 
 const md: any = markdownit({
   highlight: function (str, lang) {
@@ -26,7 +26,6 @@ export async function parseSourceMap({
   sourceMap,
   lineNumber,
   columnNumber,
-  sliceNumber = 10,
 }: SourceInfo) {
   const { sourcesContent, sources } = sourceMap;
 
@@ -38,10 +37,26 @@ export async function parseSourceMap({
 
   let index = sources.indexOf(result.source);
 
-  let code: string = sourcesContent[index];
+  const code: string = sourcesContent[index];
+
+  return {
+    file: result.source,
+    code: renderCode({ code, line: result.line }),
+  };
+}
+
+export function renderCode({
+  code,
+  line,
+  sliceNumber = 10,
+}: {
+  code: string;
+  line: number;
+  sliceNumber?: number;
+}) {
   let codeList = code.split("\n");
 
-  const realLine = result.line - 1;
+  const realLine = line - 1;
 
   codeList = codeList.map((code, index) => `   ${index + 1}  ${code}`);
 
@@ -60,8 +75,5 @@ export async function parseSourceMap({
 
   code = codeList.join("\n");
 
-  return {
-    file: result.source,
-    code: md.render("```diff\n" + code + "\n```"),
-  };
+  return md.render("```diff\n" + code + "\n```");
 }

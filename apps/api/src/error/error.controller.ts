@@ -7,10 +7,11 @@ import {
   Query,
   UseInterceptors,
 } from '@nestjs/common';
-import { ensureUploadPath, ErrorService, uploadPath } from './error.service';
-import { CreateErrorDto } from './model/error.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { CodeService } from './code.service';
+import { CreateCodeDto } from './model/error.dto';
+import { ensureUploadPath, SourceService, uploadPath } from './source.service';
 
 const storage = diskStorage({
   destination(req, file, cb) {
@@ -24,16 +25,19 @@ const storage = diskStorage({
 
 @Controller('error')
 export class ErrorController {
-  constructor(private errorService: ErrorService) {}
+  constructor(
+    private codeService: CodeService,
+    private sourceService: SourceService,
+  ) {}
 
-  @Get()
-  findAll() {
-    return this.errorService.findAll();
+  @Get('code')
+  findAllCode() {
+    return this.codeService.findAll();
   }
 
-  @Post()
-  createOne(@Body() dto: CreateErrorDto) {
-    return this.errorService.createOne(dto);
+  @Post('code')
+  createOneCode(@Body() dto: CreateCodeDto) {
+    return this.codeService.createOne(dto);
   }
 
   @Post('uploadSourceMap')
@@ -46,16 +50,16 @@ export class ErrorController {
 
   @Get('getMap')
   findMap(@Query('fileName') fileName: string) {
-    return this.errorService.findMap(fileName);
+    return this.sourceService.findMap(fileName);
   }
 
   @Delete('clearMap')
   clearMap() {
-    this.errorService.clearMap();
+    this.sourceService.clearMap();
   }
 
   @Get('export')
   async export() {
-    return await this.errorService.export();
+    return await this.sourceService.export();
   }
 }

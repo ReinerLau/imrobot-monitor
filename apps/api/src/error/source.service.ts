@@ -1,15 +1,13 @@
-import { Inject, Injectable, StreamableFile } from '@nestjs/common';
-import { DB, DBType } from '../global/providers/db.provider';
-import { errors } from '@imrobot/schema';
-import { CreateErrorDto } from './model/error.dto';
+import { Injectable, StreamableFile } from '@nestjs/common';
+import * as archiver from 'archiver';
 import { createReadStream, createWriteStream } from 'fs';
 import {
-  removeSync,
   ensureDirSync,
   ensureFileSync,
   readdirSync,
+  removeSync,
 } from 'fs-extra';
-import * as archiver from 'archiver';
+import * as path from 'path';
 
 export const uploadPath = 'uploads';
 
@@ -18,28 +16,25 @@ export function ensureUploadPath() {
 }
 
 @Injectable()
-export class ErrorService {
-  constructor(@Inject(DB) private db: DBType) {}
-  async findAll() {
-    const result = await this.db
-      .select({
-        id: errors.id,
-        message: errors.message,
-        url: errors.url,
-        lineNumber: errors.lineNumber,
-        columnNumber: errors.columnNumber,
-      })
-      .from(errors);
-    return result;
-  }
-
-  async createOne(dto: CreateErrorDto) {
-    await this.db.insert(errors).values(dto);
-  }
-
+export class SourceService {
   findMap(fileName: string) {
-    const file = createReadStream(`uploads/${fileName}.map`);
-    return new StreamableFile(file);
+    if (process.env.NODE_ENV === 'dev') {
+      const filePath = path.join(
+        __dirname,
+        '..',
+        '..',
+        '..',
+        '..',
+        'examples',
+        'test-example',
+        fileName.match(/\/src(.*)/)[0],
+      );
+      const file = createReadStream(filePath);
+      return new StreamableFile(file);
+    } else {
+      const file = createReadStream(`uploads/${fileName}.map`);
+      return new StreamableFile(file);
+    }
   }
 
   clearMap() {

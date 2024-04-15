@@ -1,12 +1,12 @@
 import * as drizzle_orm_mysql_core from 'drizzle-orm/mysql-core';
 
-declare const errors: drizzle_orm_mysql_core.MySqlTableWithColumns<{
-    name: "errors";
+declare const code: drizzle_orm_mysql_core.MySqlTableWithColumns<{
+    name: "code";
     schema: undefined;
     columns: {
         id: drizzle_orm_mysql_core.MySqlColumn<{
             name: "id";
-            tableName: "errors";
+            tableName: "code";
             dataType: "number";
             columnType: "MySqlInt";
             data: number;
@@ -18,7 +18,19 @@ declare const errors: drizzle_orm_mysql_core.MySqlTableWithColumns<{
         }, object>;
         message: drizzle_orm_mysql_core.MySqlColumn<{
             name: "message";
-            tableName: "errors";
+            tableName: "code";
+            dataType: "string";
+            columnType: "MySqlText";
+            data: string;
+            driverParam: string;
+            notNull: true;
+            hasDefault: false;
+            enumValues: [string, ...string[]];
+            baseColumn: never;
+        }, object>;
+        fileName: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "fileName";
+            tableName: "code";
             dataType: "string";
             columnType: "MySqlText";
             data: string;
@@ -30,7 +42,7 @@ declare const errors: drizzle_orm_mysql_core.MySqlTableWithColumns<{
         }, object>;
         url: drizzle_orm_mysql_core.MySqlColumn<{
             name: "url";
-            tableName: "errors";
+            tableName: "code";
             dataType: "string";
             columnType: "MySqlText";
             data: string;
@@ -42,24 +54,36 @@ declare const errors: drizzle_orm_mysql_core.MySqlTableWithColumns<{
         }, object>;
         columnNumber: drizzle_orm_mysql_core.MySqlColumn<{
             name: "columnNumber";
-            tableName: "errors";
+            tableName: "code";
             dataType: "number";
             columnType: "MySqlInt";
             data: number;
             driverParam: string | number;
-            notNull: false;
+            notNull: true;
             hasDefault: false;
             enumValues: undefined;
             baseColumn: never;
         }, object>;
         lineNumber: drizzle_orm_mysql_core.MySqlColumn<{
             name: "lineNumber";
-            tableName: "errors";
+            tableName: "code";
             dataType: "number";
             columnType: "MySqlInt";
             data: number;
             driverParam: string | number;
-            notNull: false;
+            notNull: true;
+            hasDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+        }, object>;
+        time: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "time";
+            tableName: "code";
+            dataType: "number";
+            columnType: "MySqlBigInt53";
+            data: number;
+            driverParam: string | number;
+            notNull: true;
             hasDefault: false;
             enumValues: undefined;
             baseColumn: never;
@@ -68,4 +92,4 @@ declare const errors: drizzle_orm_mysql_core.MySqlTableWithColumns<{
     dialect: "mysql";
 }>;
 
-export { errors };
+export { code };

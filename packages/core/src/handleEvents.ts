@@ -18,7 +18,8 @@ export const handleError = (err: Error) => {
 
   const errorData = {
     type: ErrorEventTypes.ERROR,
-    url: fileName,
+    fileName,
+    url: location.href,
     message: err.message,
     lineNumber,
     columnNumber,
@@ -29,7 +30,7 @@ export const handleError = (err: Error) => {
   );
 
   if (!hasHash(hash)) {
-    reportData("/error", errorData);
+    reportData("/error/code", errorData);
   }
 
   return errorData;

@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
-import { ErrorController } from './error.controller';
-import { ErrorService } from './error.service';
 import { GlobalModule } from '../global/global.module';
+import { CodeService } from './code.service';
+import { ErrorController } from './error.controller';
+import { SourceService } from './source.service';
 
 @Module({
   imports: [GlobalModule],
-  providers: [ErrorService],
+  providers: [CodeService, SourceService],
   controllers: [ErrorController],
 })
 export class ErrorModule {}

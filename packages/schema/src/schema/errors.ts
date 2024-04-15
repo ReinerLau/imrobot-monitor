@@ -1,9 +1,11 @@
-import { int, mysqlTable, text } from "drizzle-orm/mysql-core";
+import { bigint, int, mysqlTable, text } from "drizzle-orm/mysql-core";
 
-export const errors = mysqlTable("errors", {
+export const code = mysqlTable("code", {
   id: int("id").autoincrement().primaryKey(),
   message: text("message").notNull(),
+  fileName: text("fileName").notNull(),
   url: text("url").notNull(),
-  columnNumber: int("columnNumber"),
-  lineNumber: int("lineNumber"),
+  columnNumber: int("columnNumber").notNull(),
+  lineNumber: int("lineNumber").notNull(),
+  time: bigint("time", { mode: "number" }).notNull(),
 });

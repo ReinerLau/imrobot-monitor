@@ -1,12 +1,14 @@
 // src/schema/errors.ts
-import { int, mysqlTable, text } from "drizzle-orm/mysql-core";
-var errors = mysqlTable("errors", {
+import { bigint, int, mysqlTable, text } from "drizzle-orm/mysql-core";
+var code = mysqlTable("code", {
   id: int("id").autoincrement().primaryKey(),
   message: text("message").notNull(),
+  fileName: text("fileName").notNull(),
   url: text("url").notNull(),
-  columnNumber: int("columnNumber"),
-  lineNumber: int("lineNumber")
+  columnNumber: int("columnNumber").notNull(),
+  lineNumber: int("lineNumber").notNull(),
+  time: bigint("time", { mode: "number" }).notNull()
 });
 export {
-  errors
+  code
 };
