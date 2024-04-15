@@ -72,8 +72,9 @@ export const handleUnhandleRejection = (ev: PromiseRejectionEvent) => {
   )[0];
   const errorData = {
     type: ErrorEventTypes.UNHANDLEDREJECTION,
+    fileName,
+    url: location.href,
     message: ev.reason.message,
-    url: fileName,
     lineNumber,
     columnNumber,
     time: getTimestamp(),
@@ -83,7 +84,7 @@ export const handleUnhandleRejection = (ev: PromiseRejectionEvent) => {
   );
 
   if (!hasHash(hash)) {
-    reportData("/error", errorData);
+    reportData("/error/code", errorData);
   }
 
   return errorData;
