@@ -1,4 +1,5 @@
 import { bigint, int, mysqlTable, text } from "drizzle-orm/mysql-core";
+import { behavior } from "./behavior";
 
 export const code = mysqlTable("code", {
   id: int("id").autoincrement().primaryKey(),
@@ -8,6 +9,7 @@ export const code = mysqlTable("code", {
   columnNumber: int("columnNumber").notNull(),
   lineNumber: int("lineNumber").notNull(),
   time: text("time").notNull(),
+  behaviorId: int("behavior_id").references(() => behavior.id),
 });
 
 export const resource = mysqlTable("resource", {
@@ -16,6 +18,7 @@ export const resource = mysqlTable("resource", {
   target: text("target").notNull(),
   url: text("url").notNull(),
   time: text("time").notNull(),
+  behaviorId: int("behavior_id").references(() => behavior.id),
 });
 
 export const request = mysqlTable("request", {
@@ -28,4 +31,5 @@ export const request = mysqlTable("request", {
   time: text("time").notNull(),
   method: text("method").notNull(),
   requestData: text("requestData").notNull(),
+  behaviorId: int("behavior_id").references(() => behavior.id),
 });

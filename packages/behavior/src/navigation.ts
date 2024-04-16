@@ -1,6 +1,6 @@
 import { BEHAVIORTYPES, getTimestamp } from "@imrobot/shared";
 import { Behavior } from "../types";
-import { behaviorStack, pushBehaviorStack } from "./shared";
+import { pushBehaviorStack } from "./shared";
 
 /**
  * 获取当前 URL
@@ -27,19 +27,11 @@ const replacePopstate = () => {
 
     const data: Behavior = {
       type: BEHAVIORTYPES.NAVIGATION,
-      data: `${from} - ${to}`,
+      content: `${from} - ${to}`,
       time: getTimestamp(),
     };
 
     pushBehaviorStack(data);
-
-    fetch("/reportBehavior", {
-      method: "POST",
-      body: JSON.stringify(behaviorStack),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
 
     originalPopstate && originalPopstate.apply(this, args);
   };
@@ -58,19 +50,11 @@ const replacePushstate = () => {
 
     const data: Behavior = {
       type: BEHAVIORTYPES.NAVIGATION,
-      data: `${from} - ${to}`,
+      content: `${from} - ${to}`,
       time: getTimestamp(),
     };
 
     pushBehaviorStack(data);
-
-    fetch("/reportBehavior", {
-      method: "POST",
-      body: JSON.stringify(behaviorStack),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
 
     orginalPushstate.apply(this, args);
   };

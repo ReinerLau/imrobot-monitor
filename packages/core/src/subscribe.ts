@@ -1,11 +1,12 @@
+import { ErrorTypes, EventTypes, global } from "@imrobot/shared";
 import { App } from "vue";
 import { xhrReplace } from "./replace";
-import { EventTypes, global } from "@imrobot/shared";
+import { AfterErrorEvent } from "./types";
 
 /**
  * 所有错误事件集合
  */
-const events: { [key in EventTypes]?: Function } = {};
+const events: { [key in EventTypes]?: AfterErrorEvent } = {};
 
 /**
  * 开始监听对应错误事件的集合
@@ -25,7 +26,7 @@ const on: { [key in EventTypes]?: Function } = {
  */
 export const subscribeEvent = (
   eventType: EventTypes,
-  event: Function,
+  event: AfterErrorEvent,
   vueInstance?: App
 ) => {
   if (eventType in events) return false;
@@ -47,8 +48,8 @@ export const notify = (eventType: EventTypes, ...args: any[]) => {
   global.hasError = true;
   const event = events[eventType];
   if (event) {
-    const errorData = event(...args);
-    notifyAfterErrorEvent(errorData);
+    const ErrorType = event(...args);
+    notifyAfterErrorEvent(ErrorType);
   }
 };
 
@@ -88,11 +89,11 @@ export const subscribeAfterErrorEvent = (event: Function) => {
   afterErrorEvents.push(event);
 };
 
-export const notifyAfterErrorEvent = (errorData: any) => {
+export const notifyAfterErrorEvent = (errorType: ErrorTypes) => {
   afterErrorEvents.forEach((event) => {
     // 变成宏任务, 防止在其他插件事件之前执行
     setTimeout(() => {
-      event(errorData);
+      event(errorType);
     }, 0);
   });
 };

@@ -1,67 +1,65 @@
 import type { Column } from "element-plus";
+import { Fragment } from "vue/jsx-runtime";
 
 export const generateCodeColumns = (): Column[] => {
   const { showSource } = useSource();
+  const { showBehavior } = useBehavior();
 
   return [
     {
       dataKey: "url",
       title: "URL",
-      width: 150,
+      width: 200,
       align: "center",
     },
     {
       dataKey: "fileName",
       title: "文件",
-      width: 150,
+      width: 200,
       align: "center",
     },
     {
       dataKey: "message",
       title: "信息",
-      width: 150,
+      width: 200,
       align: "center",
     },
     {
       dataKey: "time",
       title: "时间",
-      width: 150,
+      width: 200,
       align: "center",
     },
     {
       dataKey: "lineNumber",
       title: "行",
-      width: 150,
+      width: 200,
       align: "center",
     },
     {
       dataKey: "columnNumber",
       title: "列",
-      width: 150,
+      width: 200,
       align: "center",
     },
     {
-      dataKey: "source",
-      title: "源码",
-      width: 150,
+      dataKey: "action",
+      title: "操作",
+      width: 200,
       align: "center",
       cellRenderer: ({ rowData }) => (
-        <el-button type="primary" onClick={() => showSource(rowData)}>
-          查看
-        </el-button>
+        <Fragment>
+          <el-button type="primary" onClick={() => showSource(rowData)}>
+            源码
+          </el-button>
+          <el-button type="primary" onClick={() => showBehavior(rowData)}>
+            行为
+          </el-button>
+          <el-button type="primary" onClick={() => showBehavior(rowData)}>
+            录屏
+          </el-button>
+        </Fragment>
       ),
-    },
-    {
-      dataKey: "behavior",
-      title: "行为",
-      width: 150,
-      align: "center",
-    },
-    {
-      dataKey: "screen",
-      title: "录屏",
-      width: 150,
-      align: "center",
     },
   ];
 };

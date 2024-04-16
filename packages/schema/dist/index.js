@@ -19,43 +19,55 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/index.ts
 var src_exports = {};
 __export(src_exports, {
+  behavior: () => behavior,
   code: () => code,
   request: () => request,
   resource: () => resource
 });
 module.exports = __toCommonJS(src_exports);
 
-// src/schema/errors.ts
+// src/schema/behavior.ts
 var import_mysql_core = require("drizzle-orm/mysql-core");
-var code = (0, import_mysql_core.mysqlTable)("code", {
+var behavior = (0, import_mysql_core.mysqlTable)("behavior", {
   id: (0, import_mysql_core.int)("id").autoincrement().primaryKey(),
-  message: (0, import_mysql_core.text)("message").notNull(),
-  fileName: (0, import_mysql_core.text)("fileName").notNull(),
-  url: (0, import_mysql_core.text)("url").notNull(),
-  columnNumber: (0, import_mysql_core.int)("columnNumber").notNull(),
-  lineNumber: (0, import_mysql_core.int)("lineNumber").notNull(),
-  time: (0, import_mysql_core.text)("time").notNull()
+  data: (0, import_mysql_core.json)("data").notNull()
 });
-var resource = (0, import_mysql_core.mysqlTable)("resource", {
-  id: (0, import_mysql_core.int)("id").autoincrement().primaryKey(),
-  source: (0, import_mysql_core.text)("source").notNull(),
-  target: (0, import_mysql_core.text)("target").notNull(),
-  url: (0, import_mysql_core.text)("url").notNull(),
-  time: (0, import_mysql_core.text)("time").notNull()
+
+// src/schema/errors.ts
+var import_mysql_core2 = require("drizzle-orm/mysql-core");
+var code = (0, import_mysql_core2.mysqlTable)("code", {
+  id: (0, import_mysql_core2.int)("id").autoincrement().primaryKey(),
+  message: (0, import_mysql_core2.text)("message").notNull(),
+  fileName: (0, import_mysql_core2.text)("fileName").notNull(),
+  url: (0, import_mysql_core2.text)("url").notNull(),
+  columnNumber: (0, import_mysql_core2.int)("columnNumber").notNull(),
+  lineNumber: (0, import_mysql_core2.int)("lineNumber").notNull(),
+  time: (0, import_mysql_core2.text)("time").notNull(),
+  behaviorId: (0, import_mysql_core2.int)("behavior_id").references(() => behavior.id)
 });
-var request = (0, import_mysql_core.mysqlTable)("request", {
-  id: (0, import_mysql_core.int)("id").autoincrement().primaryKey(),
-  status: (0, import_mysql_core.int)("status").notNull(),
-  response: (0, import_mysql_core.text)("response"),
-  elapsedTime: (0, import_mysql_core.bigint)("elapsedTime", { mode: "number" }).notNull(),
-  url: (0, import_mysql_core.text)("url").notNull(),
-  requestURL: (0, import_mysql_core.text)("requestURL").notNull(),
-  time: (0, import_mysql_core.text)("time").notNull(),
-  method: (0, import_mysql_core.text)("method").notNull(),
-  requestData: (0, import_mysql_core.text)("requestData").notNull()
+var resource = (0, import_mysql_core2.mysqlTable)("resource", {
+  id: (0, import_mysql_core2.int)("id").autoincrement().primaryKey(),
+  source: (0, import_mysql_core2.text)("source").notNull(),
+  target: (0, import_mysql_core2.text)("target").notNull(),
+  url: (0, import_mysql_core2.text)("url").notNull(),
+  time: (0, import_mysql_core2.text)("time").notNull(),
+  behaviorId: (0, import_mysql_core2.int)("behavior_id").references(() => behavior.id)
+});
+var request = (0, import_mysql_core2.mysqlTable)("request", {
+  id: (0, import_mysql_core2.int)("id").autoincrement().primaryKey(),
+  status: (0, import_mysql_core2.int)("status").notNull(),
+  response: (0, import_mysql_core2.text)("response"),
+  elapsedTime: (0, import_mysql_core2.bigint)("elapsedTime", { mode: "number" }).notNull(),
+  url: (0, import_mysql_core2.text)("url").notNull(),
+  requestURL: (0, import_mysql_core2.text)("requestURL").notNull(),
+  time: (0, import_mysql_core2.text)("time").notNull(),
+  method: (0, import_mysql_core2.text)("method").notNull(),
+  requestData: (0, import_mysql_core2.text)("requestData").notNull(),
+  behaviorId: (0, import_mysql_core2.int)("behavior_id").references(() => behavior.id)
 });
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
+  behavior,
   code,
   request,
   resource

@@ -1,4 +1,4 @@
-import { Extension } from "@imrobot/shared";
+import { ErrorTypes, Extension } from "@imrobot/shared";
 import { Plugin } from "vue";
 
 export interface ResourceErrorTarget {
@@ -29,3 +29,5 @@ export type Use = <T extends Extension>(
 export type Monitor = {
   use: Use;
 } & Plugin;
+
+export type AfterErrorEvent = (...args: any[]) => ErrorTypes;

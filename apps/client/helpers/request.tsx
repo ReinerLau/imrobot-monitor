@@ -1,6 +1,9 @@
 import type { Column } from "element-plus";
+import { Fragment } from "vue/jsx-runtime";
 
 export const generateRequestColumns = (): Column[] => {
+  const { showBehavior } = useBehavior();
+
   return [
     {
       dataKey: "url",
@@ -51,16 +54,20 @@ export const generateRequestColumns = (): Column[] => {
       align: "center",
     },
     {
-      dataKey: "behavior",
-      title: "行为",
-      width: 150,
+      dataKey: "action",
+      title: "操作",
+      width: 200,
       align: "center",
-    },
-    {
-      dataKey: "screen",
-      title: "录屏",
-      width: 150,
-      align: "center",
+      cellRenderer: ({ rowData }) => (
+        <Fragment>
+          <el-button type="primary" onClick={() => showBehavior(rowData)}>
+            行为
+          </el-button>
+          <el-button type="primary" onClick={() => showBehavior(rowData)}>
+            录屏
+          </el-button>
+        </Fragment>
+      ),
     },
   ];
 };

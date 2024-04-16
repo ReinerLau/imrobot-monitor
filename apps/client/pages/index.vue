@@ -1,15 +1,11 @@
-<script lang="tsx" setup>
+<script lang="ts" setup>
 import axios from "axios";
 import type { CardInstance } from "element-plus";
 import { generateCodeColumns } from "~/helpers/code";
 import { generateRequestColumns } from "~/helpers/request";
 import { generateResourceColumns } from "~/helpers/resource";
-const { code, file, dialogVisible } = useSource();
 
 const data = ref<any[]>([]);
-
-const tableWidth = ref(0);
-const tableHeight = ref(0);
 
 const tableContainerRef = ref<CardInstance>();
 
@@ -17,15 +13,13 @@ const codeColumns = generateCodeColumns();
 const resourceColumns = generateResourceColumns();
 const requestColumns = generateRequestColumns();
 
-async function getErrors(type: errorTypes) {
+async function getErrors(type: ErrorTypes) {
   const res = await axios.get(`http://localhost:3001/error/${type}`);
   data.value = res.data;
 }
 
 onMounted(() => {
-  tableWidth.value = tableContainerRef.value!.$el.clientWidth;
-  tableHeight.value = tableContainerRef.value!.$el.clientHeight;
-  getErrors(errorTypes.CODE);
+  getErrors(ErrorTypes.CODE);
 });
 
 const loading = ref(false);
@@ -69,15 +63,15 @@ async function exportFile() {
   link.click();
 }
 
-enum errorTypes {
+enum ErrorTypes {
   CODE = "code",
   RESOURCE = "resource",
   REQUEST = "request",
 }
 
-const activeTab = ref(errorTypes.CODE);
+const activeTab = ref(ErrorTypes.CODE);
 
-watch(activeTab, (val: errorTypes) => {
+watch(activeTab, (val: ErrorTypes) => {
   getErrors(val);
 });
 </script>
@@ -108,50 +102,44 @@ watch(activeTab, (val: errorTypes) => {
       </div>
     </div>
     <el-tabs v-model="activeTab">
-      <el-tab-pane label="运行错误" :name="errorTypes.CODE"></el-tab-pane>
+      <el-tab-pane label="运行错误" :name="ErrorTypes.CODE"></el-tab-pane>
       <el-tab-pane
         label="资源加载错误"
-        :name="errorTypes.RESOURCE"
+        :name="ErrorTypes.RESOURCE"
       ></el-tab-pane>
-      <el-tab-pane label="请求错误" :name="errorTypes.REQUEST"></el-tab-pane>
+      <el-tab-pane label="请求错误" :name="ErrorTypes.REQUEST"></el-tab-pane>
     </el-tabs>
-    <el-card ref="tableContainerRef" class="flex-1">
-      <el-table-v2
-        v-if="activeTab === errorTypes.CODE"
-        :columns="codeColumns"
-        :data="data"
-        :width="tableWidth"
-        :height="tableHeight"
-        fixed
-      />
-      <el-table-v2
-        v-if="activeTab === errorTypes.RESOURCE"
-        :columns="resourceColumns"
-        :data="data"
-        :width="tableWidth"
-        :height="tableHeight"
-        fixed
-      />
-      <el-table-v2
-        v-if="activeTab === errorTypes.REQUEST"
-        :columns="requestColumns"
-        :data="data"
-        :width="tableWidth"
-        :height="tableHeight"
-        fixed
-      />
-    </el-card>
-    <el-dialog v-model="dialogVisible">
-      <div class="bg-green-500 mb-2 text-white">{{ file }}</div>
-      <div class="bg-slate-900 text-white">
-        <span v-html="code"></span>
-      </div>
-    </el-dialog>
+    <div ref="tableContainerRef" class="flex-1 shadow-2xl rounded p-5">
+      <el-auto-resizer>
+        <template #default="{ height, width }">
+          <el-table-v2
+            v-if="activeTab === ErrorTypes.CODE"
+            :columns="codeColumns"
+            :data="data"
+            :width="width"
+            :height="height"
+            fixed
+          />
+          <el-table-v2
+            v-if="activeTab === ErrorTypes.RESOURCE"
+            :columns="resourceColumns"
+            :data="data"
+            :width="width"
+            :height="height"
+            fixed
+          />
+          <el-table-v2
+            v-if="activeTab === ErrorTypes.REQUEST"
+            :columns="requestColumns"
+            :data="data"
+            :width="width"
+            :height="height"
+            fixed
+          />
+        </template>
+      </el-auto-resizer>
+    </div>
+    <SourceDialog />
+    <BehaviorDialog />
   </div>
 </template>
-
-<style>
-code.hljs .hljs-deletion {
-  background-color: red !important;
-}
-</style>

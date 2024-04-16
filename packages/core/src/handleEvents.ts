@@ -1,12 +1,13 @@
-import { ErrorEventTypes, getTimestamp, reportData } from "@imrobot/shared";
+import {
+  ErrorEventTypes,
+  ErrorTypes,
+  getTimestamp,
+  reportData,
+} from "@imrobot/shared";
 import errorStackParser from "error-stack-parser";
 import type { ResourceErrorTarget, XHRData } from "./types";
 import { getErrorUid, hasHash } from "./utlis";
 
-/**
- * 处理代码运行错误和异步错误
- * @param err 错误详情
- */
 export const handleError = (err: Error) => {
   const { fileName, columnNumber, lineNumber } = errorStackParser.parse(err)[0];
 
@@ -25,9 +26,8 @@ export const handleError = (err: Error) => {
 
   if (!hasHash(hash)) {
     reportData("/error/code", errorData);
+    return ErrorTypes.CODE;
   }
-
-  return errorData;
 };
 
 /**
@@ -52,9 +52,8 @@ export const handleResourceError = ({
 
   if (!hasHash(hash)) {
     reportData("/error/resource", errorData);
+    return ErrorTypes.RESOURCE;
   }
-
-  return errorData;
 };
 
 /**
@@ -80,9 +79,8 @@ export const handleUnhandleRejection = (ev: PromiseRejectionEvent) => {
 
   if (!hasHash(hash)) {
     reportData("/error/code", errorData);
+    return ErrorTypes.CODE;
   }
-
-  return errorData;
 };
 
 /**
@@ -110,8 +108,7 @@ export const handleHTTPRequest = (data: XHRData) => {
 
     if (!hasHash(hash)) {
       reportData("/error/request", errorData);
+      return ErrorTypes.REQUEST;
     }
-  } else {
-    return {};
   }
 };

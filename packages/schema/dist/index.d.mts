@@ -1,5 +1,37 @@
 import * as drizzle_orm_mysql_core from 'drizzle-orm/mysql-core';
 
+declare const behavior: drizzle_orm_mysql_core.MySqlTableWithColumns<{
+    name: "behavior";
+    schema: undefined;
+    columns: {
+        id: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "id";
+            tableName: "behavior";
+            dataType: "number";
+            columnType: "MySqlInt";
+            data: number;
+            driverParam: string | number;
+            notNull: true;
+            hasDefault: true;
+            enumValues: undefined;
+            baseColumn: never;
+        }, object>;
+        data: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "data";
+            tableName: "behavior";
+            dataType: "json";
+            columnType: "MySqlJson";
+            data: unknown;
+            driverParam: string;
+            notNull: true;
+            hasDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+        }, object>;
+    };
+    dialect: "mysql";
+}>;
+
 declare const code: drizzle_orm_mysql_core.MySqlTableWithColumns<{
     name: "code";
     schema: undefined;
@@ -88,6 +120,18 @@ declare const code: drizzle_orm_mysql_core.MySqlTableWithColumns<{
             enumValues: [string, ...string[]];
             baseColumn: never;
         }, object>;
+        behaviorId: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "behavior_id";
+            tableName: "code";
+            dataType: "number";
+            columnType: "MySqlInt";
+            data: number;
+            driverParam: string | number;
+            notNull: false;
+            hasDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+        }, object>;
     };
     dialect: "mysql";
 }>;
@@ -153,6 +197,18 @@ declare const resource: drizzle_orm_mysql_core.MySqlTableWithColumns<{
             notNull: true;
             hasDefault: false;
             enumValues: [string, ...string[]];
+            baseColumn: never;
+        }, object>;
+        behaviorId: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "behavior_id";
+            tableName: "resource";
+            dataType: "number";
+            columnType: "MySqlInt";
+            data: number;
+            driverParam: string | number;
+            notNull: false;
+            hasDefault: false;
+            enumValues: undefined;
             baseColumn: never;
         }, object>;
     };
@@ -270,8 +326,20 @@ declare const request: drizzle_orm_mysql_core.MySqlTableWithColumns<{
             enumValues: [string, ...string[]];
             baseColumn: never;
         }, object>;
+        behaviorId: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "behavior_id";
+            tableName: "request";
+            dataType: "number";
+            columnType: "MySqlInt";
+            data: number;
+            driverParam: string | number;
+            notNull: false;
+            hasDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+        }, object>;
     };
     dialect: "mysql";
 }>;
 
-export { code, request, resource };
+export { behavior, code, request, resource };

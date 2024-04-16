@@ -26,7 +26,7 @@ export enum BEHAVIORTYPES {
  * @returns 当前时间戳
  */
 export const getTimestamp = () => {
-  return dayjs().toString();
+  return dayjs().format("YYYY-MM-DDTHH:mm:ss");
 };
 
 export type extensionInstallEvent = (options?: any) => void;
@@ -60,5 +60,11 @@ export function reportData(url: string, data: Record<string, any>) {
   const headers = {
     type: "application/json",
   };
-  navigator.sendBeacon(url, new Blob([JSON.stringify(data)], headers));
+  return navigator.sendBeacon(url, new Blob([JSON.stringify(data)], headers));
+}
+
+export enum ErrorTypes {
+  CODE = "code",
+  RESOURCE = "resource",
+  REQUEST = "request",
 }
