@@ -132,6 +132,18 @@ declare const code: drizzle_orm_mysql_core.MySqlTableWithColumns<{
             enumValues: undefined;
             baseColumn: never;
         }, object>;
+        screenId: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "screen_id";
+            tableName: "code";
+            dataType: "number";
+            columnType: "MySqlInt";
+            data: number;
+            driverParam: string | number;
+            notNull: false;
+            hasDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+        }, object>;
     };
     dialect: "mysql";
 }>;
@@ -201,6 +213,18 @@ declare const resource: drizzle_orm_mysql_core.MySqlTableWithColumns<{
         }, object>;
         behaviorId: drizzle_orm_mysql_core.MySqlColumn<{
             name: "behavior_id";
+            tableName: "resource";
+            dataType: "number";
+            columnType: "MySqlInt";
+            data: number;
+            driverParam: string | number;
+            notNull: false;
+            hasDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+        }, object>;
+        screenId: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "screen_id";
             tableName: "resource";
             dataType: "number";
             columnType: "MySqlInt";
@@ -338,8 +362,52 @@ declare const request: drizzle_orm_mysql_core.MySqlTableWithColumns<{
             enumValues: undefined;
             baseColumn: never;
         }, object>;
+        screenId: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "screen_id";
+            tableName: "request";
+            dataType: "number";
+            columnType: "MySqlInt";
+            data: number;
+            driverParam: string | number;
+            notNull: false;
+            hasDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+        }, object>;
     };
     dialect: "mysql";
 }>;
 
-export { behavior, code, request, resource };
+declare const screen: drizzle_orm_mysql_core.MySqlTableWithColumns<{
+    name: "screen";
+    schema: undefined;
+    columns: {
+        id: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "id";
+            tableName: "screen";
+            dataType: "number";
+            columnType: "MySqlInt";
+            data: number;
+            driverParam: string | number;
+            notNull: true;
+            hasDefault: true;
+            enumValues: undefined;
+            baseColumn: never;
+        }, object>;
+        data: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "data";
+            tableName: "screen";
+            dataType: "json";
+            columnType: "MySqlJson";
+            data: unknown;
+            driverParam: string;
+            notNull: true;
+            hasDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+        }, object>;
+    };
+    dialect: "mysql";
+}>;
+
+export { behavior, code, request, resource, screen };

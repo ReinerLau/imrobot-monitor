@@ -1,10 +1,10 @@
 import {
   BEHAVIORTYPES,
+  ErrorTypes,
   Extension,
   getTimestamp,
   reportData,
 } from "@imrobot/shared";
-import { ErrorTypes } from "../../shared/types/index";
 import { Behavior, BehaviorOptions } from "../types";
 import { onNavigation } from "./navigation";
 import { behaviorStack, pushBehaviorStack, setMaxStackNum } from "./shared";

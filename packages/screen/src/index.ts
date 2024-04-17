@@ -1,14 +1,16 @@
-import { ScreenOptions } from "./types";
+import { ErrorTypes, Extension } from "@imrobot/shared";
+import { openHasError, setErrorType } from "./helpers";
 import { onScreen } from "./record";
-import { Extension } from "@imrobot/shared";
+import { ScreenOptions } from "./types";
 export * from "./play";
 
 const extension: Extension = {
   install(options?: ScreenOptions) {
     onScreen(options);
   },
-  afterEvent(data: any) {
-    console.log(data);
+  afterEvent(errorType: ErrorTypes) {
+    openHasError();
+    setErrorType(errorType);
   },
 };
 

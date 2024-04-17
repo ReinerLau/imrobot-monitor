@@ -1,6 +1,7 @@
+import { reportData } from "@imrobot/shared";
 import { record } from "rrweb";
+import { closeHasError, errorType, hasError } from "./helpers";
 import { ScreenOptions } from "./types";
-import { global } from "@imrobot/shared";
 
 export const events: any[] = [];
 
@@ -8,15 +9,9 @@ export const onScreen = (options?: ScreenOptions) => {
   record({
     async emit(event, isCheckout) {
       if (isCheckout) {
-        if (global.hasError) {
-          fetch("/reportEvent", {
-            method: "POST",
-            body: JSON.stringify(events),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-          global.hasError = false;
+        if (hasError) {
+          reportData("/screen", { errorType, data: events });
+          closeHasError();
         }
         events.length = 0;
       }
