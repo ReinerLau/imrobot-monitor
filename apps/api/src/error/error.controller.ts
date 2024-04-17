@@ -1,14 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Post,
-  Query,
-  UseInterceptors,
-} from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { CodeService } from './code.service';
 import {
   CreateCodeDto,
@@ -17,17 +7,7 @@ import {
 } from './model/error.dto';
 import { RequestService } from './request.service';
 import { ResourceService } from './resource.service';
-import { ensureUploadPath, SourceService, uploadPath } from './source.service';
-
-const storage = diskStorage({
-  destination(req, file, cb) {
-    ensureUploadPath();
-    cb(null, uploadPath);
-  },
-  filename(req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
+import { SourceService } from './source.service';
 
 @Controller('error')
 export class ErrorController {
@@ -48,22 +28,9 @@ export class ErrorController {
     return this.codeService.createOne(dto);
   }
 
-  @Post('uploadSourceMap')
-  @UseInterceptors(
-    FileInterceptor('files', {
-      storage,
-    }),
-  )
-  uploadSource() {}
-
   @Get('getMap')
   findMap(@Query('fileName') fileName: string) {
     return this.sourceService.findMap(fileName);
-  }
-
-  @Delete('clearMap')
-  clearMap() {
-    this.sourceService.clearMap();
   }
 
   @Get('resource')

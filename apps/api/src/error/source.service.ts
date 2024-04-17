@@ -1,13 +1,6 @@
 import { Injectable, StreamableFile } from '@nestjs/common';
 import { createReadStream } from 'fs';
-import { ensureDirSync, removeSync } from 'fs-extra';
 import * as path from 'path';
-
-export const uploadPath = 'uploads';
-
-export function ensureUploadPath() {
-  ensureDirSync(uploadPath);
-}
 
 @Injectable()
 export class SourceService {
@@ -29,9 +22,5 @@ export class SourceService {
       const file = createReadStream(`uploads/${fileName}.map`);
       return new StreamableFile(file);
     }
-  }
-
-  clearMap() {
-    removeSync(uploadPath);
   }
 }

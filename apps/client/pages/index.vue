@@ -42,15 +42,6 @@ const handleFileName = (str: string) => {
   return match ? match[1] : "";
 };
 
-async function clearMap() {
-  const res = await axios.delete("http://localhost:3001/error/clearMap");
-  if (res.status === 200) {
-    ElMessage.success({
-      message: "清空成功",
-    });
-  }
-}
-
 async function exportFile() {
   const res = await axios.get("http://localhost:3001/data/export", {
     responseType: "arraybuffer",
@@ -78,28 +69,22 @@ watch(activeTab, (val: ErrorTypes) => {
 
 <template>
   <div class="flex flex-col h-screen p-2">
-    <div class="flex justify-between p-1">
-      <div class="flex">
-        <el-upload
-          action="http://localhost:3001/error/uploadSourceMap"
-          name="files"
-          accept=".map"
-          :multiple="true"
-          :show-file-list="false"
-          @progress="handleUploadProgress"
-          @success="handleUploadSuccess"
-          @error="handleUploadError"
+    <div class="flex justify-end p-1">
+      <el-upload
+        action="http://localhost:3001/data/uploadSourceMap"
+        name="files"
+        accept=".map"
+        :multiple="true"
+        :show-file-list="false"
+        @progress="handleUploadProgress"
+        @success="handleUploadSuccess"
+        @error="handleUploadError"
+      >
+        <el-button class="mr-2" type="primary" :loading="loading"
+          >上传</el-button
         >
-          <el-button class="mr-2" type="primary" :loading="loading"
-            >上传 sourcemap</el-button
-          >
-        </el-upload>
-        <el-button type="primary" @click="clearMap">清空 sourcemap</el-button>
-      </div>
-      <div>
-        <el-button type="primary">上传</el-button>
-        <el-button type="primary" @click="exportFile">导出</el-button>
-      </div>
+      </el-upload>
+      <el-button type="primary" @click="exportFile">导出</el-button>
     </div>
     <el-tabs v-model="activeTab">
       <el-tab-pane label="运行错误" :name="ErrorTypes.CODE"></el-tab-pane>
