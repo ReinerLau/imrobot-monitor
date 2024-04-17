@@ -71,9 +71,9 @@ watch(activeTab, (val: ErrorTypes) => {
   <div class="flex flex-col h-screen p-2">
     <div class="flex justify-end p-1">
       <el-upload
-        action="http://localhost:3001/data/uploadSourceMap"
-        name="files"
-        accept=".map"
+        action="http://localhost:3001/data/upload"
+        name="file"
+        accept=".map,.json"
         :multiple="true"
         :show-file-list="false"
         @progress="handleUploadProgress"

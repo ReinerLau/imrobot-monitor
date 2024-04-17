@@ -1,4 +1,10 @@
-import { Controller, Get, Post, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ensureDirSync } from 'fs-extra';
 import { diskStorage } from 'multer';
@@ -28,11 +34,13 @@ export class DataController {
     return this.dataService.export();
   }
 
-  @Post('uploadSourceMap')
+  @Post('upload')
   @UseInterceptors(
-    FileInterceptor('files', {
+    FileInterceptor('file', {
       storage,
     }),
   )
-  uploadSource() {}
+  upload(@UploadedFile() file: Express.Multer.File) {
+    this.dataService.upload(file);
+  }
 }

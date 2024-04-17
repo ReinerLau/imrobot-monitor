@@ -7,6 +7,7 @@ import {
   createWriteStream,
   ensureFileSync,
   readdirSync,
+  readJSONSync,
   removeSync,
 } from 'fs-extra';
 import { DB, DBType } from '../global/providers/db.provider';
@@ -50,5 +51,14 @@ export class DataService {
     results.forEach((result, index) => {
       archive.append(JSON.stringify(result), { name: `${tables[index]}.json` });
     });
+  }
+
+  async upload(file: Express.Multer.File) {
+    if (file.filename.includes('.json')) {
+      const res = readJSONSync(file.path);
+      const index = file.filename.indexOf('.json');
+      const tableName = file.filename.slice(0, index);
+      await this.db.insert(schema[tableName]).values(res);
+    }
   }
 }
