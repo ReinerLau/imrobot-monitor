@@ -141,5 +141,6 @@ watch(activeTab, (val: ErrorTypes) => {
     </div>
     <SourceDialog />
     <BehaviorDialog />
+    <ScreenDialog />
   </div>
 </template>

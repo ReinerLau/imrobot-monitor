@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import axios from 'axios'
-import { parseSourceMap } from '@imrobot/source'
-import { playScreen } from '@imrobot/screen'
 import type { Behavior } from '@imrobot/behavior/types'
+import { playScreen } from '@imrobot/screen'
+import { parseSourceMap } from '@imrobot/source'
+import axios from 'axios'
+import { ref } from 'vue'
 
 const onClick = () => {
   // getErrorList()
@@ -75,7 +75,7 @@ const getErrorList = () => {
 }
 
 const onScreen = async () => {
-  const res = await axios.get('/getEvent')
+  const res = await axios.get(`/screen/1`)
   playScreen(sourceCodeRef.value!, res.data.data)
 }
 

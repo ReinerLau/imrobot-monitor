@@ -61,6 +61,7 @@ export const handleResourceError = ({
  * @param ev 错误信息
  */
 export const handleUnhandleRejection = (ev: PromiseRejectionEvent) => {
+  if (ev.reason.name === "AxiosError") return; // 防止 axios 请求错误触发
   const { fileName, columnNumber, lineNumber } = errorStackParser.parse(
     ev.reason
   )[0];

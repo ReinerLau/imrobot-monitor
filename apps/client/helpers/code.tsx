@@ -4,6 +4,7 @@ import { Fragment } from "vue/jsx-runtime";
 export const generateCodeColumns = (): Column[] => {
   const { showSource } = useSource();
   const { showBehavior } = useBehavior();
+  const { showScreen } = useScreen();
 
   return [
     {
@@ -55,7 +56,10 @@ export const generateCodeColumns = (): Column[] => {
           <el-button type="primary" onClick={() => showBehavior(rowData)}>
             行为
           </el-button>
-          <el-button type="primary" onClick={() => showBehavior(rowData)}>
+          <el-button
+            type="primary"
+            onClick={() => showScreen(rowData.screenId)}
+          >
             录屏
           </el-button>
         </Fragment>

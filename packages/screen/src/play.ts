@@ -9,11 +9,12 @@ import "rrweb-player/dist/style.css";
  * @param el 要插入视频控件的元素
  * @param events rrweb 生成的录屏数据
  */
-export const playScreen = (el: HTMLElement, events: any[]) => {
+export const playScreen = (el: HTMLElement, events: any[], width?: number) => {
   new rrwebPlayer({
     target: el,
     props: {
       events,
+      width,
     },
   });
 };

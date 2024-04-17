@@ -150,6 +150,9 @@ importers:
 
   apps/client:
     dependencies:
+      '@imrobot/screen':
+        specifier: workspace:^
+        version: link:../../packages/screen
       axios:
         specifier: ^1.6.8
         version: 1.6.8
