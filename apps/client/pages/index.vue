@@ -52,7 +52,7 @@ async function clearMap() {
 }
 
 async function exportFile() {
-  const res = await axios.get("http://localhost:3001/error/export", {
+  const res = await axios.get("http://localhost:3001/data/export", {
     responseType: "arraybuffer",
   });
   const content = new Blob([res.data], { type: res.headers["content-type"] });

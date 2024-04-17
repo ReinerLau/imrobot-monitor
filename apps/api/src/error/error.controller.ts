@@ -66,11 +66,6 @@ export class ErrorController {
     this.sourceService.clearMap();
   }
 
-  @Get('export')
-  async export() {
-    return await this.sourceService.export();
-  }
-
   @Get('resource')
   findAllResource() {
     return this.resourceService.findAll();
