@@ -5,6 +5,7 @@ import { desc } from 'drizzle-orm';
 import {
   createReadStream,
   createWriteStream,
+  ensureDirSync,
   ensureFileSync,
   readdirSync,
   readJSONSync,
@@ -17,7 +18,7 @@ export class DataService {
   constructor(@Inject(DB) private db: DBType) {}
   async export() {
     const exportedZip = 'exports/data.zip';
-    removeSync('exports');
+    removeSync(exportedZip);
     ensureFileSync(exportedZip);
     const output = createWriteStream(exportedZip);
     const archive = archiver('zip', { zlib: { level: 9 } });
@@ -33,7 +34,9 @@ export class DataService {
   }
 
   appendSourceMap(archive: archiver.Archiver) {
-    const files = readdirSync('uploads');
+    const uploadPath = 'uploads';
+    ensureDirSync(uploadPath);
+    const files = readdirSync(uploadPath);
     files.forEach((fileName) => {
       const file = createReadStream(`uploads/${fileName}`);
       archive.append(file, { name: fileName });
@@ -59,6 +62,7 @@ export class DataService {
       const index = file.filename.indexOf('.json');
       const tableName = file.filename.slice(0, index);
       await this.db.insert(schema[tableName]).values(res);
+      removeSync(file.path);
     }
   }
 }
