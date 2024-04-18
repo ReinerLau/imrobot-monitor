@@ -2,7 +2,7 @@
   "name": "imrobot-monitor",
   "version": "0.1.0",
   "description": "frontend monitor",
-  "repository": "https://github.com/ReinerLau/imrobot-monitor",
+  "repository": "https://github.com/ReinerLau/imrobot-monitor/tree/main/packages/core",
   "main": "dist/index.mjs",
   "types": "dist/index.d.mts",
   "scripts": {
