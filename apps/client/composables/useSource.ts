@@ -90,11 +90,17 @@ function renderCode({
   return md.render("```diff\n" + code + "\n```");
 }
 
-export default function () {
+function handleFileName(str: string) {
+  const reg = /\/([^/]+)$/;
+  const match = str.match(reg);
+  return match ? match[1] : "";
+}
+
+export const useSource = () => {
   async function showSource(rowData: Data) {
     const res = await axios.get("http://localhost:3001/error/getMap", {
       params: {
-        fileName: rowData.fileName,
+        fileName: handleFileName(rowData.fileName),
       },
     });
     dialogVisible.value = true;
@@ -118,4 +124,4 @@ export default function () {
     dialogVisible,
     showSource,
   };
-}
+};

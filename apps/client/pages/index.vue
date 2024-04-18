@@ -35,16 +35,9 @@ function handleUploadSuccess(res: any) {
     message: "上传成功",
   });
 }
-
 function handleUploadError(error: Error) {
   loading.value = false;
 }
-
-const handleFileName = (str: string) => {
-  const reg = /\/([^/]+)$/;
-  const match = str.match(reg);
-  return match ? match[1] : "";
-};
 
 async function exportFile() {
   const res = await axios.get("http://localhost:3001/data/export", {
