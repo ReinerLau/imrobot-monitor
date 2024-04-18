@@ -223,15 +223,9 @@ importers:
 
   examples/test-example:
     dependencies:
-      '@imrobot/behavior':
-        specifier: workspace:^
-        version: link:../../packages/behavior
       '@imrobot/core':
         specifier: workspace:^
         version: link:../../packages/core
-      '@imrobot/screen':
-        specifier: workspace:^
-        version: link:../../packages/screen
       '@imrobot/source':
         specifier: workspace:^
         version: link:../../packages/source
@@ -327,6 +321,12 @@ importers:
 
   packages/core:
     dependencies:
+      '@imrobot/behavior':
+        specifier: workspace:^
+        version: link:../behavior
+      '@imrobot/screen':
+        specifier: workspace:^
+        version: link:../screen
       '@imrobot/shared':
         specifier: workspace:^
         version: link:../shared
