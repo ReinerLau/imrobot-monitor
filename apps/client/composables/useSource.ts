@@ -91,9 +91,17 @@ function renderCode({
 }
 
 function handleFileName(str: string) {
-  const reg = /\/([^/]+)$/;
-  const match = str.match(reg);
-  return match ? match[1] : "";
+  if (isDev()) {
+    const match = str.match(/\/src([^?]+)/);
+    return match ? match[0] : "";
+  } else {
+    const match = str.match(/\/([^/]+)$/);
+    return match ? match[1] : "";
+  }
+}
+
+function isDev() {
+  return process.env.NODE_ENV === "development";
 }
 
 export const useSource = () => {
@@ -104,7 +112,7 @@ export const useSource = () => {
       },
     });
     dialogVisible.value = true;
-    if (process.env.NODE_ENV === "development") {
+    if (isDev()) {
       file.value = rowData.fileName;
       code.value = renderCode({ code: res.data, line: rowData.lineNumber });
     } else {
