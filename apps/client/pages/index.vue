@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import axios from "axios";
-import type { CardInstance } from "element-plus";
+import { type CardInstance } from "element-plus";
 import { generateCodeColumns } from "~/helpers/code";
 import { generateRequestColumns } from "~/helpers/request";
 import { generateResourceColumns } from "~/helpers/resource";
@@ -30,6 +30,10 @@ function handleUploadProgress() {
 
 function handleUploadSuccess(res: any) {
   loading.value = false;
+  ElMessage({
+    type: "success",
+    message: "上传成功",
+  });
 }
 
 function handleUploadError(error: Error) {
