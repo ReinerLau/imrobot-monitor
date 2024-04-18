@@ -13,6 +13,8 @@ export const useBehavior = () => {
       );
       behaviorStack.value = res.data.data;
       dialogVisible.value = true;
+    } else {
+      ElMessage.warning("没有关联");
     }
   };
 

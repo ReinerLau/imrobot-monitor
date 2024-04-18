@@ -17,6 +17,8 @@ export const useScreen = () => {
           playerRef.value?.clientWidth
         );
       });
+    } else {
+      ElMessage.warning("没有关联");
     }
   };
 
