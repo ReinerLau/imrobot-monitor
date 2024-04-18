@@ -13,7 +13,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@imrobot/core": "workspace:^",
+    "imrobot-monitor": "workspace:^",
     "axios": "^1.6.8",
     "vue": "^3.4.15",
     "vue-router": "^4.3.0"

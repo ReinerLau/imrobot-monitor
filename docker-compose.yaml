@@ -15,3 +15,17 @@ services:
     restart: always
     ports:
       - 6381:6379
+  client:
+    build: ./apps/client
+    restart: always
+    ports:
+      - 3000:3000
+  serve:
+    build: ./apps/api
+    restart: always
+    ports:
+      - 3001:3001
+    depends_on:
+      - mysql
+      - redis
+  
