@@ -223,12 +223,12 @@ importers:
 
   examples/test-example:
     dependencies:
+      '@imrobot/monitor':
+        specifier: workspace:^
+        version: link:../../packages/core
       axios:
         specifier: ^1.6.8
         version: 1.6.8
-      imrobot-monitor:
-        specifier: workspace:^
-        version: link:../../packages/core
       vue:
         specifier: ^3.4.15
         version: 3.4.21(typescript@5.3.3)

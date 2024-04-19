@@ -1,5 +1,5 @@
 {
-  "name": "imrobot-monitor",
+  "name": "@imrobot/monitor",
   "version": "0.1.0",
   "description": "frontend monitor",
   "repository": "https://github.com/ReinerLau/imrobot-monitor/tree/main/packages/core",
