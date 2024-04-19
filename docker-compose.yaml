@@ -21,11 +21,13 @@ services:
     ports:
       - 3000:3000
   serve:
-    build: ./apps/api
+    build: ./
     restart: always
     ports:
       - 3001:3001
     depends_on:
       - mysql
       - redis
+    environment:
+      - DATABASE_URL=mysql://root:password@host.docker.internal:3308/imrobot_monitor
   

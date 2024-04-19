@@ -1,8 +1,7 @@
 {
-  "name": "imrobot-monitor",
+  "name": "monitor",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "schema:build": "pnpm -F @imrobot/schema build",
     "db:init": "pnpm schema:build && pnpm -F @imrobot/db run init",
@@ -15,7 +14,8 @@
     "prod:test": "pnpm -F test-example build-only && pnpm -F test-example preview",
     "commit": "cz",
     "prepare": "husky",
-    "changeset": "changeset"
+    "changeset": "changeset",
+    "deploy:serve": "pnpm db:init && pnpm -F api start:prod"
   },
   "keywords": [],
   "author": "",
