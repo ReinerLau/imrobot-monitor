@@ -1,5 +1,7 @@
 FROM node:lts
 
+ENV DATABASE_URL=mysql://root:password@host.docker.internal:3308/imrobot_monitor
+
 COPY apps/api/dist /app/apps/api/dist
 COPY apps/api/package.json /app/apps/api/package.json
 
