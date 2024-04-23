@@ -1,5 +1,6 @@
 import { ErrorTypes, Extension } from "@imrobot/shared";
 import { Plugin } from "vue";
+import { Modes } from "../shared";
 
 export interface ResourceErrorTarget {
   src?: string;
@@ -30,4 +31,8 @@ export type Monitor = {
   use: Use;
 } & Plugin;
 
-export type AfterErrorEvent = (...args: any[]) => ErrorTypes;
+export type AfterErrorEvent = (...args: any[]) => ErrorTypes | undefined;
+
+export interface InstallOptions {
+  mode?: Modes;
+}

@@ -1,3 +1,5 @@
+import { EventTypes, extensionInstallEvent } from "@imrobot/shared";
+import { io } from "socket.io-client";
 import type { App } from "vue";
 import {
   handleError,
@@ -5,15 +7,16 @@ import {
   handleResourceError,
   handleUnhandleRejection,
 } from "./handleEvents";
-import type { ResourceErrorTarget, Use, XHRData } from "./types";
+import { Modes } from "./shared";
 import { subscribeAfterErrorEvent, subscribeEvent } from "./subscribe";
-import { EventTypes, extensionInstallEvent } from "@imrobot/shared";
+import {
+  type InstallOptions,
+  type ResourceErrorTarget,
+  type Use,
+  type XHRData,
+} from "./types";
 
-/**
- * 插件安装方法
- * @param app vue 实例
- */
-export const install = (app: App): void => {
+export const install = (app: App, options: InstallOptions = {}): void => {
   subscribeEvent(
     EventTypes.VUE,
     (err: Error) => {
@@ -35,26 +38,29 @@ export const install = (app: App): void => {
   subscribeEvent(EventTypes.XHR, (xhrData: XHRData) => {
     return handleHTTPRequest(xhrData);
   });
+  if (options.mode === Modes.ANY) {
+    test();
+  }
   extensionTrigger();
 };
 
-/**
- * 已注册拓展集合
- */
+function test() {
+  const socket = io("http://localhost:3001");
+  socket.on("connect", () => {
+    socket.emit("events", { id: "test1" }, (data: any) => console.log(data));
+  });
+  socket.on("acknowledgement", (data) => {
+    console.log(data);
+  });
+}
+
 export const extensionInstallEvents: extensionInstallEvent[] = [];
 
-/**
- * 注册拓展
- * @param extension 拓展实例
- */
 export const use: Use = (extension, options) => {
   extensionInstallEvents.push(() => extension.install(options));
   extension.afterEvent && subscribeAfterErrorEvent(extension.afterEvent);
 };
 
-/**
- * 触发拓展初始化方法
- */
 const extensionTrigger = () => {
   extensionInstallEvents.forEach((event) => {
     event();

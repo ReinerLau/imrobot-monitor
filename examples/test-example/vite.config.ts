@@ -23,7 +23,11 @@ export default defineConfig({
       '/getBehavior': 'http://127.0.0.1:5174',
       '/error': 'http://localhost:3001',
       '/behavior': 'http://localhost:3001',
-      '/screen': 'http://localhost:3001'
+      '/screen': 'http://localhost:3001',
+      'ws://localhost:3000': {
+        target: 'ws://localhost:3001',
+        ws: true
+      }
     }
   },
   build: {

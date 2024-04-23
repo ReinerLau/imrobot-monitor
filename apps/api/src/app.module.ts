@@ -4,10 +4,19 @@ import { AppService } from './app.service';
 import { BehaviorModule } from './behavior/behavior.module';
 import { DataModule } from './data/data.module';
 import { ErrorModule } from './error/error.module';
+import { EventsModule } from './events/events.module';
+import { GlobalModule } from './global/global.module';
 import { ScreenModule } from './screen/screen.module';
 
 @Module({
-  imports: [ErrorModule, BehaviorModule, ScreenModule, DataModule],
+  imports: [
+    GlobalModule,
+    ErrorModule,
+    BehaviorModule,
+    ScreenModule,
+    DataModule,
+    EventsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

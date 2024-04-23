@@ -13,4 +13,4 @@ monitor.use(screen, {
   checkoutEveryNms: 1000 * 3
 })
 
-createApp(App).use(monitor).use(router).mount('#app')
+createApp(App).use(monitor, { mode: 'any' }).use(router).mount('#app')
