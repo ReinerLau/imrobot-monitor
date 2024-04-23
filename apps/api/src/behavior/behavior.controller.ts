@@ -6,13 +6,13 @@ import { CreateBehaviorDto } from './model/behavior.dto';
 export class BehaviorController {
   constructor(private behaviorService: BehaviorService) {}
 
-  @Get(':id')
-  find(@Param('id') id: number) {
-    return this.behaviorService.findOne(id);
+  @Get(':time')
+  async find(@Param('time') time: number) {
+    return await this.behaviorService.findOne(time);
   }
 
   @Post()
-  createOne(@Body() dto: CreateBehaviorDto) {
-    return this.behaviorService.createOne(dto);
+  async createOne(@Body() dto: CreateBehaviorDto) {
+    await this.behaviorService.create(dto);
   }
 }

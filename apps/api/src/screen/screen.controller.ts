@@ -6,13 +6,13 @@ import { ScreenService } from './screen.service';
 export class ScreenController {
   constructor(private screenService: ScreenService) {}
 
-  @Get(':id')
-  find(@Param('id') id: number) {
-    return this.screenService.findOne(id);
+  @Get(':time')
+  async find(@Param('time') time: number) {
+    return await this.screenService.findOne(time);
   }
 
   @Post()
-  createOne(@Body() dto: CreateScreenDto) {
-    return this.screenService.createOne(dto);
+  async createOne(@Body() dto: CreateScreenDto) {
+    await this.screenService.createOne(dto);
   }
 }

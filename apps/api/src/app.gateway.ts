@@ -12,7 +12,7 @@ let connectedClient: Socket;
 })
 export class AppGateway implements OnGatewayConnection {
   constructor(private schedulerRegistry: SchedulerRegistry) {
-    const job = new CronJob('*/10 * * * * *', this.create);
+    const job = new CronJob('*/30 * * * * *', this.create);
     this.schedulerRegistry.addCronJob('create', job);
   }
 
