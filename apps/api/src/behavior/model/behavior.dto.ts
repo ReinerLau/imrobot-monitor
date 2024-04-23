@@ -1,4 +1,4 @@
 export class CreateBehaviorDto {
-  errorType: string;
-  data: { type: string; content: string; time: string };
+  time: number;
+  data: any;
 }

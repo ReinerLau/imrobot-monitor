@@ -42,6 +42,7 @@ var app = (0, import_mysql_core.mysqlTable)("app", {
 var import_mysql_core2 = require("drizzle-orm/mysql-core");
 var behavior = (0, import_mysql_core2.mysqlTable)("behavior", {
   id: (0, import_mysql_core2.int)("id").autoincrement().primaryKey(),
+  time: (0, import_mysql_core2.bigint)("time", { mode: "number" }).notNull(),
   data: (0, import_mysql_core2.json)("data").notNull()
 });
 

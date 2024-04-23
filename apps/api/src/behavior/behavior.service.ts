@@ -16,14 +16,14 @@ export class BehaviorService {
   async createOne(dto: CreateBehaviorDto) {
     await this.db.insert(schema.behavior).values(dto);
 
-    const newBehavior = await this.findFirst();
-    const newEntry = await this.db.query[dto.errorType].findFirst({
-      orderBy: [desc(schema[dto.errorType].id)],
-    });
-    await this.db
-      .update(schema[dto.errorType])
-      .set({ behaviorId: newBehavior.id })
-      .where(eq(schema[dto.errorType].id, newEntry.id));
+    // const newBehavior = await this.findFirst();
+    // const newEntry = await this.db.query[dto.errorType].findFirst({
+    //   orderBy: [desc(schema[dto.errorType].id)],
+    // });
+    // await this.db
+    //   .update(schema[dto.errorType])
+    //   .set({ behaviorId: newBehavior.id })
+    //   .where(eq(schema[dto.errorType].id, newEntry.id));
   }
 
   async findOne(id: number) {

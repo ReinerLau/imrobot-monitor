@@ -1,6 +1,5 @@
 import {
   BEHAVIORTYPES,
-  ErrorTypes,
   Extension,
   getTimestamp,
   reportData,
@@ -27,15 +26,23 @@ const elementToString = (target: HTMLElement) => {
   return `<${tagName}>${innerText}</${tagName}>`;
 };
 
+const install = (options?: BehaviorOptions) => {
+  setMaxStackNum(options?.maxStackNum);
+  onClick();
+  onNavigation();
+};
+
+const afterEvent = (time: number) => {
+  if (behaviorStack.length > 0) {
+    const data = { time, data: behaviorStack };
+    reportData("/behavior", data);
+    behaviorStack.length = 0;
+  }
+};
+
 const extension: Extension = {
-  install(options?: BehaviorOptions) {
-    setMaxStackNum(options?.maxStackNum);
-    onClick();
-    onNavigation();
-  },
-  afterEvent(errorType: ErrorTypes) {
-    reportData("/behavior", { errorType, data: behaviorStack });
-  },
+  install,
+  afterEvent,
 };
 
 export default extension;

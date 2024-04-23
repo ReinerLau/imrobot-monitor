@@ -48,6 +48,18 @@ declare const behavior: drizzle_orm_mysql_core.MySqlTableWithColumns<{
             enumValues: undefined;
             baseColumn: never;
         }, object>;
+        time: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "time";
+            tableName: "behavior";
+            dataType: "number";
+            columnType: "MySqlBigInt53";
+            data: number;
+            driverParam: string | number;
+            notNull: true;
+            hasDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+        }, object>;
         data: drizzle_orm_mysql_core.MySqlColumn<{
             name: "data";
             tableName: "behavior";

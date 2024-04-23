@@ -1,13 +1,13 @@
-import monitor, { screen } from '@imrobot/monitor'
+import monitor, { behavior, screen } from '@imrobot/monitor'
 
 import { createApp } from 'vue'
 import App from './App.vue'
 
 import router from './router'
 
-// monitor.use(behavior, {
-//   maxStackNum: 10
-// })
+monitor.use(behavior, {
+  maxStackNum: 10
+})
 
 monitor.use(screen)
 
