@@ -20,5 +20,6 @@ export const afterEvent = (time: number) => {
     const data = { time, data: [...events] };
     reportData("/screen", data);
     events.length = 0;
+    record.takeFullSnapshot(true);
   }
 };
