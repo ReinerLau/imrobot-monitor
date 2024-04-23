@@ -46,9 +46,9 @@ export const install = (app: App, options: InstallOptions = {}): void => {
 
 function test() {
   const socket = io("http://localhost:3001");
-  socket.on("connect", () => {
-    socket.emit("events", { id: "test1" }, (data: any) => console.log(data));
-  });
+  // socket.on("connect", () => {
+  //   socket.emit("events", { id: "test1" }, (data: any) => console.log(data));
+  // });
   socket.on("acknowledgement", (data) => {
     console.log(data);
   });
