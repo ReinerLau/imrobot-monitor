@@ -24,10 +24,7 @@ export default defineConfig({
       '/error': 'http://localhost:3001',
       '/behavior': 'http://localhost:3001',
       '/screen': 'http://localhost:3001',
-      'ws://localhost:3000': {
-        target: 'ws://localhost:3001',
-        ws: true
-      }
+      '/api': 'http://localhost:3001'
     }
   },
   build: {

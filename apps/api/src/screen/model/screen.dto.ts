@@ -1,4 +1,4 @@
 export class CreateScreenDto {
-  errorType: string;
-  data: { type: number; data: any; timestamp: number };
+  time: number;
+  data: Record<string, any>;
 }

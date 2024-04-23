@@ -1,23 +1,24 @@
 import { reportData } from "@imrobot/shared";
 import { record } from "rrweb";
-import { closeHasError, errorType, hasError } from "./helpers";
-import { ScreenOptions } from "./types";
 
 export const events: any[] = [];
 
-export const onScreen = (options?: ScreenOptions) => {
+export const onScreen = () => {
   record({
-    async emit(event, isCheckout) {
-      if (isCheckout) {
-        if (hasError) {
-          reportData("/screen", { errorType, data: events });
-          closeHasError();
-        }
-        events.length = 0;
-      }
+    emit(event) {
       events.push(event);
     },
-    checkoutEveryNth: options?.checkoutEveryNth,
-    checkoutEveryNms: options?.checkoutEveryNms,
   });
+};
+
+export const install = () => {
+  onScreen();
+};
+
+export const afterEvent = (time: number) => {
+  if (events.length > 0) {
+    const data = { time, data: [...events] };
+    reportData("/screen", data);
+    events.length = 0;
+  }
 };

@@ -32,11 +32,10 @@ module.exports = __toCommonJS(src_exports);
 var import_mysql_core = require("drizzle-orm/mysql-core");
 var app = (0, import_mysql_core.mysqlTable)("app", {
   id: (0, import_mysql_core.int)("id").autoincrement().primaryKey(),
-  startTime: (0, import_mysql_core.bigint)("startTime", { mode: "number" }).notNull(),
-  endTime: (0, import_mysql_core.bigint)("endTime", { mode: "number" }).notNull(),
-  hasError: (0, import_mysql_core.boolean)("has_error"),
-  behaviorId: (0, import_mysql_core.int)("behavior_id"),
-  screenId: (0, import_mysql_core.int)("screen_id")
+  time: (0, import_mysql_core.bigint)("time", { mode: "number" }).notNull()
+  // hasError: boolean("has_error"),
+  // behaviorId: int("behavior_id"),
+  // screenId: int("screen_id"),
 });
 
 // src/schema/behavior.ts
@@ -47,48 +46,47 @@ var behavior = (0, import_mysql_core2.mysqlTable)("behavior", {
 });
 
 // src/schema/errors.ts
-var import_mysql_core4 = require("drizzle-orm/mysql-core");
+var import_mysql_core3 = require("drizzle-orm/mysql-core");
+var code = (0, import_mysql_core3.mysqlTable)("code", {
+  id: (0, import_mysql_core3.int)("id").autoincrement().primaryKey(),
+  message: (0, import_mysql_core3.text)("message").notNull(),
+  fileName: (0, import_mysql_core3.text)("fileName").notNull(),
+  url: (0, import_mysql_core3.text)("url").notNull(),
+  columnNumber: (0, import_mysql_core3.int)("columnNumber").notNull(),
+  lineNumber: (0, import_mysql_core3.int)("lineNumber").notNull(),
+  time: (0, import_mysql_core3.text)("time").notNull(),
+  behaviorId: (0, import_mysql_core3.int)("behavior_id"),
+  screenId: (0, import_mysql_core3.int)("screen_id")
+});
+var resource = (0, import_mysql_core3.mysqlTable)("resource", {
+  id: (0, import_mysql_core3.int)("id").autoincrement().primaryKey(),
+  source: (0, import_mysql_core3.text)("source").notNull(),
+  target: (0, import_mysql_core3.text)("target").notNull(),
+  url: (0, import_mysql_core3.text)("url").notNull(),
+  time: (0, import_mysql_core3.text)("time").notNull(),
+  behaviorId: (0, import_mysql_core3.int)("behavior_id"),
+  screenId: (0, import_mysql_core3.int)("screen_id")
+});
+var request = (0, import_mysql_core3.mysqlTable)("request", {
+  id: (0, import_mysql_core3.int)("id").autoincrement().primaryKey(),
+  status: (0, import_mysql_core3.int)("status").notNull(),
+  response: (0, import_mysql_core3.text)("response"),
+  elapsedTime: (0, import_mysql_core3.bigint)("elapsedTime", { mode: "number" }).notNull(),
+  url: (0, import_mysql_core3.text)("url").notNull(),
+  requestURL: (0, import_mysql_core3.text)("requestURL").notNull(),
+  time: (0, import_mysql_core3.text)("time").notNull(),
+  method: (0, import_mysql_core3.text)("method").notNull(),
+  requestData: (0, import_mysql_core3.text)("requestData").notNull(),
+  behaviorId: (0, import_mysql_core3.int)("behavior_id"),
+  screenId: (0, import_mysql_core3.int)("screen_id")
+});
 
 // src/schema/screen.ts
-var import_mysql_core3 = require("drizzle-orm/mysql-core");
-var screen = (0, import_mysql_core3.mysqlTable)("screen", {
-  id: (0, import_mysql_core3.int)("id").autoincrement().primaryKey(),
-  data: (0, import_mysql_core3.json)("data").notNull()
-});
-
-// src/schema/errors.ts
-var code = (0, import_mysql_core4.mysqlTable)("code", {
+var import_mysql_core4 = require("drizzle-orm/mysql-core");
+var screen = (0, import_mysql_core4.mysqlTable)("screen", {
   id: (0, import_mysql_core4.int)("id").autoincrement().primaryKey(),
-  message: (0, import_mysql_core4.text)("message").notNull(),
-  fileName: (0, import_mysql_core4.text)("fileName").notNull(),
-  url: (0, import_mysql_core4.text)("url").notNull(),
-  columnNumber: (0, import_mysql_core4.int)("columnNumber").notNull(),
-  lineNumber: (0, import_mysql_core4.int)("lineNumber").notNull(),
-  time: (0, import_mysql_core4.text)("time").notNull(),
-  behaviorId: (0, import_mysql_core4.int)("behavior_id").references(() => behavior.id),
-  screenId: (0, import_mysql_core4.int)("screen_id").references(() => screen.id)
-});
-var resource = (0, import_mysql_core4.mysqlTable)("resource", {
-  id: (0, import_mysql_core4.int)("id").autoincrement().primaryKey(),
-  source: (0, import_mysql_core4.text)("source").notNull(),
-  target: (0, import_mysql_core4.text)("target").notNull(),
-  url: (0, import_mysql_core4.text)("url").notNull(),
-  time: (0, import_mysql_core4.text)("time").notNull(),
-  behaviorId: (0, import_mysql_core4.int)("behavior_id").references(() => behavior.id),
-  screenId: (0, import_mysql_core4.int)("screen_id").references(() => screen.id)
-});
-var request = (0, import_mysql_core4.mysqlTable)("request", {
-  id: (0, import_mysql_core4.int)("id").autoincrement().primaryKey(),
-  status: (0, import_mysql_core4.int)("status").notNull(),
-  response: (0, import_mysql_core4.text)("response"),
-  elapsedTime: (0, import_mysql_core4.bigint)("elapsedTime", { mode: "number" }).notNull(),
-  url: (0, import_mysql_core4.text)("url").notNull(),
-  requestURL: (0, import_mysql_core4.text)("requestURL").notNull(),
-  time: (0, import_mysql_core4.text)("time").notNull(),
-  method: (0, import_mysql_core4.text)("method").notNull(),
-  requestData: (0, import_mysql_core4.text)("requestData").notNull(),
-  behaviorId: (0, import_mysql_core4.int)("behavior_id").references(() => behavior.id),
-  screenId: (0, import_mysql_core4.int)("screen_id").references(() => screen.id)
+  time: (0, import_mysql_core4.bigint)("time", { mode: "number" }).notNull(),
+  data: (0, import_mysql_core4.json)("data").notNull()
 });
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {

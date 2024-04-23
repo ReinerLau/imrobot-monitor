@@ -1,17 +1,10 @@
-import { ErrorTypes, Extension } from "@imrobot/shared";
-import { openHasError, setErrorType } from "./helpers";
-import { onScreen } from "./record";
-import { ScreenOptions } from "./types";
+import { Extension } from "@imrobot/shared";
+import { afterEvent, install } from "./record";
 export * from "./play";
 
 const extension: Extension = {
-  install(options?: ScreenOptions) {
-    onScreen(options);
-  },
-  afterEvent(errorType: ErrorTypes) {
-    openHasError();
-    setErrorType(errorType);
-  },
+  install,
+  afterEvent,
 };
 
 export default extension;

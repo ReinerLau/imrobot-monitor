@@ -1,17 +1,15 @@
-import { ErrorTypes } from "@imrobot/shared";
+export let hasNewRecord = false;
 
-export let hasError = false;
+export let recordTime: number;
 
-export let errorType: ErrorTypes;
-
-export const openHasError = () => {
-  hasError = true;
+export const openHasNewRecord = () => {
+  hasNewRecord = true;
 };
 
-export const closeHasError = () => {
-  hasError = false;
+export const closeHasNewRecord = () => {
+  hasNewRecord = false;
 };
 
-export const setErrorType = (val: ErrorTypes) => {
-  errorType = val;
+export const setRecordTime = (val: number) => {
+  recordTime = val;
 };

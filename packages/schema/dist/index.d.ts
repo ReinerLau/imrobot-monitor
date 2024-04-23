@@ -16,62 +16,14 @@ declare const app: drizzle_orm_mysql_core.MySqlTableWithColumns<{
             enumValues: undefined;
             baseColumn: never;
         }, object>;
-        startTime: drizzle_orm_mysql_core.MySqlColumn<{
-            name: "startTime";
+        time: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "time";
             tableName: "app";
             dataType: "number";
             columnType: "MySqlBigInt53";
             data: number;
             driverParam: string | number;
             notNull: true;
-            hasDefault: false;
-            enumValues: undefined;
-            baseColumn: never;
-        }, object>;
-        endTime: drizzle_orm_mysql_core.MySqlColumn<{
-            name: "endTime";
-            tableName: "app";
-            dataType: "number";
-            columnType: "MySqlBigInt53";
-            data: number;
-            driverParam: string | number;
-            notNull: true;
-            hasDefault: false;
-            enumValues: undefined;
-            baseColumn: never;
-        }, object>;
-        hasError: drizzle_orm_mysql_core.MySqlColumn<{
-            name: "has_error";
-            tableName: "app";
-            dataType: "boolean";
-            columnType: "MySqlBoolean";
-            data: boolean;
-            driverParam: number | boolean;
-            notNull: false;
-            hasDefault: false;
-            enumValues: undefined;
-            baseColumn: never;
-        }, object>;
-        behaviorId: drizzle_orm_mysql_core.MySqlColumn<{
-            name: "behavior_id";
-            tableName: "app";
-            dataType: "number";
-            columnType: "MySqlInt";
-            data: number;
-            driverParam: string | number;
-            notNull: false;
-            hasDefault: false;
-            enumValues: undefined;
-            baseColumn: never;
-        }, object>;
-        screenId: drizzle_orm_mysql_core.MySqlColumn<{
-            name: "screen_id";
-            tableName: "app";
-            dataType: "number";
-            columnType: "MySqlInt";
-            data: number;
-            driverParam: string | number;
-            notNull: false;
             hasDefault: false;
             enumValues: undefined;
             baseColumn: never;
@@ -471,6 +423,18 @@ declare const screen: drizzle_orm_mysql_core.MySqlTableWithColumns<{
             driverParam: string | number;
             notNull: true;
             hasDefault: true;
+            enumValues: undefined;
+            baseColumn: never;
+        }, object>;
+        time: drizzle_orm_mysql_core.MySqlColumn<{
+            name: "time";
+            tableName: "screen";
+            dataType: "number";
+            columnType: "MySqlBigInt53";
+            data: number;
+            driverParam: string | number;
+            notNull: true;
+            hasDefault: false;
             enumValues: undefined;
             baseColumn: never;
         }, object>;

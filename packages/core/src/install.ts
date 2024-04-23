@@ -1,4 +1,4 @@
-import { EventTypes, extensionInstallEvent } from "@imrobot/shared";
+import { EventTypes, extensionInstallEvent, reportData } from "@imrobot/shared";
 import { io } from "socket.io-client";
 import type { App } from "vue";
 import {
@@ -7,16 +7,14 @@ import {
   handleResourceError,
   handleUnhandleRejection,
 } from "./handleEvents";
-import { Modes } from "./shared";
-import { subscribeAfterErrorEvent, subscribeEvent } from "./subscribe";
 import {
-  type InstallOptions,
-  type ResourceErrorTarget,
-  type Use,
-  type XHRData,
-} from "./types";
+  notifyAfterErrorEvent,
+  subscribeAfterErrorEvent,
+  subscribeEvent,
+} from "./subscribe";
+import { type ResourceErrorTarget, type Use, type XHRData } from "./types";
 
-export const install = (app: App, options: InstallOptions = {}): void => {
+export const install = (app: App): void => {
   subscribeEvent(
     EventTypes.VUE,
     (err: Error) => {
@@ -38,20 +36,19 @@ export const install = (app: App, options: InstallOptions = {}): void => {
   subscribeEvent(EventTypes.XHR, (xhrData: XHRData) => {
     return handleHTTPRequest(xhrData);
   });
-  if (options.mode === Modes.ANY) {
-    test();
-  }
   extensionTrigger();
+  connectWS();
 };
 
-function test() {
+function connectWS() {
   const socket = io("http://localhost:3001");
-  // socket.on("connect", () => {
-  //   socket.emit("events", { id: "test1" }, (data: any) => console.log(data));
-  // });
-  socket.on("acknowledgement", (data) => {
-    console.log(data);
-  });
+  socket.on("report", onReport);
+}
+
+function onReport() {
+  const time = Date.now();
+  reportData("/api", { time });
+  notifyAfterErrorEvent(time);
 }
 
 export const extensionInstallEvents: extensionInstallEvent[] = [];

@@ -1,16 +1,14 @@
-import monitor, { behavior, screen } from '@imrobot/monitor'
+import monitor, { screen } from '@imrobot/monitor'
 
 import { createApp } from 'vue'
 import App from './App.vue'
 
 import router from './router'
 
-monitor.use(behavior, {
-  maxStackNum: 10
-})
+// monitor.use(behavior, {
+//   maxStackNum: 10
+// })
 
-monitor.use(screen, {
-  checkoutEveryNms: 1000 * 3
-})
+monitor.use(screen)
 
-createApp(App).use(monitor, { mode: 'any' }).use(router).mount('#app')
+createApp(App).use(monitor).use(router).mount('#app')
