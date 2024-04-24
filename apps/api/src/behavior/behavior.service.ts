@@ -1,7 +1,7 @@
-import { behavior } from '@imrobot/schema';
 import { Inject, Injectable } from '@nestjs/common';
 import { eq } from 'drizzle-orm';
 import { DB, DBType } from '../global/providers/db.provider';
+import { behavior } from '../schema';
 import { CreateBehaviorDto } from './model/behavior.dto';
 
 @Injectable()

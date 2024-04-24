@@ -1,4 +1,3 @@
-import * as schema from '@imrobot/schema';
 import { Inject, Injectable, StreamableFile } from '@nestjs/common';
 import * as archiver from 'archiver';
 import { desc } from 'drizzle-orm';
@@ -12,6 +11,7 @@ import {
   removeSync,
 } from 'fs-extra';
 import { DB, DBType } from '../global/providers/db.provider';
+import * as schema from '../schema';
 
 @Injectable()
 export class DataService {

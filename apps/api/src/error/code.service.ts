@@ -1,7 +1,7 @@
-import { code } from '@imrobot/schema';
 import { Inject, Injectable } from '@nestjs/common';
 import { and, desc, gte, lte } from 'drizzle-orm';
 import { DB, DBType } from '../global/providers/db.provider';
+import { code } from '../schema';
 import { CreateCodeDto } from './model/error.dto';
 
 @Injectable()

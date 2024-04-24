@@ -5,7 +5,7 @@ import path from 'path';
 config({ path: path.resolve(__dirname, './.env') });
 
 export default defineConfig({
-  schema: '../../packages/schema/src/schema/*',
+  schema: './src/schema/index.ts',
   out: './drizzle',
   driver: 'mysql2',
   dbCredentials: {

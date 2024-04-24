@@ -1,6 +1,6 @@
-import * as mysql from 'mysql2/promise';
 import { drizzle } from 'drizzle-orm/mysql2';
-import * as schema from '@imrobot/schema';
+import * as mysql from 'mysql2/promise';
+import * as schema from '../schema';
 
 let connection: mysql.Connection;
 

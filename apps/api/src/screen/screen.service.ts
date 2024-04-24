@@ -1,7 +1,7 @@
-import { screen } from '@imrobot/schema';
 import { Inject, Injectable } from '@nestjs/common';
 import { eq } from 'drizzle-orm';
 import { DB, DBType } from '../global/providers/db.provider';
+import { screen } from '../schema';
 import { CreateScreenDto } from './model/screen.dto';
 
 @Injectable()

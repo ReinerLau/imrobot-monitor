@@ -1,11 +1,3 @@
-import {
-  app,
-  behavior,
-  code,
-  request,
-  resource,
-  screen,
-} from '@imrobot/schema';
 import { Inject, Injectable } from '@nestjs/common';
 import { Cron, CronExpression, SchedulerRegistry } from '@nestjs/schedule';
 import { CronTime } from 'cron';
@@ -13,6 +5,7 @@ import { desc } from 'drizzle-orm';
 import { AppGateway } from './app.gateway';
 import { DB, DBType } from './global/providers/db.provider';
 import { AppCreateDto } from './model/app.dto';
+import { app, behavior, code, request, resource, screen } from './schema';
 
 @Injectable()
 export class AppService {
