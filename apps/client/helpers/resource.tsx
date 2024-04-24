@@ -1,9 +1,7 @@
-import type { Column } from "element-plus";
-import { Fragment } from "vue/jsx-runtime";
+import { dayjs, type Column } from "element-plus";
 
 export const generateResourceColumns = (): Column[] => {
   const { showBehavior } = useBehavior();
-  const { showScreen } = useScreen();
 
   return [
     {
@@ -29,24 +27,8 @@ export const generateResourceColumns = (): Column[] => {
       title: "时间",
       width: 200,
       align: "center",
-    },
-    {
-      dataKey: "action",
-      title: "操作",
-      width: 200,
-      align: "center",
       cellRenderer: ({ rowData }) => (
-        <Fragment>
-          <el-button type="primary" onClick={() => showBehavior(rowData)}>
-            行为
-          </el-button>
-          <el-button
-            type="primary"
-            onClick={() => showScreen(rowData.screenId)}
-          >
-            录屏
-          </el-button>
-        </Fragment>
+        <span>{dayjs(rowData.time).format("YYYY-MM-DDTHH:mm:ss")}</span>
       ),
     },
   ];

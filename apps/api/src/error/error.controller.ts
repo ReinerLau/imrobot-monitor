@@ -19,8 +19,11 @@ export class ErrorController {
   ) {}
 
   @Get('code')
-  findAllCode() {
-    return this.codeService.findAll();
+  findAllCode(
+    @Query('startTime') startTime: number,
+    @Query('endTime') endTime: number,
+  ) {
+    return this.codeService.findAll(startTime, endTime);
   }
 
   @Post('code')
@@ -34,8 +37,11 @@ export class ErrorController {
   }
 
   @Get('resource')
-  findAllResource() {
-    return this.resourceService.findAll();
+  findAllResource(
+    @Query('startTime') startTime: number,
+    @Query('endTime') endTime: number,
+  ) {
+    return this.resourceService.findAll(startTime, endTime);
   }
 
   @Post('resource')
@@ -44,8 +50,11 @@ export class ErrorController {
   }
 
   @Get('request')
-  findAllRequest() {
-    return this.requestService.findAll();
+  findAllRequest(
+    @Query('startTime') startTime: number,
+    @Query('endTime') endTime: number,
+  ) {
+    return this.requestService.findAll(startTime, endTime);
   }
 
   @Post('request')

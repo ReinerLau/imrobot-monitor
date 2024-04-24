@@ -1,5 +1,10 @@
-import { EventTypes, extensionInstallEvent, reportData } from "@imrobot/shared";
-import { io, Socket } from "socket.io-client";
+import {
+  EventTypes,
+  extensionInstallEvent,
+  getTimestamp,
+  reportData,
+} from "@imrobot/shared";
+import { io } from "socket.io-client";
 import type { App } from "vue";
 import {
   handleError,
@@ -18,46 +23,45 @@ export const install = (app: App): void => {
   subscribeEvent(
     EventTypes.VUE,
     (err: Error) => {
-      return handleError(err);
+      handleError(err);
     },
     app
   );
   subscribeEvent(EventTypes.ERROR, (ev: ErrorEvent) => {
     const target = ev.target as ResourceErrorTarget;
     if (target?.localName) {
-      return handleResourceError(target);
+      handleResourceError(target);
     } else {
-      return handleError(ev.error);
+      handleError(ev.error);
     }
   });
   subscribeEvent(EventTypes.UNHANDLEDREJECTION, (ev: PromiseRejectionEvent) => {
-    return handleUnhandleRejection(ev);
+    handleUnhandleRejection(ev);
   });
   subscribeEvent(EventTypes.XHR, (xhrData: XHRData) => {
-    return handleHTTPRequest(xhrData);
+    handleHTTPRequest(xhrData);
   });
   extensionTrigger();
   connectWS();
 };
 
-let socket: Socket;
+let startTime: number = getTimestamp();
 
 function connectWS() {
+  const socket = io("http://localhost:3001");
+  socket.on("report", onReport);
   window.addEventListener("blur", () => {
     socket.close();
   });
   window.addEventListener("focus", () => {
-    if (!socket) {
-      socket = io("http://localhost:3001");
-      socket.on("report", onReport);
-    }
     socket.connect();
   });
 }
 
 function onReport() {
-  const time = Date.now();
-  reportData("/api", { time });
+  const time = getTimestamp();
+  reportData("/api", { time, startTime });
+  startTime = time;
   notifyAfterErrorEvent(time);
 }
 

@@ -2,10 +2,9 @@
 import { bigint, int, mysqlTable } from "drizzle-orm/mysql-core";
 var app = mysqlTable("app", {
   id: int("id").autoincrement().primaryKey(),
-  time: bigint("time", { mode: "number" }).notNull()
+  time: bigint("time", { mode: "number" }).notNull(),
+  startTime: bigint("startTime", { mode: "number" }).notNull()
   // hasError: boolean("has_error"),
-  // behaviorId: int("behavior_id"),
-  // screenId: int("screen_id"),
 });
 
 // src/schema/behavior.ts
@@ -25,18 +24,14 @@ var code = mysqlTable3("code", {
   url: text("url").notNull(),
   columnNumber: int3("columnNumber").notNull(),
   lineNumber: int3("lineNumber").notNull(),
-  time: text("time").notNull(),
-  behaviorId: int3("behavior_id"),
-  screenId: int3("screen_id")
+  time: bigint3("time", { mode: "number" }).notNull()
 });
 var resource = mysqlTable3("resource", {
   id: int3("id").autoincrement().primaryKey(),
   source: text("source").notNull(),
   target: text("target").notNull(),
   url: text("url").notNull(),
-  time: text("time").notNull(),
-  behaviorId: int3("behavior_id"),
-  screenId: int3("screen_id")
+  time: bigint3("time", { mode: "number" }).notNull()
 });
 var request = mysqlTable3("request", {
   id: int3("id").autoincrement().primaryKey(),
@@ -45,11 +40,9 @@ var request = mysqlTable3("request", {
   elapsedTime: bigint3("elapsedTime", { mode: "number" }).notNull(),
   url: text("url").notNull(),
   requestURL: text("requestURL").notNull(),
-  time: text("time").notNull(),
+  time: bigint3("time", { mode: "number" }).notNull(),
   method: text("method").notNull(),
-  requestData: text("requestData").notNull(),
-  behaviorId: int3("behavior_id"),
-  screenId: int3("screen_id")
+  requestData: text("requestData").notNull()
 });
 
 // src/schema/screen.ts

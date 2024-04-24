@@ -1,17 +1,18 @@
 import { resource } from '@imrobot/schema';
 import { Inject, Injectable } from '@nestjs/common';
-import { desc } from 'drizzle-orm';
+import { and, desc, gte, lte } from 'drizzle-orm';
 import { DB, DBType } from '../global/providers/db.provider';
 import { CreateResourceDto } from './model/error.dto';
 
 @Injectable()
 export class ResourceService {
   constructor(@Inject(DB) private db: DBType) {}
-  async findAll() {
-    const result = await this.db.query.resource.findMany({
-      orderBy: [desc(resource.id)],
-    });
-    return result;
+  async findAll(startTime: number, endTime: number) {
+    return await this.db
+      .select()
+      .from(resource)
+      .orderBy(desc(resource.id))
+      .where(and(gte(resource.time, startTime), lte(resource.time, endTime)));
   }
 
   async createOne(dto: CreateResourceDto) {

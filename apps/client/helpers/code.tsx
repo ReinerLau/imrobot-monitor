@@ -1,10 +1,8 @@
-import type { Column } from "element-plus";
+import { dayjs, type Column } from "element-plus";
 import { Fragment } from "vue/jsx-runtime";
 
 export const generateCodeColumns = (): Column[] => {
   const { showSource } = useSource();
-  const { showBehavior } = useBehavior();
-  const { showScreen } = useScreen();
 
   return [
     {
@@ -30,6 +28,9 @@ export const generateCodeColumns = (): Column[] => {
       title: "时间",
       width: 200,
       align: "center",
+      cellRenderer: ({ rowData }) => (
+        <span>{dayjs(rowData.time).format("YYYY-MM-DDTHH:mm:ss")}</span>
+      ),
     },
     {
       dataKey: "lineNumber",
@@ -52,15 +53,6 @@ export const generateCodeColumns = (): Column[] => {
         <Fragment>
           <el-button type="primary" onClick={() => showSource(rowData)}>
             源码
-          </el-button>
-          <el-button type="primary" onClick={() => showBehavior(rowData)}>
-            行为
-          </el-button>
-          <el-button
-            type="primary"
-            onClick={() => showScreen(rowData.screenId)}
-          >
-            录屏
           </el-button>
         </Fragment>
       ),

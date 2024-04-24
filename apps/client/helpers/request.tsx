@@ -1,5 +1,4 @@
-import type { Column } from "element-plus";
-import { Fragment } from "vue/jsx-runtime";
+import { dayjs, type Column } from "element-plus";
 
 export const generateRequestColumns = (): Column[] => {
   const { showBehavior } = useBehavior();
@@ -23,6 +22,9 @@ export const generateRequestColumns = (): Column[] => {
       title: "发起时间",
       width: 150,
       align: "center",
+      cellRenderer: ({ rowData }) => (
+        <span>{dayjs(rowData.time).format("YYYY-MM-DDTHH:mm:ss")}</span>
+      ),
     },
     {
       dataKey: "elapsedTime",
@@ -53,25 +55,6 @@ export const generateRequestColumns = (): Column[] => {
       title: "请求数据",
       width: 150,
       align: "center",
-    },
-    {
-      dataKey: "action",
-      title: "操作",
-      width: 200,
-      align: "center",
-      cellRenderer: ({ rowData }) => (
-        <Fragment>
-          <el-button type="primary" onClick={() => showBehavior(rowData)}>
-            行为
-          </el-button>
-          <el-button
-            type="primary"
-            onClick={() => showScreen(rowData.screenId)}
-          >
-            录屏
-          </el-button>
-        </Fragment>
-      ),
     },
   ];
 };

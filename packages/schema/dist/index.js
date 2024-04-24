@@ -32,10 +32,9 @@ module.exports = __toCommonJS(src_exports);
 var import_mysql_core = require("drizzle-orm/mysql-core");
 var app = (0, import_mysql_core.mysqlTable)("app", {
   id: (0, import_mysql_core.int)("id").autoincrement().primaryKey(),
-  time: (0, import_mysql_core.bigint)("time", { mode: "number" }).notNull()
+  time: (0, import_mysql_core.bigint)("time", { mode: "number" }).notNull(),
+  startTime: (0, import_mysql_core.bigint)("startTime", { mode: "number" }).notNull()
   // hasError: boolean("has_error"),
-  // behaviorId: int("behavior_id"),
-  // screenId: int("screen_id"),
 });
 
 // src/schema/behavior.ts
@@ -55,18 +54,14 @@ var code = (0, import_mysql_core3.mysqlTable)("code", {
   url: (0, import_mysql_core3.text)("url").notNull(),
   columnNumber: (0, import_mysql_core3.int)("columnNumber").notNull(),
   lineNumber: (0, import_mysql_core3.int)("lineNumber").notNull(),
-  time: (0, import_mysql_core3.text)("time").notNull(),
-  behaviorId: (0, import_mysql_core3.int)("behavior_id"),
-  screenId: (0, import_mysql_core3.int)("screen_id")
+  time: (0, import_mysql_core3.bigint)("time", { mode: "number" }).notNull()
 });
 var resource = (0, import_mysql_core3.mysqlTable)("resource", {
   id: (0, import_mysql_core3.int)("id").autoincrement().primaryKey(),
   source: (0, import_mysql_core3.text)("source").notNull(),
   target: (0, import_mysql_core3.text)("target").notNull(),
   url: (0, import_mysql_core3.text)("url").notNull(),
-  time: (0, import_mysql_core3.text)("time").notNull(),
-  behaviorId: (0, import_mysql_core3.int)("behavior_id"),
-  screenId: (0, import_mysql_core3.int)("screen_id")
+  time: (0, import_mysql_core3.bigint)("time", { mode: "number" }).notNull()
 });
 var request = (0, import_mysql_core3.mysqlTable)("request", {
   id: (0, import_mysql_core3.int)("id").autoincrement().primaryKey(),
@@ -75,11 +70,9 @@ var request = (0, import_mysql_core3.mysqlTable)("request", {
   elapsedTime: (0, import_mysql_core3.bigint)("elapsedTime", { mode: "number" }).notNull(),
   url: (0, import_mysql_core3.text)("url").notNull(),
   requestURL: (0, import_mysql_core3.text)("requestURL").notNull(),
-  time: (0, import_mysql_core3.text)("time").notNull(),
+  time: (0, import_mysql_core3.bigint)("time", { mode: "number" }).notNull(),
   method: (0, import_mysql_core3.text)("method").notNull(),
-  requestData: (0, import_mysql_core3.text)("requestData").notNull(),
-  behaviorId: (0, import_mysql_core3.int)("behavior_id"),
-  screenId: (0, import_mysql_core3.int)("screen_id")
+  requestData: (0, import_mysql_core3.text)("requestData").notNull()
 });
 
 // src/schema/screen.ts

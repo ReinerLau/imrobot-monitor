@@ -1,24 +1,17 @@
-export class CreateErrorDto {
-  message: string;
-  url: string;
-  lineNumber?: number;
-  columnNumber?: number;
-}
-
 export class CreateCodeDto {
   message: string;
   url: string;
   fileName: string;
   lineNumber: number;
   columnNumber: number;
-  time: string;
+  time: number;
 }
 
 export class CreateResourceDto {
   source: string;
   url: string;
   target: string;
-  time: string;
+  time: number;
 }
 
 export class CreateRequestDto {
@@ -26,7 +19,7 @@ export class CreateRequestDto {
   response?: string;
   elapsedTime: number;
   url: string;
-  time: string;
+  time: number;
   method: string;
   requestData: string;
   requestURL: string;

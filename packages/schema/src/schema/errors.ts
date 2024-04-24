@@ -7,9 +7,7 @@ export const code = mysqlTable("code", {
   url: text("url").notNull(),
   columnNumber: int("columnNumber").notNull(),
   lineNumber: int("lineNumber").notNull(),
-  time: text("time").notNull(),
-  behaviorId: int("behavior_id"),
-  screenId: int("screen_id"),
+  time: bigint("time", { mode: "number" }).notNull(),
 });
 
 export const resource = mysqlTable("resource", {
@@ -17,9 +15,7 @@ export const resource = mysqlTable("resource", {
   source: text("source").notNull(),
   target: text("target").notNull(),
   url: text("url").notNull(),
-  time: text("time").notNull(),
-  behaviorId: int("behavior_id"),
-  screenId: int("screen_id"),
+  time: bigint("time", { mode: "number" }).notNull(),
 });
 
 export const request = mysqlTable("request", {
@@ -29,9 +25,7 @@ export const request = mysqlTable("request", {
   elapsedTime: bigint("elapsedTime", { mode: "number" }).notNull(),
   url: text("url").notNull(),
   requestURL: text("requestURL").notNull(),
-  time: text("time").notNull(),
+  time: bigint("time", { mode: "number" }).notNull(),
   method: text("method").notNull(),
   requestData: text("requestData").notNull(),
-  behaviorId: int("behavior_id"),
-  screenId: int("screen_id"),
 });

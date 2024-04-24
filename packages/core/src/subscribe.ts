@@ -48,7 +48,7 @@ export const notify = (eventType: EventTypes, ...args: any[]) => {
   global.hasError = true;
   const event = events[eventType];
   if (event) {
-    const errorType = event(...args);
+    event(...args);
   }
 };
 

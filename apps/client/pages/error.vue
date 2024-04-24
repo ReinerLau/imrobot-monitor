@@ -1,20 +1,24 @@
 <script lang="ts" setup>
 import axios from "axios";
-import { type CardInstance } from "element-plus";
 import { generateCodeColumns } from "~/helpers/code";
 import { generateRequestColumns } from "~/helpers/request";
 import { generateResourceColumns } from "~/helpers/resource";
 
 const data = ref<any[]>([]);
 
-const tableContainerRef = ref<CardInstance>();
-
 const codeColumns = generateCodeColumns();
 const resourceColumns = generateResourceColumns();
 const requestColumns = generateRequestColumns();
 
+const route = useRoute();
+
 async function getErrors(type: ErrorTypes) {
-  const res = await axios.get(`http://localhost:3001/error/${type}`);
+  const res = await axios.get(`http://localhost:3001/error/${type}`, {
+    params: {
+      startTime: route.query.startTime,
+      endTime: route.query.endTime,
+    },
+  });
   data.value = res.data;
 }
 
@@ -22,33 +26,10 @@ onMounted(() => {
   getErrors(ErrorTypes.CODE);
 });
 
-const loading = ref(false);
+const router = useRouter();
 
-function handleUploadProgress() {
-  loading.value = true;
-}
-
-function handleUploadSuccess(res: any) {
-  loading.value = false;
-  ElMessage({
-    type: "success",
-    message: "上传成功",
-  });
-}
-function handleUploadError(error: Error) {
-  loading.value = false;
-}
-
-async function exportFile() {
-  const res = await axios.get("http://localhost:3001/data/export", {
-    responseType: "arraybuffer",
-  });
-  const content = new Blob([res.data], { type: res.headers["content-type"] });
-  const url = URL.createObjectURL(content);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "data.zip";
-  link.click();
+function back() {
+  router.back();
 }
 
 enum ErrorTypes {
@@ -67,21 +48,7 @@ watch(activeTab, (val: ErrorTypes) => {
 <template>
   <div class="flex flex-col h-screen p-2">
     <div class="flex justify-end p-1">
-      <el-upload
-        action="http://localhost:3001/data/upload"
-        name="file"
-        accept=".map,.json"
-        :multiple="true"
-        :show-file-list="false"
-        @progress="handleUploadProgress"
-        @success="handleUploadSuccess"
-        @error="handleUploadError"
-      >
-        <el-button class="mr-2" type="primary" :loading="loading"
-          >上传</el-button
-        >
-      </el-upload>
-      <el-button type="primary" @click="exportFile">导出</el-button>
+      <el-button type="primary" @click="back">返回</el-button>
     </div>
     <el-tabs v-model="activeTab">
       <el-tab-pane label="运行错误" :name="ErrorTypes.CODE"></el-tab-pane>
@@ -91,7 +58,7 @@ watch(activeTab, (val: ErrorTypes) => {
       ></el-tab-pane>
       <el-tab-pane label="请求错误" :name="ErrorTypes.REQUEST"></el-tab-pane>
     </el-tabs>
-    <div ref="tableContainerRef" class="flex-1 shadow-2xl rounded p-5">
+    <div class="flex-1 shadow-2xl rounded p-5">
       <el-auto-resizer>
         <template #default="{ height, width }">
           <el-table-v2
@@ -122,7 +89,5 @@ watch(activeTab, (val: ErrorTypes) => {
       </el-auto-resizer>
     </div>
     <SourceDialog />
-    <BehaviorDialog />
-    <ScreenDialog />
   </div>
 </template>
