@@ -18,7 +18,7 @@ export const useScreen = () => {
         );
       });
     } else {
-      ElMessage.warning("没有关联");
+      ElMessage.warning("无数据");
     }
   };
 

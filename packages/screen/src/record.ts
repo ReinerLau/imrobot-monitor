@@ -16,10 +16,8 @@ export const install = () => {
 };
 
 export const afterEvent = (time: number) => {
-  if (events.length > 0) {
-    const data = { time, data: [...events] };
-    reportData("/screen", data);
-    events.length = 0;
-    record.takeFullSnapshot(true);
-  }
+  const data = { time, data: [...events] };
+  reportData("/screen", data);
+  events.length = 0;
+  record.takeFullSnapshot(true);
 };
