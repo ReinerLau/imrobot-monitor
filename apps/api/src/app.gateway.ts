@@ -8,6 +8,7 @@ import { CronJob } from 'cron';
 import { Socket } from 'socket.io';
 
 let connectedClient: Socket;
+let cronJob: CronJob;
 
 @WebSocketGateway({
   cors: {
@@ -15,12 +16,16 @@ let connectedClient: Socket;
   },
 })
 export class AppGateway implements OnGatewayConnection, OnGatewayDisconnect {
-  constructor(private schedulerRegistry: SchedulerRegistry) {
-    const job = new CronJob('*/10 * * * * *', this.create);
-    this.schedulerRegistry.addCronJob('create', job);
-  }
+  constructor(private schedulerRegistry: SchedulerRegistry) {}
 
   handleConnection(client: Socket) {
+    if (!cronJob) {
+      cronJob = new CronJob(
+        client.handshake.query.cronTime as string,
+        this.create,
+      );
+      this.schedulerRegistry.addCronJob('create', cronJob);
+    }
     connectedClient = client;
     const job = this.schedulerRegistry.getCronJob('create');
     job.start();

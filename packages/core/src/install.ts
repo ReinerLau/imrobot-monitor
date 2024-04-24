@@ -17,9 +17,14 @@ import {
   subscribeAfterErrorEvent,
   subscribeEvent,
 } from "./subscribe";
-import { type ResourceErrorTarget, type Use, type XHRData } from "./types";
+import type {
+  InstallOptions,
+  ResourceErrorTarget,
+  Use,
+  XHRData,
+} from "./types";
 
-export const install = (app: App): void => {
+export const install = (app: App, options: InstallOptions): void => {
   subscribeEvent(
     EventTypes.VUE,
     (err: Error) => {
@@ -42,13 +47,17 @@ export const install = (app: App): void => {
     handleHTTPRequest(xhrData);
   });
   extensionTrigger();
-  connectWS();
+  connectWS(options.cronTime);
 };
 
 let startTime: number = getTimestamp();
 
-function connectWS() {
-  const socket = io("http://localhost:3001");
+function connectWS(cronTime?: string) {
+  const socket = io("http://localhost:3001", {
+    query: {
+      cronTime,
+    },
+  });
   socket.on("report", onReport);
   window.addEventListener("blur", () => {
     socket.close();

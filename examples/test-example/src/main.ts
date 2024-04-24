@@ -11,4 +11,4 @@ monitor.use(behavior, {
 
 monitor.use(screen)
 
-createApp(App).use(monitor).use(router).mount('#app')
+createApp(App).use(monitor, { cronTime: '*/10 * * * * *' }).use(router).mount('#app')

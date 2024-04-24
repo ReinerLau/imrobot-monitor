@@ -1,6 +1,5 @@
 import { Extension } from "@imrobot/shared";
 import { Plugin } from "vue";
-import { Modes } from "../shared";
 
 export interface ResourceErrorTarget {
   src?: string;
@@ -34,5 +33,5 @@ export type Monitor = {
 export type AfterErrorEvent = (...args: any[]) => void;
 
 export interface InstallOptions {
-  mode?: Modes;
+  cronTime: string;
 }
