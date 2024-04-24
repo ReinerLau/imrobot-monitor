@@ -44,7 +44,7 @@ export class DataService {
   }
 
   async appendTableData(archive: archiver.Archiver) {
-    const tables = ['code', 'resource', 'request', 'behavior', 'screen'];
+    const tables = ['app', 'code', 'resource', 'request', 'behavior', 'screen'];
     const promiseList = tables.map((table) => {
       return this.db.query[table].findMany({
         orderBy: [desc(schema[table].id)],
