@@ -6,6 +6,8 @@ const data = ref<any[]>([]);
 
 const columns = getColumns();
 
+const { showTime } = useTime();
+
 async function getList() {
   const res = await axios.get(`http://localhost:3001/api`);
   data.value = res.data;
@@ -21,14 +23,14 @@ function handleUploadProgress() {
   loading.value = true;
 }
 
-function handleUploadSuccess(res: any) {
+function handleUploadSuccess() {
   loading.value = false;
   ElMessage({
     type: "success",
     message: "上传成功",
   });
 }
-function handleUploadError(error: Error) {
+function handleUploadError() {
   loading.value = false;
 }
 
@@ -47,22 +49,32 @@ async function exportFile() {
 
 <template>
   <div class="flex flex-col h-screen p-2">
-    <div class="flex justify-end p-1">
-      <el-upload
-        action="http://localhost:3001/data/upload"
-        name="file"
-        accept=".map,.json"
-        :multiple="true"
-        :show-file-list="false"
-        @progress="handleUploadProgress"
-        @success="handleUploadSuccess"
-        @error="handleUploadError"
-      >
-        <el-button class="mr-2" type="primary" :loading="loading"
-          >上传</el-button
+    <div class="flex justify-between p-1">
+      <div>
+        <el-button type="primary" @click="() => showTime('report')"
+          >设置上报时间</el-button
         >
-      </el-upload>
-      <el-button type="primary" @click="exportFile">导出</el-button>
+        <el-button type="primary" @click="() => showTime('clear')"
+          >设置清空时间</el-button
+        >
+      </div>
+      <div class="flex">
+        <el-upload
+          action="http://localhost:3001/data/upload"
+          name="file"
+          accept=".map,.json"
+          :multiple="true"
+          :show-file-list="false"
+          @progress="handleUploadProgress"
+          @success="handleUploadSuccess"
+          @error="handleUploadError"
+        >
+          <el-button class="mr-2" type="primary" :loading="loading"
+            >上传</el-button
+          >
+        </el-upload>
+        <el-button type="primary" @click="exportFile">导出</el-button>
+      </div>
     </div>
     <div class="flex-1 shadow-2xl rounded p-5">
       <el-auto-resizer>
@@ -79,5 +91,6 @@ async function exportFile() {
     </div>
     <BehaviorDialog />
     <ScreenDialog />
+    <TimeDialog />
   </div>
 </template>

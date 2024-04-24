@@ -4,11 +4,7 @@ import {
   OnGatewayDisconnect,
   WebSocketGateway,
 } from '@nestjs/websockets';
-import { CronJob } from 'cron';
 import { Socket } from 'socket.io';
-
-let connectedClient: Socket;
-let cronJob: CronJob;
 
 @WebSocketGateway({
   cors: {
@@ -18,25 +14,16 @@ let cronJob: CronJob;
 export class AppGateway implements OnGatewayConnection, OnGatewayDisconnect {
   constructor(private schedulerRegistry: SchedulerRegistry) {}
 
+  public connectedClient: Socket;
+
   handleConnection(client: Socket) {
-    if (!cronJob) {
-      cronJob = new CronJob(
-        client.handshake.query.cronTime as string,
-        this.create,
-      );
-      this.schedulerRegistry.addCronJob('create', cronJob);
-    }
-    connectedClient = client;
-    const job = this.schedulerRegistry.getCronJob('create');
+    this.connectedClient = client;
+    const job = this.schedulerRegistry.getCronJob('report');
     job.start();
   }
 
   handleDisconnect() {
-    const job = this.schedulerRegistry.getCronJob('create');
+    const job = this.schedulerRegistry.getCronJob('report');
     job.stop();
-  }
-
-  async create() {
-    connectedClient.emit('report');
   }
 }
