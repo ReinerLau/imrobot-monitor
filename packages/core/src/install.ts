@@ -2,6 +2,7 @@ import {
   EventTypes,
   extensionInstallEvent,
   getTimestamp,
+  global,
   reportData,
 } from "@imrobot/shared";
 import { io } from "socket.io-client";
@@ -17,9 +18,15 @@ import {
   subscribeAfterErrorEvent,
   subscribeEvent,
 } from "./subscribe";
-import type { ResourceErrorTarget, Use, XHRData } from "./types";
+import type {
+  InstallOptions,
+  ResourceErrorTarget,
+  Use,
+  XHRData,
+} from "./types";
 
-export const install = (app: App): void => {
+export const install = (app: App, options: InstallOptions = {}): void => {
+  setupOptions(options);
   subscribeEvent(
     EventTypes.VUE,
     (err: Error) => {
@@ -48,7 +55,7 @@ export const install = (app: App): void => {
 let startTime: number = getTimestamp();
 
 function connectWS() {
-  const socket = io("http://localhost:3001");
+  const socket = io(global.baseURL);
   socket.on("report", onReport);
   window.addEventListener("blur", () => {
     socket.close();
@@ -56,6 +63,10 @@ function connectWS() {
   window.addEventListener("focus", () => {
     socket.connect();
   });
+}
+
+function setupOptions(options: InstallOptions) {
+  global.baseURL = options.baseURL || global.baseURL;
 }
 
 function onReport() {

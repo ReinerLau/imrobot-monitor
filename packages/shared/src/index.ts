@@ -1,5 +1,5 @@
 export const global = {
-  hasError: false,
+  baseURL: "http://localhost:3001",
 };
 
 export enum BEHAVIORTYPES {
@@ -44,7 +44,10 @@ export function reportData(url: string, data: Record<string, any>) {
   const headers = {
     type: "application/json",
   };
-  return navigator.sendBeacon(url, new Blob([JSON.stringify(data)], headers));
+  return navigator.sendBeacon(
+    `${global.baseURL}${url}`,
+    new Blob([JSON.stringify(data)], headers)
+  );
 }
 
 export enum ErrorTypes {

@@ -1,4 +1,4 @@
-import { EventTypes, global } from "@imrobot/shared";
+import { EventTypes } from "@imrobot/shared";
 import { App } from "vue";
 import { xhrReplace } from "./replace";
 import { AfterErrorEvent } from "./types";
@@ -45,7 +45,6 @@ export const subscribeEvent = (
  * @param eventType 事件类型
  */
 export const notify = (eventType: EventTypes, ...args: any[]) => {
-  global.hasError = true;
   const event = events[eventType];
   if (event) {
     event(...args);

@@ -31,3 +31,7 @@ export type Monitor = {
 } & Plugin;
 
 export type AfterErrorEvent = (...args: any[]) => void;
+
+export interface InstallOptions {
+  baseURL?: string;
+}
