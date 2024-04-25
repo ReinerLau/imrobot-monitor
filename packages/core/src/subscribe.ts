@@ -1,4 +1,4 @@
-import { EventTypes } from "@imrobot/shared";
+import { EventTypes, extensionInstallEvent } from "@imrobot/shared";
 import { App } from "vue";
 import { xhrReplace } from "./replace";
 import { AfterErrorEvent } from "./types";
@@ -92,3 +92,5 @@ export const notifyAfterErrorEvent = (time: number) => {
     event(time);
   });
 };
+
+export const extensionInstallEvents: extensionInstallEvent[] = [];

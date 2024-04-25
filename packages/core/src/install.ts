@@ -1,10 +1,4 @@
-import {
-  EventTypes,
-  extensionInstallEvent,
-  getTimestamp,
-  global,
-  reportData,
-} from "@imrobot/shared";
+import { EventTypes, getTimestamp, global, reportData } from "@imrobot/shared";
 import { io } from "socket.io-client";
 import type { App } from "vue";
 import {
@@ -14,16 +8,11 @@ import {
   handleUnhandleRejection,
 } from "./handleEvents";
 import {
+  extensionInstallEvents,
   notifyAfterErrorEvent,
-  subscribeAfterErrorEvent,
   subscribeEvent,
 } from "./subscribe";
-import type {
-  InstallOptions,
-  ResourceErrorTarget,
-  Use,
-  XHRData,
-} from "./types";
+import type { InstallOptions, ResourceErrorTarget, XHRData } from "./types";
 
 export const install = (app: App, options: InstallOptions = {}): void => {
   setupOptions(options);
@@ -76,15 +65,8 @@ function onReport() {
   notifyAfterErrorEvent(time);
 }
 
-export const extensionInstallEvents: extensionInstallEvent[] = [];
-
-export const use: Use = (extension, options) => {
-  extensionInstallEvents.push(() => extension.install(options));
-  extension.afterEvent && subscribeAfterErrorEvent(extension.afterEvent);
-};
-
-const extensionTrigger = () => {
+function extensionTrigger() {
   extensionInstallEvents.forEach((event) => {
     event();
   });
-};
+}
