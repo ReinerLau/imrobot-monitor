@@ -15,19 +15,17 @@ services:
     restart: always
     ports:
       - 6381:6379
-  # client:
-  #   build: ./apps/client
-  #   restart: always
-  #   ports:
-  #     - 3000:3000
-  # serve:
-  #   build: ./
-  #   restart: always
-  #   ports:
-  #     - 3001:3001
-  #   depends_on:
-  #     - mysql
-  #     - redis
-  #   environment:
-  #     - DATABASE_URL=mysql://root:password@host.docker.internal:3308/imrobot_monitor
+  client:
+    image: client
+    restart: always
+    ports:
+      - 3000:3000
+  serve:
+    image: serve
+    restart: always
+    ports:
+      - 3001:3001
+    depends_on:
+      - mysql
+      - redis
   

@@ -11,7 +11,7 @@
     "prod:serve": "pnpm -F api build && pnpm -F api start:prod",
     "prod:client": "pnpm -F client build && pnpm -F client preview",
     "prod:test": "pnpm -F test-example build-only && pnpm -F test-example preview",
-    "deploy:serve": "pnpm db:init && pnpm -F api start:prod",
+    "docker:build": "pnpm -F api -F client docker:build",
     "commit": "cz",
     "prepare": "husky",
     "changeset": "changeset"
