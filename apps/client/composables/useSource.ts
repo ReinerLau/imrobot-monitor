@@ -3,6 +3,7 @@ import hljs from "highlight.js";
 import markdownit from "markdown-it";
 import markdownitHighlight from "markdown-it-highlightjs";
 import { SourceMapConsumer } from "source-map-js";
+import { baseUrl } from "~/helpers";
 import type { SourceInfo } from "~/types";
 
 interface Data {
@@ -106,7 +107,7 @@ function isDev() {
 
 export const useSource = () => {
   async function showSource(rowData: Data) {
-    const res = await axios.get("http://localhost:3001/error/getMap", {
+    const res = await axios.get(`${baseUrl.value}/error/getMap`, {
       params: {
         fileName: handleFileName(rowData.fileName),
       },

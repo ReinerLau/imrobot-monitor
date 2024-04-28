@@ -1,12 +1,13 @@
 import { playScreen } from "@imrobot/screen";
 import axios from "axios";
+import { baseUrl } from "~/helpers";
 
 const dialogVisible = ref(false);
 const playerRef = ref<HTMLElement>();
 
 export const useScreen = () => {
   const showScreen = async (time: number) => {
-    const res = await axios.get(`http://localhost:3001/screen/${time}`);
+    const res = await axios.get(`${baseUrl.value}/screen/${time}`);
     if (res.data?.data) {
       dialogVisible.value = true;
       nextTick(() => {

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import axios from "axios";
-import { getColumns } from "../helpers/index";
+import { baseUrl, getColumns } from "../helpers/index";
 
 const data = ref<any[]>([]);
 
@@ -9,11 +9,12 @@ const columns = getColumns();
 const { showTime } = useTime();
 
 async function getList() {
-  const res = await axios.get(`http://localhost:3001/api`);
+  const res = await axios.get(`${baseUrl.value}/api`);
   data.value = res.data;
 }
 
 onMounted(() => {
+  baseUrl.value = localStorage.getItem("base_url") || "http://localhost:3001";
   getList();
 });
 
@@ -35,7 +36,7 @@ function handleUploadError() {
 }
 
 async function exportFile() {
-  const res = await axios.get("http://localhost:3001/data/export", {
+  const res = await axios.get(`${baseUrl.value}/data/export`, {
     responseType: "arraybuffer",
   });
   const content = new Blob([res.data], { type: res.headers["content-type"] });
@@ -45,12 +46,21 @@ async function exportFile() {
   link.download = "data.zip";
   link.click();
 }
+
+function changeBaseUrl() {
+  localStorage.setItem("base_url", baseUrl.value);
+}
 </script>
 
 <template>
   <div class="flex flex-col h-screen p-2">
     <div class="flex justify-between p-1">
-      <div>
+      <div class="flex">
+        <el-input
+          class="mr-3"
+          v-model="baseUrl"
+          @input="changeBaseUrl"
+        ></el-input>
         <el-button type="primary" @click="() => showTime('report')"
           >设置上报时间</el-button
         >

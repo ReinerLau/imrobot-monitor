@@ -1,4 +1,5 @@
 import axios from "axios";
+import { baseUrl } from "~/helpers";
 
 const dialogVisible = ref(false);
 const times = ref<string[]>([]);
@@ -16,22 +17,22 @@ export const useTime = () => {
   };
 
   const getReportTime = async () => {
-    let res = await axios.get("http://localhost:3001/api/getReportTime");
+    let res = await axios.get(`${baseUrl.value}/api/getReportTime`);
     times.value = res.data;
   };
 
   const getClearTime = async () => {
-    let res = await axios.get("http://localhost:3001/api/getClearTime");
+    let res = await axios.get(`${baseUrl.value}/api/getClearTime`);
     times.value = res.data;
   };
 
   const handleSave = () => {
     if (currentType.value === "report") {
-      axios.post("http://localhost:3001/api/setReportTime", {
+      axios.post(`${baseUrl.value}/api/setReportTime`, {
         time: times.value.join(" "),
       });
     } else if ((currentType.value = "clear")) {
-      axios.post("http://localhost:3001/api/setClearTime", {
+      axios.post(`${baseUrl.value}/api/setClearTime`, {
         time: times.value.join(" "),
       });
     }
