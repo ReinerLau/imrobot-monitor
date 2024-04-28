@@ -7,11 +7,19 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "init-db":"drizzle-kit generate:sqlite && tsx database/migrate.ts"
   },
   "dependencies": {
+    "better-sqlite3": "^9.6.0",
+    "drizzle-orm": "^0.30.7",
     "nuxt": "^3.11.2",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.10",
+    "drizzle-kit": "^0.20.17",
+    "tsx": "^4.7.3"
   }
 }
