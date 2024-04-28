@@ -70,7 +70,7 @@ function changeBaseUrl() {
       </div>
       <div class="flex">
         <el-upload
-          action="http://localhost:3001/data/upload"
+          :action="`${baseUrl}/data/upload`"
           name="file"
           accept=".map,.json"
           :multiple="true"
