@@ -5,4 +5,4 @@ import { migrate } from "drizzle-orm/better-sqlite3/migrator";
 const sqlite = new Database("sqlite.db");
 const db = drizzle(sqlite);
 
-migrate(db, { migrationsFolder: "./database" });
+migrate(db, { migrationsFolder: "./server/db/migrations" });
