@@ -50,6 +50,15 @@ async function exportFile() {
 function changeBaseUrl() {
   localStorage.setItem("base_url", baseUrl.value);
 }
+
+async function clearData() {
+  await axios.delete(`${baseUrl.value}/api`);
+  getList();
+  ElMessage({
+    type: "success",
+    message: "删除成功",
+  });
+}
 </script>
 
 <template>
@@ -67,6 +76,7 @@ function changeBaseUrl() {
         <el-button type="primary" @click="() => showTime('clear')"
           >设置清空时间</el-button
         >
+        <el-button type="primary" @click="clearData">清空数据</el-button>
       </div>
       <div class="flex">
         <el-upload
