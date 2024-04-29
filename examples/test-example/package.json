@@ -15,6 +15,7 @@
   "dependencies": {
     "@imrobot/monitor": "workspace:^",
     "axios": "^1.6.8",
+    "element-plus": "^2.6.1",
     "vue": "^3.4.15",
     "vue-router": "^4.3.0"
   },
