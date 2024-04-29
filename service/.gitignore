@@ -25,4 +25,4 @@ logs
 
 database/meta
 database/*.sql
-database/*.db
+sqlite.db
