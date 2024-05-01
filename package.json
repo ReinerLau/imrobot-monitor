@@ -16,7 +16,8 @@
     "prepare": "husky",
     "changeset": "changeset",
     "type:check": "tsc --watch",
-    "package:build": "pnpm -F '@imrobot/*' build"
+    "package:build": "pnpm -F '@imrobot/*' build",
+    "package:publish": "pnpm -F '@imrobot/*' publish"
   },
   "keywords": [],
   "author": "",
