@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/index.ts",
+  "publishConfig": {
+    "main": "dist/index.mjs",
+    "types": "dist/index.d.mts"
+  },
   "scripts": {
     "build": "tsup"
   },
