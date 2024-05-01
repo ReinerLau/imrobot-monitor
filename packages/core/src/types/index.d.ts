@@ -17,7 +17,7 @@ export interface XHRData {
   requestData?: string;
   response?: string;
   status?: number;
-  sendTime: string;
+  sendTime: number;
   elapsedTime?: number;
 }
 

@@ -20,14 +20,6 @@ export interface Extension {
   afterEvent?: Function;
 }
 
-export enum EventTypes {
-  VUE = "vue",
-  ERROR = "error",
-  RESOURCE = "resource",
-  UNHANDLEDREJECTION = "unhandledrejection",
-  XHR = "xhr",
-}
-
 export enum ErrorEventTypes {
   VUE = "vue_error",
   ERROR = "error",

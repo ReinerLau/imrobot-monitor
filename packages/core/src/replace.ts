@@ -1,4 +1,5 @@
-import { EventTypes, getTimestamp } from "@imrobot/monitor-helpers";
+import { getTimestamp } from "@imrobot/monitor-helpers";
+import { EventTypes } from "./helpers";
 import { notify } from "./subscribe";
 import { XHRInstance } from "./types";
 
