@@ -39,12 +39,6 @@ export const generateCodeColumns = (): Column[] => {
       align: "center",
     },
     {
-      dataKey: "columnNumber",
-      title: "列",
-      width: 200,
-      align: "center",
-    },
-    {
       dataKey: "action",
       title: "操作",
       width: 200,

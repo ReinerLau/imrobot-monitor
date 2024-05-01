@@ -1,19 +1,30 @@
 import { getTimestamp, reportData } from "@imrobot/monitor-helpers";
 import errorStackParser from "error-stack-parser";
+import { parseSourceMap } from "./helpers";
 import type { ResourceErrorTarget, XHRData } from "./types";
 import { getErrorUid, hasHash } from "./utlis";
 
-export const handleError = (err: Error) => {
+export const handleError = async (err: Error) => {
   const { fileName, columnNumber, lineNumber } = errorStackParser.parse(err)[0];
 
+  const res = await fetch(`${fileName}.map`);
+  const sourceMap = await res.json();
+  const data = await parseSourceMap({
+    sourceMap,
+    lineNumber: lineNumber!,
+    columnNumber: columnNumber!,
+  });
+
   const errorData = {
-    fileName,
+    fileName: data.file,
     url: location.href,
     message: err.message,
-    lineNumber,
+    lineNumber: data.line,
     columnNumber,
     time: getTimestamp(),
+    code: data.code,
   };
+
   const hash = getErrorUid(
     `${errorData.message}-${errorData.url}-${errorData.lineNumber}-${errorData.columnNumber}`
   );

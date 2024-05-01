@@ -5,6 +5,7 @@ export class CreateCodeDto {
   lineNumber: number;
   columnNumber: number;
   time: number;
+  code: string;
 }
 
 export class CreateResourceDto {
