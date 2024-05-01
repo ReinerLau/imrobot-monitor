@@ -1,9 +1,4 @@
-import {
-  ErrorEventTypes,
-  ErrorTypes,
-  getTimestamp,
-  reportData,
-} from "@imrobot/monitor-helpers";
+import { ErrorTypes, getTimestamp, reportData } from "@imrobot/monitor-helpers";
 import errorStackParser from "error-stack-parser";
 import type { ResourceErrorTarget, XHRData } from "./types";
 import { getErrorUid, hasHash } from "./utlis";
@@ -12,7 +7,6 @@ export const handleError = (err: Error) => {
   const { fileName, columnNumber, lineNumber } = errorStackParser.parse(err)[0];
 
   const errorData = {
-    type: ErrorEventTypes.ERROR,
     fileName,
     url: location.href,
     message: err.message,
@@ -21,7 +15,7 @@ export const handleError = (err: Error) => {
     time: getTimestamp(),
   };
   const hash = getErrorUid(
-    `${errorData.type}-${errorData.message}-${errorData.url}-${errorData.columnNumber}`
+    `${errorData.message}-${errorData.url}-${errorData.lineNumber}-${errorData.columnNumber}`
   );
 
   if (!hasHash(hash)) {
@@ -41,13 +35,12 @@ export const handleResourceError = ({
 }: ResourceErrorTarget) => {
   const errorData = {
     url: location.href,
-    type: ErrorEventTypes.RESOURCE,
     source: src || href,
     target: localName,
     time: getTimestamp(),
   };
   const hash = getErrorUid(
-    `${errorData.type}-${errorData.source}-${errorData.url}-${errorData.target}`
+    `${errorData.source}-${errorData.url}-${errorData.target}`
   );
 
   if (!hasHash(hash)) {
@@ -66,7 +59,6 @@ export const handleUnhandleRejection = (ev: PromiseRejectionEvent) => {
     ev.reason
   )[0];
   const errorData = {
-    type: ErrorEventTypes.UNHANDLEDREJECTION,
     fileName,
     url: location.href,
     message: ev.reason.message,
@@ -75,7 +67,7 @@ export const handleUnhandleRejection = (ev: PromiseRejectionEvent) => {
     time: getTimestamp(),
   };
   const hash = getErrorUid(
-    `${errorData.type}-${errorData.message}-${errorData.url}-${errorData.columnNumber}`
+    `${errorData.message}-${errorData.url}-${errorData.columnNumber}`
   );
 
   if (!hasHash(hash)) {
@@ -93,7 +85,6 @@ export const handleHTTPRequest = (data: XHRData) => {
     data;
   if (status === 0 || status! >= 400) {
     const errorData = {
-      type: ErrorEventTypes.XHR,
       url: location.href,
       requestURL: url,
       time: sendTime,
@@ -104,7 +95,7 @@ export const handleHTTPRequest = (data: XHRData) => {
       requestData,
     };
     const hash = getErrorUid(
-      `${errorData.type}-${errorData.response}-${errorData.method}-${errorData.status}`
+      `${errorData.response}-${errorData.method}-${errorData.status}`
     );
 
     if (!hasHash(hash)) {
