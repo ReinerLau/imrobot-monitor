@@ -2,13 +2,6 @@ export const global = {
   baseURL: "http://localhost:3001",
 };
 
-export enum BEHAVIORTYPES {
-  CLICK = "click",
-  ERROR = "error",
-  XHR = "xhr",
-  NAVIGATION = "navigation",
-}
-
 export const getTimestamp = () => {
   return Date.now();
 };

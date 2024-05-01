@@ -1,12 +1,12 @@
-import {
-  BEHAVIORTYPES,
-  Extension,
-  getTimestamp,
-  reportData,
-} from "@imrobot/monitor-helpers";
+import { Extension, getTimestamp, reportData } from "@imrobot/monitor-helpers";
 import { Behavior, BehaviorOptions } from "../types";
 import { onNavigation } from "./navigation";
-import { behaviorStack, pushBehaviorStack, setMaxStackNum } from "./shared";
+import {
+  behaviorStack,
+  BEHAVIORTYPES,
+  pushBehaviorStack,
+  setMaxStackNum,
+} from "./shared";
 
 const onClick = () => {
   document.addEventListener("click", (ev: any) => {

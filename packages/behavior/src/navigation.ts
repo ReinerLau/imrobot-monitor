@@ -1,6 +1,6 @@
-import { BEHAVIORTYPES, getTimestamp } from "@imrobot/monitor-helpers";
+import { getTimestamp } from "@imrobot/monitor-helpers";
 import { Behavior } from "../types";
-import { pushBehaviorStack } from "./shared";
+import { BEHAVIORTYPES, pushBehaviorStack } from "./shared";
 
 /**
  * 获取当前 URL
