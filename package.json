@@ -5,10 +5,10 @@
   "scripts": {
     "docker:start": "docker-compose -f docker-compose-dev.yaml up -d ",
     "db:init": " pnpm -F api db:init",
-    "dev:serve": "pnpm -F api run start:dev",
+    "dev:server": "pnpm -F api run start:dev",
     "dev:client": "pnpm -F client dev",
     "dev:test": "pnpm -F test-example dev",
-    "prod:serve": "pnpm -F api build && pnpm -F api start:prod",
+    "prod:server": "pnpm -F api build && pnpm -F api start:prod",
     "prod:client": "pnpm -F client build && pnpm -F client preview",
     "prod:test": "pnpm -F test-example build-only && pnpm -F test-example preview",
     "docker:build": "pnpm -F api -F client docker:build",
