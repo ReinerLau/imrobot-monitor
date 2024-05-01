@@ -15,5 +15,8 @@
   "license": "ISC",
   "dependencies": {
     "@imrobot/monitor-helpers": "workspace:^"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
