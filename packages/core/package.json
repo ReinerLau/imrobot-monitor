@@ -24,8 +24,6 @@
     "vue": "^3.4.15"
   },
   "dependencies": {
-    "@imrobot/monitor-behavior": "workspace:^",
-    "@imrobot/monitor-screen": "workspace:^",
     "@imrobot/monitor-helpers": "workspace:^",
     "error-stack-parser": "^2.1.4",
     "md5": "^2.3.0",

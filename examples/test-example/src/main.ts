@@ -1,4 +1,6 @@
-import monitor, { behavior, screen } from '@imrobot/monitor'
+import monitor from '@imrobot/monitor'
+import behavior from '@imrobot/monitor-behavior'
+import screen from '@imrobot/monitor-screen'
 
 import { createApp } from 'vue'
 import App from './App.vue'

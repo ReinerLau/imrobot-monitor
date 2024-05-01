@@ -244,6 +244,12 @@ importers:
       '@imrobot/monitor':
         specifier: workspace:^
         version: link:../../packages/core
+      '@imrobot/monitor-behavior':
+        specifier: workspace:^
+        version: link:../../packages/behavior
+      '@imrobot/monitor-screen':
+        specifier: workspace:^
+        version: link:../../packages/screen
       axios:
         specifier: ^1.6.8
         version: 1.6.8
@@ -308,15 +314,9 @@ importers:
 
   packages/core:
     dependencies:
-      '@imrobot/monitor-behavior':
-        specifier: workspace:^
-        version: link:../behavior
       '@imrobot/monitor-helpers':
         specifier: workspace:^
         version: link:../helpers
-      '@imrobot/monitor-screen':
-        specifier: workspace:^
-        version: link:../screen
       error-stack-parser:
         specifier: ^2.1.4
         version: 2.1.4
