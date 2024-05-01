@@ -308,7 +308,7 @@ importers:
 
   packages/core:
     dependencies:
-      '@imrobot/behavior':
+      '@imrobot/monitor-behavior':
         specifier: workspace:^
         version: link:../behavior
       '@imrobot/monitor-helpers':
