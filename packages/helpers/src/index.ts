@@ -37,9 +37,3 @@ export function reportData(url: string, data: Record<string, any>) {
     });
   }
 }
-
-export enum ErrorTypes {
-  CODE = "code",
-  RESOURCE = "resource",
-  REQUEST = "request",
-}

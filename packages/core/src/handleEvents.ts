@@ -1,4 +1,4 @@
-import { ErrorTypes, getTimestamp, reportData } from "@imrobot/monitor-helpers";
+import { getTimestamp, reportData } from "@imrobot/monitor-helpers";
 import errorStackParser from "error-stack-parser";
 import type { ResourceErrorTarget, XHRData } from "./types";
 import { getErrorUid, hasHash } from "./utlis";
@@ -20,7 +20,6 @@ export const handleError = (err: Error) => {
 
   if (!hasHash(hash)) {
     reportData("/error/code", errorData);
-    return ErrorTypes.CODE;
   }
 };
 
@@ -45,7 +44,6 @@ export const handleResourceError = ({
 
   if (!hasHash(hash)) {
     reportData("/error/resource", errorData);
-    return ErrorTypes.RESOURCE;
   }
 };
 
@@ -72,7 +70,6 @@ export const handleUnhandleRejection = (ev: PromiseRejectionEvent) => {
 
   if (!hasHash(hash)) {
     reportData("/error/code", errorData);
-    return ErrorTypes.CODE;
   }
 };
 
@@ -100,7 +97,6 @@ export const handleHTTPRequest = (data: XHRData) => {
 
     if (!hasHash(hash)) {
       reportData("/error/request", errorData);
-      return ErrorTypes.REQUEST;
     }
   }
 };
