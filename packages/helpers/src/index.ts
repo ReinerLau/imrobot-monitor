@@ -13,10 +13,6 @@ export interface Extension {
   afterEvent?: Function;
 }
 
-export enum NormalEventTypes {
-  XHR = "xhr_normal",
-}
-
 export function reportData(url: string, data: Record<string, any>) {
   const headers = {
     type: "application/json",
