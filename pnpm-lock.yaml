@@ -171,7 +171,7 @@ importers:
 
   apps/client:
     dependencies:
-      '@imrobot/screen':
+      '@imrobot/monitor-screen':
         specifier: workspace:^
         version: link:../../packages/screen
       axios:
@@ -314,7 +314,7 @@ importers:
       '@imrobot/monitor-helpers':
         specifier: workspace:^
         version: link:../helpers
-      '@imrobot/screen':
+      '@imrobot/monitor-screen':
         specifier: workspace:^
         version: link:../screen
       error-stack-parser:

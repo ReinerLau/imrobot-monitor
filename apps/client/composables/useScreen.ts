@@ -1,4 +1,4 @@
-import { playScreen } from "@imrobot/screen";
+import { playScreen } from "@imrobot/monitor-screen";
 import axios from "axios";
 import { baseUrl } from "~/helpers";
 

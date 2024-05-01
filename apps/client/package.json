@@ -11,7 +11,7 @@
     "docker:build": "pnpm build && docker build -t client ."
   },
   "dependencies": {
-    "@imrobot/screen": "workspace:^",
+    "@imrobot/monitor-screen": "workspace:^",
     "axios": "^1.6.8",
     "highlight.js": "^11.9.0",
     "markdown-it": "^14.1.0",
