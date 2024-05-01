@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@imrobot/shared": "workspace:^"
+    "@imrobot/monitor-helpers": "workspace:^"
   }
 }

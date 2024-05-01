@@ -1,4 +1,9 @@
-import { EventTypes, getTimestamp, global, reportData } from "@imrobot/shared";
+import {
+  EventTypes,
+  getTimestamp,
+  global,
+  reportData,
+} from "@imrobot/monitor-helpers";
 import { io } from "socket.io-client";
 import type { App } from "vue";
 import {

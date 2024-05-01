@@ -302,21 +302,21 @@ importers:
 
   packages/behavior:
     dependencies:
-      '@imrobot/shared':
+      '@imrobot/monitor-helpers':
         specifier: workspace:^
-        version: link:../shared
+        version: link:../helpers
 
   packages/core:
     dependencies:
       '@imrobot/behavior':
         specifier: workspace:^
         version: link:../behavior
+      '@imrobot/monitor-helpers':
+        specifier: workspace:^
+        version: link:../helpers
       '@imrobot/screen':
         specifier: workspace:^
         version: link:../screen
-      '@imrobot/shared':
-        specifier: workspace:^
-        version: link:../shared
       error-stack-parser:
         specifier: ^2.1.4
         version: 2.1.4
@@ -337,35 +337,33 @@ importers:
         specifier: ^3.4.15
         version: 3.4.21(typescript@5.3.3)
 
-  packages/db:
-    devDependencies:
-      drizzle-kit:
-        specifier: ^0.20.14
-        version: 0.20.14
-
-  packages/schema:
+  packages/helpers:
     dependencies:
-      drizzle-orm:
-        specifier: ^0.30.7
-        version: 0.30.7(mysql2@3.9.4)
+      dayjs:
+        specifier: ^1.11.10
+        version: 1.11.10
 
   packages/screen:
     dependencies:
-      '@imrobot/shared':
+      '@imrobot/monitor-helpers':
         specifier: workspace:^
-        version: link:../shared
+        version: link:../helpers
+      js-base64:
+        specifier: ^3.7.7
+        version: 3.7.7
+      pako:
+        specifier: ^2.1.0
+        version: 2.1.0
       rrweb:
         specifier: 2.0.0-alpha.4
         version: 2.0.0-alpha.4
       rrweb-player:
         specifier: 1.0.0-alpha.4
         version: 1.0.0-alpha.4
-
-  packages/shared:
-    dependencies:
-      dayjs:
-        specifier: ^1.11.10
-        version: 1.11.10
+    devDependencies:
+      '@types/pako':
+        specifier: ^2.0.3
+        version: 2.0.3
 
 packages:
 
@@ -1316,12 +1314,6 @@ packages:
   /@ctrl/tinycolor@3.6.1:
     resolution: {integrity: sha512-SITSV6aIXsuVNV3f3O0f2n/cgyEDWoSqtZMYiAmcsYHydcKrOz3gUxB/iXd/Qf08+IZX4KpgNbvUdMBmWz+kcA==}
     engines: {node: '>=10'}
-
-  /@drizzle-team/studio@0.0.39:
-    resolution: {integrity: sha512-c5Hkm7MmQC2n5qAsKShjQrHoqlfGslB8+qWzsGGZ+2dHMRTNG60UuzalF0h0rvBax5uzPXuGkYLGaQ+TUX3yMw==}
-    dependencies:
-      superjson: 2.2.1
-    dev: true
 
   /@element-plus/icons-vue@2.3.1(vue@3.4.21):
     resolution: {integrity: sha512-XxVUZv48RZAd87ucGS48jPf6pKu0yV5UCg9f4FFwtrYxXOwWuVJo6wOvSLKEoMQKjv8GsX/mhP6UsC1lRwbUWg==}
@@ -3909,6 +3901,10 @@ packages:
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
     dev: true
 
+  /@types/pako@2.0.3:
+    resolution: {integrity: sha512-bq0hMV9opAcrmE0Byyo0fY3Ew4tgOevJmQ9grUhpXQhYfyLJ1Kqg3P33JT5fdbT2AjeAjR51zqqVjAL/HMkx7Q==}
+    dev: true
+
   /@types/qs@6.9.12:
     resolution: {integrity: sha512-bZcOkJ6uWrL0Qb2NAWKa7TBU+mJHPzhx9jjLL1KHF+XpzEcR7EXHvjbHlGtR/IsP1vyPrehuS6XqkmaePy//mg==}
     dev: true
@@ -6435,28 +6431,6 @@ packages:
     engines: {node: '>=0.4.0'}
     dependencies:
       wordwrap: 1.0.0
-    dev: true
-
-  /drizzle-kit@0.20.14:
-    resolution: {integrity: sha512-0fHv3YIEaUcSVPSGyaaBfOi9bmpajjhbJNdPsRMIUvYdLVxBu9eGjH8mRc3Qk7HVmEidFc/lhG1YyJhoXrn5yA==}
-    hasBin: true
-    dependencies:
-      '@drizzle-team/studio': 0.0.39
-      '@esbuild-kit/esm-loader': 2.6.5
-      camelcase: 7.0.1
-      chalk: 5.3.0
-      commander: 9.5.0
-      env-paths: 3.0.0
-      esbuild: 0.19.12
-      esbuild-register: 3.5.0(esbuild@0.19.12)
-      glob: 8.1.0
-      hanji: 0.0.5
-      json-diff: 0.9.0
-      minimatch: 7.4.6
-      semver: 7.6.0
-      zod: 3.22.4
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /drizzle-kit@0.20.17:
@@ -9208,6 +9182,10 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
+  /js-base64@3.7.7:
+    resolution: {integrity: sha512-7rCnleh0z2CkXhH67J8K1Ytz0b2Y+yxTPL+/KOJoa20hfnVQ/3/T6W/KflYI4bRHRagNeXeU2bkNGI3v1oS/lw==}
+    dev: false
+
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
     requiresBuild: true
@@ -10879,6 +10857,10 @@ packages:
     transitivePeerDependencies:
       - bluebird
       - supports-color
+    dev: false
+
+  /pako@2.1.0:
+    resolution: {integrity: sha512-w+eufiZ1WuJYgPXbV/PO3NCMEc3xqylkKHzp8bxp1uW4qaSNQUkwmLLEc3kKsfz8lpV1F8Ht3U1Cm+9Srog2ug==}
     dev: false
 
   /parent-module@1.0.1:

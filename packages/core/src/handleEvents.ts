@@ -3,7 +3,7 @@ import {
   ErrorTypes,
   getTimestamp,
   reportData,
-} from "@imrobot/shared";
+} from "@imrobot/monitor-helpers";
 import errorStackParser from "error-stack-parser";
 import type { ResourceErrorTarget, XHRData } from "./types";
 import { getErrorUid, hasHash } from "./utlis";

@@ -3,8 +3,7 @@
   "version": "0.2.0",
   "description": "frontend monitor",
   "repository": "https://github.com/ReinerLau/imrobot-monitor/tree/main/packages/core",
-  "main": "dist/index.mjs",
-  "types": "dist/index.d.mts",
+  "main": "src/index.ts",
   "scripts": {
     "build": "tsup"
   },
@@ -23,7 +22,7 @@
   "dependencies": {
     "@imrobot/behavior": "workspace:^",
     "@imrobot/screen": "workspace:^",
-    "@imrobot/shared": "workspace:^",
+    "@imrobot/monitor-helpers": "workspace:^",
     "error-stack-parser": "^2.1.4",
     "md5": "^2.3.0",
     "socket.io-client": "^4.7.5"

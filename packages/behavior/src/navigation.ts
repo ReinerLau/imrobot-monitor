@@ -1,4 +1,4 @@
-import { BEHAVIORTYPES, getTimestamp } from "@imrobot/shared";
+import { BEHAVIORTYPES, getTimestamp } from "@imrobot/monitor-helpers";
 import { Behavior } from "../types";
 import { pushBehaviorStack } from "./shared";
 

@@ -1,4 +1,4 @@
-import { Extension } from "@imrobot/shared";
+import { Extension } from "@imrobot/monitor-helpers";
 import { afterEvent, install } from "./record";
 export * from "./play";
 

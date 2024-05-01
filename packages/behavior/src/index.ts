@@ -3,7 +3,7 @@ import {
   Extension,
   getTimestamp,
   reportData,
-} from "@imrobot/shared";
+} from "@imrobot/monitor-helpers";
 import { Behavior, BehaviorOptions } from "../types";
 import { onNavigation } from "./navigation";
 import { behaviorStack, pushBehaviorStack, setMaxStackNum } from "./shared";

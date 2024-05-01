@@ -1,4 +1,4 @@
-import { reportData } from "@imrobot/shared";
+import { reportData } from "@imrobot/monitor-helpers";
 import { Base64 } from "js-base64";
 import pako from "pako";
 import { record } from "rrweb";
