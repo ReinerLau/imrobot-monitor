@@ -1,6 +1,6 @@
 {
   "name": "@imrobot/monitor",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "frontend monitor",
   "repository": "https://github.com/ReinerLau/imrobot-monitor/tree/main/packages/core",
   "main": "src/index.ts",
