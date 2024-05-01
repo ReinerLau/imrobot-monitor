@@ -15,7 +15,8 @@
     "commit": "cz",
     "prepare": "husky",
     "changeset": "changeset",
-    "type:check": "tsc --watch"
+    "type:check": "tsc --watch",
+    "package:build": "pnpm -F '@imrobot/*' build"
   },
   "keywords": [],
   "author": "",

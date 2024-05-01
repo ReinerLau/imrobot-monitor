@@ -1,7 +1,7 @@
-import { Extension } from '@imrobot/shared';
+import { Extension } from '@imrobot/monitor-helpers';
 import { Plugin } from 'vue';
-export { default as behavior } from '@imrobot/behavior';
-export { playScreen, default as screen } from '@imrobot/screen';
+export { default as behavior } from '@imrobot/monitor-behavior';
+export { playScreen, default as screen } from '@imrobot/monitor-screen';
 
 type Use = <T extends Extension>(
   extension: T,
