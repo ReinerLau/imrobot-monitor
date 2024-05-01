@@ -14,7 +14,8 @@
     "docker:build": "pnpm -F api -F client docker:build",
     "commit": "cz",
     "prepare": "husky",
-    "changeset": "changeset"
+    "changeset": "changeset",
+    "type:check": "tsc --watch"
   },
   "keywords": [],
   "author": "",
