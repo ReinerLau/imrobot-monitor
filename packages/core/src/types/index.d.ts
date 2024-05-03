@@ -1,5 +1,5 @@
 import { Extension } from "@imrobot/monitor-helpers";
-import { Plugin } from "vue";
+import { App } from "vue";
 
 export interface ResourceErrorTarget {
   src?: string;
@@ -28,7 +28,8 @@ export type Use = <T extends Extension>(
 
 export type Monitor = {
   use: Use;
-} & Plugin;
+  install: (app: App, options?: InstallOptions) => void;
+};
 
 export type AfterErrorEvent = (...args: any[]) => void;
 
