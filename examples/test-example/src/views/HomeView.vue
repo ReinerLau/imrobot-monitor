@@ -45,5 +45,8 @@ const onAxios = () => {
   <button id="promise" class="promise" @click="onPromise">promise 错误</button>
   <button @click="onXHR">xhr 请求错误</button>
   <button @click="onAxios">axios 请求错误</button>
-  <img v-if="visible" src="http://www.abc.com/test.png" />
+  <div>
+    <img src="/images/test.jpg" />
+    <img v-if="visible" src="http://www.abc.com/test.png" />
+  </div>
 </template>

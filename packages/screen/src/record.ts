@@ -10,6 +10,7 @@ export const onScreen = () => {
     emit(event) {
       events.push(event);
     },
+    inlineImages: true,
   });
 };
 
