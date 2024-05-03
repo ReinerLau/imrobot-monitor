@@ -1,2 +1,0 @@
-var n={baseURL:"http://localhost:3001"},a=()=>Date.now();function i(t,e){let o={type:"application/json"};navigator.sendBeacon(`${n.baseURL}${t}`,new Blob([JSON.stringify(e)],o))||requestIdleCallback(()=>{fetch(`${n.baseURL}${t}`,{method:"post",body:JSON.stringify(e),headers:{"Content-Type":"application/json"}})})}export{a as getTimestamp,n as global,i as reportData};
-//# sourceMappingURL=index.mjs.map

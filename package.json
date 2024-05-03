@@ -16,7 +16,7 @@
     "prepare": "husky",
     "changeset": "changeset",
     "type:check": "tsc --watch",
-    "package:publish": "pnpm -F '@imrobot/*' build && pnpm -F '@imrobot/*' publish"
+    "package:publish": "pnpm -F '@imrobot/*' build && pnpm -F '@imrobot/*' publish --no-git-checks"
   },
   "keywords": [],
   "author": "",
