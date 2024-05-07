@@ -8,8 +8,9 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "init-db":"drizzle-kit generate:sqlite && tsx server/scripts/migrate.ts",
-    "db-studio":"drizzle-kit studio"
+    "init-db": "drizzle-kit generate:sqlite && tsx server/scripts/migrate.ts",
+    "db-studio": "drizzle-kit studio",
+    "clear-db": "rm -rf server/db/migrations sqlite.db"
   },
   "dependencies": {
     "better-sqlite3": "^9.6.0",

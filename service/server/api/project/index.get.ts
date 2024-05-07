@@ -2,5 +2,5 @@
 
 export default defineEventHandler(async (event) => {
   const result = await db.query.project.findMany();
-  return result;
+  return { result };
 });
