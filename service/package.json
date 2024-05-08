@@ -22,6 +22,7 @@
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.10",
     "drizzle-kit": "^0.20.17",
+    "rrweb-player": "1.0.0-alpha.4",
     "tsx": "^4.7.3"
   }
 }
