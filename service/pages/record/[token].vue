@@ -18,21 +18,10 @@ const { data } = useFetch("/api/record");
           <Tag :value="dayjs(data.createdAt).format('YYYY-MM-DD HH:mm:ss')" />
         </template>
       </Column>
-      <Column header="数据">
-        <template #body="{ data }">
-          <div class="flex gap-2">
-            <NuxtLink :to="`/record/${data.id}`">
-              <Button label="录屏" />
-            </NuxtLink>
-            <Button label="动作" />
-            <Button label="错误" />
-          </div>
-        </template>
-      </Column>
       <Column header="操作">
         <template #body="{ data }">
           <div class="flex gap-2">
-            <Button label="编辑" />
+            <Button label="查看" />
             <Button label="删除" />
           </div>
         </template>
