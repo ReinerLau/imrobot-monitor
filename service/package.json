@@ -14,15 +14,19 @@
   },
   "dependencies": {
     "better-sqlite3": "^9.6.0",
-    "drizzle-orm": "^0.30.7",
+    "drizzle-orm": "^0.30.10",
     "nuxt": "^3.11.2",
-    "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "vue": "^3.4.27",
+    "vue-router": "^4.3.1"
   },
   "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.11.4",
     "@types/better-sqlite3": "^7.6.10",
-    "drizzle-kit": "^0.20.17",
+    "dayjs": "^1.11.10",
+    "drizzle-kit": "^0.20.18",
+    "nuxt-primevue": "^0.3.1",
+    "primevue": "^3.52.0",
     "rrweb-player": "1.0.0-alpha.4",
-    "tsx": "^4.7.3"
+    "tsx": "^4.9.3"
   }
 }
