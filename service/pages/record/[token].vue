@@ -1,7 +1,7 @@
 <script lang="tsx" setup>
 import dayjs from "dayjs";
 
-const { data } = useFetch("/api/project");
+const { data } = useFetch("/api/record");
 </script>
 
 <template>
@@ -21,7 +21,7 @@ const { data } = useFetch("/api/project");
       <Column header="数据">
         <template #body="{ data }">
           <div class="flex gap-2">
-            <NuxtLink :to="`/record/${data.token}`">
+            <NuxtLink :to="`/record/${data.id}`">
               <Button label="录屏" />
             </NuxtLink>
             <Button label="动作" />

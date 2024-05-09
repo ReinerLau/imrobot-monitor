@@ -17,12 +17,12 @@
     "drizzle-orm": "^0.30.10",
     "nuxt": "^3.11.2",
     "vue": "^3.4.27",
-    "vue-router": "^4.3.1"
+    "vue-router": "^4.3.2"
   },
   "devDependencies": {
-    "@nuxtjs/tailwindcss": "^6.11.4",
+    "@nuxtjs/tailwindcss": "^6.12.0",
     "@types/better-sqlite3": "^7.6.10",
-    "dayjs": "^1.11.10",
+    "dayjs": "^1.11.11",
     "drizzle-kit": "^0.20.18",
     "nuxt-primevue": "^0.3.1",
     "primevue": "^3.52.0",
