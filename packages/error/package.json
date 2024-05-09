@@ -1,0 +1,21 @@
+{
+  "name": "@imrobot/monitor-error",
+  "version": "0.1.0",
+  "description": "a plugin of imrobot-monitor for monitor error",
+  "main": "src/index.ts",
+  "publishConfig": {
+    "main": "dist/index.mjs",
+    "types": "dist/index.d.mts"
+  },
+  "scripts": {
+    "build": "tsup"
+  },
+  "keywords": [
+    "typescript"
+  ],
+  "author": "ReinerLau",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ]
+}

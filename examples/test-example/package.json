@@ -14,8 +14,9 @@
   },
   "dependencies": {
     "@imrobot/monitor": "workspace:^",
-    "@imrobot/monitor-screen": "workspace:^",
     "@imrobot/monitor-behavior": "workspace:^",
+    "@imrobot/monitor-error": "workspace:^",
+    "@imrobot/monitor-screen": "workspace:^",
     "axios": "^1.6.8",
     "element-plus": "^2.6.1",
     "vue": "^3.4.15",

@@ -1,5 +1,6 @@
 import monitor from '@imrobot/monitor'
 import behavior from '@imrobot/monitor-behavior'
+import error from '@imrobot/monitor-error'
 import screen from '@imrobot/monitor-screen'
 
 import { createApp } from 'vue'
@@ -13,7 +14,7 @@ import router from './router'
 monitor.use(behavior, {
   maxStackNum: 10
 })
-
 monitor.use(screen)
+monitor.use(error)
 
 createApp(App).use(ElementPlus).use(monitor).use(router).mount('#app')
