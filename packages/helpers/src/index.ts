@@ -1,3 +1,6 @@
+import { Monitor } from "./monitor";
+export * from "./monitor";
+
 export const global = {
   baseURL: "http://localhost:3001",
 };
@@ -6,7 +9,7 @@ export const getTimestamp = () => {
   return Date.now();
 };
 
-export type extensionInstallEvent = (options?: any) => void;
+export type extensionInstallEvent = (monitor: Monitor, options?: any) => void;
 
 export interface Extension {
   install: extensionInstallEvent;

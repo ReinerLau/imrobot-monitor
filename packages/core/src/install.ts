@@ -1,4 +1,9 @@
-import { getTimestamp, global, reportData } from "@imrobot/monitor-helpers";
+import {
+  getTimestamp,
+  global,
+  Monitor,
+  reportData,
+} from "@imrobot/monitor-helpers";
 import { io } from "socket.io-client";
 import type { App } from "vue";
 import {
@@ -8,7 +13,6 @@ import {
   handleUnhandleRejection,
 } from "./handleEvents";
 import { EventTypes } from "./helpers";
-import { Monitor } from "./monitor";
 import {
   extensionInstallEvents,
   notifyAfterErrorEvent,

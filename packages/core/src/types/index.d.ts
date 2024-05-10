@@ -23,7 +23,7 @@ export interface XHRData {
 
 export type Use = <T extends Extension>(
   extension: T,
-  options?: Parameters<T["install"]>[0]
+  options?: Parameters<T["install"]>[1]
 ) => void;
 
 export type Monitor = {

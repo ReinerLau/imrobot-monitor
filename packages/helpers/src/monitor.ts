@@ -4,4 +4,8 @@ export class Monitor {
   constructor(baseURL: string) {
     this.baseURL = baseURL;
   }
+
+  reportData() {
+    console.log("test");
+  }
 }

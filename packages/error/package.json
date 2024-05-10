@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "a plugin of imrobot-monitor for monitor error",
   "main": "src/index.ts",
+  "types": "src/index.ts",
   "publishConfig": {
     "main": "dist/index.mjs",
     "types": "dist/index.d.mts"
@@ -17,5 +18,8 @@
   "license": "MIT",
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "@imrobot/monitor-helpers": "workspace:^"
+  }
 }

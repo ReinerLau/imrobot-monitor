@@ -1,11 +1,10 @@
-import { Monitor } from "./monitor";
+import { Monitor } from "@imrobot/monitor-helpers";
 import { extensionInstallEvents, subscribeAfterErrorEvent } from "./subscribe";
 import { Use } from "./types";
 
 export const use: Use = (extension, options) => {
   extensionInstallEvents.push((monitor: Monitor) => {
-    const mergedOptions = { monitor, options };
-    extension.install(mergedOptions);
+    extension.install(monitor, options);
   });
   extension.afterEvent && subscribeAfterErrorEvent(extension.afterEvent);
 };

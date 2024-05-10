@@ -332,7 +332,23 @@ importers:
         version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.12.11)(typescript@5.4.2))(typescript@5.4.2)
       vue:
         specifier: ^3.4.15
+<<<<<<< HEAD
         version: 3.4.21(typescript@5.4.2)
+=======
+        version: 3.4.21(typescript@5.3.3)
+
+  packages/error:
+    dependencies:
+      '@imrobot/monitor-helpers':
+        specifier: workspace:^
+        version: link:../helpers
+
+  packages/helpers:
+    dependencies:
+      dayjs:
+        specifier: ^1.11.10
+        version: 1.11.10
+>>>>>>> b398a6d (refactor(error): get monitor instance)
 
   packages/screen:
     dependencies:
