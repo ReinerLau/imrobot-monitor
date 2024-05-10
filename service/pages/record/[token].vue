@@ -1,7 +1,7 @@
 <script lang="tsx" setup>
 import dayjs from "dayjs";
 
-const { data } = useFetch("/api/record");
+const { data, refresh } = useFetch("/api/record");
 
 function stringToSize(str: string): string {
   /**
@@ -13,6 +13,34 @@ function stringToSize(str: string): string {
 }
 
 const { playScreen, target: rrwebPlayer, visible } = useScreen();
+
+const confirm = useConfirm();
+const toast = useToast();
+
+const deleteConfirm = (id: number, event: MouseEvent) => {
+  confirm.require({
+    target: event.currentTarget as HTMLElement,
+    message: "您想要删除这条记录吗？",
+    icon: "pi pi-info-circle",
+    rejectClass: "p-button-secondary p-button-outlined p-button-sm",
+    acceptClass: "p-button-danger p-button-sm",
+    rejectLabel: "取消",
+    acceptLabel: "删除",
+    position: "top",
+    accept: async () => {
+      await useFetch(`/api/record/${id}`, {
+        method: "DELETE",
+      });
+      await refresh();
+      toast.add({
+        severity: "success",
+        summary: "删除成功",
+        detail: "这条数据记录已完成删除",
+        life: 5000,
+      });
+    },
+  });
+};
 </script>
 
 <template>
@@ -36,13 +64,27 @@ const { playScreen, target: rrwebPlayer, visible } = useScreen();
         <template #body="{ data }">
           <div class="flex gap-2">
             <Button @click="playScreen(data.data)" label="查看" />
-            <Button label="删除" />
+            <Button
+              @click="deleteConfirm(data.id, $event)"
+              label="删除"
+              severity="danger"
+            />
           </div>
         </template>
       </Column>
     </DataTable>
   </ScrollPanel>
-  <Dialog v-model:visible="visible">
-    <div ref="rrwebPlayer"></div>
+  <Dialog v-model:visible="visible" modal header="录屏数据回放">
+    <div ref="rrwebPlayer" class=""></div>
   </Dialog>
+  <Toast />
+  <ConfirmPopup />
 </template>
+
+<style>
+.rr-player {
+  float: none;
+  border: 1px solid #0002;
+  box-sizing: content-box;
+}
+</style>
