@@ -8,6 +8,7 @@ import {
   handleUnhandleRejection,
 } from "./handleEvents";
 import { EventTypes } from "./helpers";
+import { Monitor } from "./monitor";
 import {
   extensionInstallEvents,
   notifyAfterErrorEvent,
@@ -15,7 +16,8 @@ import {
 } from "./subscribe";
 import type { InstallOptions, ResourceErrorTarget, XHRData } from "./types";
 
-export const install = (app: App, options: InstallOptions = {}): void => {
+export const install = (app: App, options: InstallOptions): void => {
+  const monitor = new Monitor(options.baseURL);
   setupOptions(options);
   subscribeEvent(
     EventTypes.VUE,
@@ -38,7 +40,7 @@ export const install = (app: App, options: InstallOptions = {}): void => {
   subscribeEvent(EventTypes.XHR, (xhrData: XHRData) => {
     handleHTTPRequest(xhrData);
   });
-  extensionTrigger();
+  extensionTrigger(monitor);
   connectWS();
 };
 
@@ -66,8 +68,6 @@ function onReport() {
   notifyAfterErrorEvent(time);
 }
 
-function extensionTrigger() {
-  extensionInstallEvents.forEach((event) => {
-    event();
-  });
+function extensionTrigger(monitor: Monitor) {
+  extensionInstallEvents.forEach((event) => event(monitor));
 }

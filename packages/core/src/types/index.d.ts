@@ -34,5 +34,5 @@ export type Monitor = {
 export type AfterErrorEvent = (...args: any[]) => void;
 
 export interface InstallOptions {
-  baseURL?: string;
+  baseURL: string;
 }

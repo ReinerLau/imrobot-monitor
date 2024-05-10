@@ -1,6 +1,6 @@
 const extension = {
-  install: () => {
-    console.log("test");
+  install(options: any) {
+    console.log(options);
   },
 };
 
