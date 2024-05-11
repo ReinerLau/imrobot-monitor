@@ -13,8 +13,6 @@ export default () => {
     createdAt?: number;
   }>({});
 
-  watchEffect(() => visible.value || (formData.value = {}));
-
   const create = async () => {
     await $fetch("/api/project", {
       method: "POST",

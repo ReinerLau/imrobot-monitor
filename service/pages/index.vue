@@ -2,6 +2,20 @@
 import dayjs from "dayjs";
 
 const { data, visible, formData, create, update, _delete } = useProject();
+
+const toast = useToast();
+
+const copyTip = ref("点击复制");
+
+const copyToken = async (token: string) => {
+  await navigator.clipboard.writeText(token);
+  toast.add({
+    detail: token,
+    life: 3000,
+    severity: "success",
+    summary: "复制成功",
+  });
+};
 </script>
 
 <template>
@@ -12,7 +26,17 @@ const { data, visible, formData, create, update, _delete } = useProject();
     <DataTable :value="data">
       <Column field="id" header="编号" sortable></Column>
       <Column field="name" header="名称" sortable></Column>
-      <Column field="token" header="密钥" sortable></Column>
+      <Column field="token" header="密钥" sortable>
+        <template #body="{ data }">
+          <code
+            v-tooltip="copyTip"
+            class="p-2 bg-slate-500 text-white rounded-md cursor-pointer"
+            @click="copyToken(data.token)"
+          >
+            {{ data.token }}
+          </code>
+        </template>
+      </Column>
       <Column field="createdAt" header="创建时间" sortable>
         <template #body="{ data }">
           <Tag :value="dayjs(data.createdAt).format('YYYY-MM-DD HH:mm:ss')" />
@@ -46,6 +70,7 @@ const { data, visible, formData, create, update, _delete } = useProject();
     v-model:visible="visible"
     modal
     :header="`${!formData.id ? '新增' : '编辑'}项目`"
+    @hide="formData = {}"
   >
     <div class="flex items-center gap-4 mb-4">
       <label for="username" class="font-semibold">名称</label>
