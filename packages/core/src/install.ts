@@ -5,47 +5,35 @@ import {
   reportData,
 } from "@imrobot/monitor-helpers";
 import { io } from "socket.io-client";
-import type { App } from "vue";
-import {
-  handleError,
-  handleHTTPRequest,
-  handleResourceError,
-  handleUnhandleRejection,
-} from "./handleEvents";
-import { EventTypes } from "./helpers";
-import {
-  extensionInstallEvents,
-  notifyAfterErrorEvent,
-  subscribeEvent,
-} from "./subscribe";
-import type { InstallOptions, ResourceErrorTarget, XHRData } from "./types";
+import { extensionInstallEvents, notifyAfterErrorEvent } from "./subscribe";
+import type { InstallOptions } from "./types";
 
-export const install = (app: App, options: InstallOptions): void => {
-  const monitor = new Monitor(options.baseURL);
-  setupOptions(options);
-  subscribeEvent(
-    EventTypes.VUE,
-    (err: Error) => {
-      handleError(err);
-    },
-    app
-  );
-  subscribeEvent(EventTypes.ERROR, (ev: ErrorEvent) => {
-    const target = ev.target as ResourceErrorTarget;
-    if (target?.localName) {
-      handleResourceError(target);
-    } else {
-      handleError(ev.error);
-    }
-  });
-  subscribeEvent(EventTypes.UNHANDLEDREJECTION, (ev: PromiseRejectionEvent) => {
-    handleUnhandleRejection(ev);
-  });
-  subscribeEvent(EventTypes.XHR, (xhrData: XHRData) => {
-    handleHTTPRequest(xhrData);
-  });
+export const install = (app: any, options: InstallOptions): void => {
+  const monitor = new Monitor(options.baseURL, app);
+  // setupOptions(options);
+  // subscribeEvent(
+  //   EventTypes.VUE,
+  //   (err: Error) => {
+  //     handleError(err);
+  //   },
+  //   app
+  // );
+  // subscribeEvent(EventTypes.ERROR, (ev: ErrorEvent) => {
+  //   const target = ev.target as ResourceErrorTarget;
+  //   if (target?.localName) {
+  //     handleResourceError(target);
+  //   } else {
+  //     handleError(ev.error);
+  //   }
+  // });
+  // subscribeEvent(EventTypes.UNHANDLEDREJECTION, (ev: PromiseRejectionEvent) => {
+  //   handleUnhandleRejection(ev);
+  // });
+  // subscribeEvent(EventTypes.XHR, (xhrData: XHRData) => {
+  //   handleHTTPRequest(xhrData);
+  // });
   extensionTrigger(monitor);
-  connectWS();
+  // connectWS();
 };
 
 let startTime: number = getTimestamp();

@@ -1,8 +1,13 @@
+import type { App } from "vue";
+
 export class Monitor {
   private baseURL: string = "";
 
-  constructor(baseURL: string) {
+  public vueInstance: App;
+
+  constructor(baseURL: string, vueInstance: App) {
     this.baseURL = baseURL;
+    this.vueInstance = vueInstance;
   }
 
   reportData(url: string, data: Record<string, any>) {

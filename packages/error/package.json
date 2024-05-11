@@ -20,6 +20,11 @@
     "dist"
   ],
   "dependencies": {
-    "@imrobot/monitor-helpers": "workspace:^"
+    "@imrobot/monitor-helpers": "workspace:^",
+    "error-stack-parser": "^2.1.4",
+    "md5": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/md5": "^2.3.5"
   }
 }
