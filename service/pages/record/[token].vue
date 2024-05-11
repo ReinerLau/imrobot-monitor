@@ -1,7 +1,13 @@
 <script lang="tsx" setup>
 import dayjs from "dayjs";
 
-const { data, refresh } = useFetch("/api/record");
+const route = useRoute();
+
+const { data, refresh } = useFetch("/api/record", {
+  params: {
+    token: route.params.token,
+  },
+});
 
 function stringToSize(str: string): string {
   /**

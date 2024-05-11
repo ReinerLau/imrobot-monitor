@@ -12,7 +12,10 @@ window.onload = async function () {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(recordData),
+          body: JSON.stringify({
+            events: recordData,
+            token: "ab35ffb9-15fb-402d-8b7f-6724956f6709",
+          }),
         });
         recordData = [];
         record.takeFullSnapshot();

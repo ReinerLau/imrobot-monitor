@@ -1,16 +1,23 @@
 import { record } from "~/server/db/schema";
 
 export default defineEventHandler(async (event) => {
-  const data = await readBody(event);
-  const result = await db
-    .insert(record)
-    .values({
-      projectId: 1,
-      data,
-      type: 1,
-      createdAt: Date.now(),
-    })
-    .returning();
+  const { events, token } = await readBody(event);
 
-  return result;
+  const project = await db.query.project.findFirst({
+    where: (project, { eq }) => eq(project.token, token),
+  });
+
+  if (project) {
+    const result = await db
+      .insert(record)
+      .values({
+        projectId: project.id,
+        data: events,
+        type: 1,
+        createdAt: Date.now(),
+      })
+      .returning();
+
+    return result;
+  }
 });
