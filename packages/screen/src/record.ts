@@ -1,32 +1,29 @@
-import { reportData } from "@imrobot/monitor-helpers";
+import { getTimestamp } from "@imrobot/monitor-helpers";
 import { Base64 } from "js-base64";
 import pako from "pako";
 import { record } from "rrweb";
+import { ScreenOptions } from "../types/index";
+import { monitor } from "./helpers";
 
-export const events: any[] = [];
+const events: any[] = [];
 
-export const onScreen = () => {
+export const onScreen = (options: ScreenOptions) => {
   record({
-    emit(event) {
+    emit(event, isCheckout) {
+      console.log(event);
       events.push(event);
+      if (isCheckout) {
+        const time = getTimestamp();
+        const data = { time, data: zip(events) };
+        events.length = 0;
+        monitor.reportData("/screen", data);
+      }
     },
-    inlineImages: true,
+    ...options,
   });
 };
 
-export const install = () => {
-  onScreen();
-};
-
-export const afterEvent = (time: number) => {
-  const data = { time, data: zip(events) };
-  reportData("/screen", data);
-  events.length = 0;
-  record.takeFullSnapshot(true);
-};
-
-export function zip(data: any[]): string {
-  if (!data) return data;
+function zip(data: any[]): string {
   const base64Str = Base64.encode(JSON.stringify(data));
   const zipData = pako.gzip(base64Str);
   const zipDataArray = Array.from(zipData);

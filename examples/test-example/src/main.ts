@@ -1,7 +1,7 @@
 import monitor from '@imrobot/monitor'
 import behavior from '@imrobot/monitor-behavior'
 import error from '@imrobot/monitor-error'
-// import screen from '@imrobot/monitor-screen'
+import screen from '@imrobot/monitor-screen'
 
 import { createApp } from 'vue'
 import App from './App.vue'
@@ -14,7 +14,9 @@ import router from './router'
 monitor.use(behavior, {
   maxStackNum: 5
 })
-// monitor.use(screen)
+monitor.use(screen, {
+  checkoutEveryNth: 30
+})
 monitor.use(error)
 
 createApp(App)
