@@ -1,12 +1,12 @@
 <script lang="tsx" setup>
 import dayjs from "dayjs";
 
-const { data } = useFetch("/api/project");
+const { data, visible, formData, create, update } = useProject();
 </script>
 
 <template>
   <header class="h-16 flex items-center p-4 shadow-md">
-    <Button label="添加项目" />
+    <Button @click="visible = true" label="添加项目" />
   </header>
   <ScrollPanel class="h-[calc(100vh-96px)] m-4">
     <DataTable :value="data">
@@ -32,11 +32,32 @@ const { data } = useFetch("/api/project");
       <Column header="操作">
         <template #body="{ data }">
           <div class="flex gap-2">
-            <Button label="编辑" />
+            <Button
+              @click="(formData = Object.assign({}, data)) && (visible = true)"
+              label="编辑"
+            />
             <Button label="删除" />
           </div>
         </template>
       </Column>
     </DataTable>
   </ScrollPanel>
+  <Dialog
+    v-model:visible="visible"
+    modal
+    :header="`${!formData.id ? '新增' : '编辑'}项目`"
+  >
+    <div class="flex items-center gap-4 mb-4">
+      <label for="username" class="font-semibold">名称</label>
+      <InputText v-model:model-value="formData.name" />
+    </div>
+    <div class="flex justify-end gap-2">
+      <Button
+        label="取消"
+        severity="secondary"
+        @click="visible = false"
+      ></Button>
+      <Button label="确认" @click="!formData.id ? create() : update()"></Button>
+    </div>
+  </Dialog>
 </template>
