@@ -1,7 +1,7 @@
 <script lang="tsx" setup>
 import dayjs from "dayjs";
 
-const { data, visible, formData, create, update } = useProject();
+const { data, visible, formData, create, update, _delete } = useProject();
 </script>
 
 <template>
@@ -36,7 +36,7 @@ const { data, visible, formData, create, update } = useProject();
               @click="(formData = Object.assign({}, data)) && (visible = true)"
               label="编辑"
             />
-            <Button label="删除" />
+            <Button @click="_delete(data.id, $event)" label="删除" />
           </div>
         </template>
       </Column>
@@ -60,4 +60,6 @@ const { data, visible, formData, create, update } = useProject();
       <Button label="确认" @click="!formData.id ? create() : update()"></Button>
     </div>
   </Dialog>
+  <Toast />
+  <ConfirmPopup />
 </template>
