@@ -1,5 +1,5 @@
+import { Monitor } from "../types";
 import { install } from "./install";
-import { Monitor } from "./types";
 import { use } from "./use";
 
 const monitor: Monitor = {

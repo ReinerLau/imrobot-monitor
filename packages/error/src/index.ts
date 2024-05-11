@@ -1,38 +1,58 @@
 import { Monitor } from "@imrobot/monitor-helpers";
-import errorStackParser from "error-stack-parser";
-import { InstallOptions } from "../types";
-import { monitor, setupMonitor } from "./helpers";
-import { getErrorUid, hasHash } from "./utils";
+import { InstallOptions, ResourceErrorTarget, XHRData } from "../types";
+import { setupMonitor } from "./helpers";
+import {
+  handleError,
+  handleHTTPRequest,
+  handleResourceError,
+  handleUnhandleRejection,
+} from "./helpers/handlers";
+import { EventTypes, subscribeEvent } from "./helpers/subscribe";
 
 const extension = {
-  install(monitor: Monitor, options: InstallOptions = { vue: true }) {
+  install(
+    monitor: Monitor,
+    options: InstallOptions = {
+      vue: true,
+      error: true,
+      promise: true,
+      xhr: true,
+    }
+  ) {
     setupMonitor(monitor);
+
     if (options.vue) {
-      monitor.vueInstance.config.errorHandler = (err: any) => {
+      subscribeEvent(EventTypes.VUE, (err: Error) => {
         handleError(err);
-        // notify(EventTypes.VUE, err);
-      };
+      });
+    }
+
+    if (options.error) {
+      subscribeEvent(EventTypes.ERROR, (ev: ErrorEvent) => {
+        const target = ev.target as ResourceErrorTarget;
+        if (target?.localName) {
+          handleResourceError(target);
+        } else {
+          handleError(ev.error);
+        }
+      });
+    }
+
+    if (options.promise) {
+      subscribeEvent(
+        EventTypes.UNHANDLEDREJECTION,
+        (ev: PromiseRejectionEvent) => {
+          handleUnhandleRejection(ev);
+        }
+      );
+    }
+
+    if (options.xhr) {
+      subscribeEvent(EventTypes.XHR, (xhrData: XHRData) => {
+        handleHTTPRequest(xhrData);
+      });
     }
   },
-};
-
-const handleError = (err: Error) => {
-  const { fileName, columnNumber, lineNumber } = errorStackParser.parse(err)[0];
-  const errorData = {
-    fileName: "",
-    url: "",
-    message: "",
-    lineNumber: 0,
-    columnNumber: 0,
-    time: Date.now(),
-    code: "{}",
-  };
-  const hash = getErrorUid(
-    `${errorData.message}-${errorData.url}-${errorData.lineNumber}-${errorData.columnNumber}`
-  );
-  if (!hasHash(hash)) {
-    monitor.reportData("/error/code", errorData);
-  }
 };
 
 export default extension;

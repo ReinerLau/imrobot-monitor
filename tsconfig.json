@@ -6,7 +6,8 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "noEmit": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "target": "ESNext"
   },
   "include": ["packages/**/src"]
 }

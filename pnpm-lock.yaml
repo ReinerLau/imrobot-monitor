@@ -307,6 +307,7 @@ importers:
     dependencies:
       '@imrobot/behavior':
         specifier: workspace:^
+<<<<<<< HEAD
         version: link:../behavior
       '@imrobot/screen':
         specifier: workspace:^
@@ -323,12 +324,13 @@ importers:
       socket.io-client:
         specifier: ^4.7.5
         version: 4.7.5
+=======
+        version: link:../helpers
+>>>>>>> 4539ab7 (refactor(error): subscribe)
     devDependencies:
-      '@types/md5':
-        specifier: ^2.3.5
-        version: 2.3.5
       tsup:
         specifier: ^8.0.2
+<<<<<<< HEAD
         version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.12.11)(typescript@5.4.2))(typescript@5.4.2)
       vue:
         specifier: ^3.4.15
@@ -336,6 +338,9 @@ importers:
         version: 3.4.21(typescript@5.4.2)
 =======
         version: 3.4.21(typescript@5.3.3)
+=======
+        version: 8.0.2(typescript@5.3.3)
+>>>>>>> 4539ab7 (refactor(error): subscribe)
 
   packages/error:
     dependencies:
@@ -348,6 +353,9 @@ importers:
       md5:
         specifier: ^2.3.0
         version: 2.3.0
+      source-map-js:
+        specifier: ^1.1.0
+        version: 1.2.0
     devDependencies:
       '@types/md5':
         specifier: ^2.3.5
@@ -14550,6 +14558,7 @@ snapshots:
       iconv-lite: 0.6.3
     optional: true
 
+<<<<<<< HEAD
   end-of-stream@1.4.4:
     dependencies:
       once: 1.4.0
@@ -14567,6 +14576,11 @@ snapshots:
       - utf-8-validate
 
   engine.io-parser@5.2.2: {}
+=======
+  /engine.io-parser@5.2.2:
+    resolution: {integrity: sha512-RcyUFKA93/CXH20l4SoVvzZfrSDMOTUS3bWVpTt2FuFP+XYrL8i8oonHP7WInRyVHXh0n/ORtoeiE1os+8qkSw==}
+    engines: {node: '>=10.0.0'}
+>>>>>>> 4539ab7 (refactor(error): subscribe)
 
   engine.io@6.5.4:
     dependencies:
@@ -18958,6 +18972,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
+<<<<<<< HEAD
   socket.io-client@4.7.5:
     dependencies:
       '@socket.io/component-emitter': 3.1.1
@@ -18970,6 +18985,11 @@ snapshots:
       - utf-8-validate
 
   socket.io-parser@4.2.4:
+=======
+  /socket.io-parser@4.2.4:
+    resolution: {integrity: sha512-/GbIKmo8ioc+NIWIhwdecY0ge+qVBSMdgxGygevmdHj24bsfgtCmcUUcQ5ZzcylGFHsN3k4HB4Cgkl96KVnuew==}
+    engines: {node: '>=10.0.0'}
+>>>>>>> 4539ab7 (refactor(error): subscribe)
     dependencies:
       '@socket.io/component-emitter': 3.1.1
       debug: 4.3.4(supports-color@5.5.0)
@@ -20557,9 +20577,15 @@ snapshots:
 
   ws@8.17.0: {}
 
+<<<<<<< HEAD
   xml-name-validator@4.0.0: {}
 
   xmlhttprequest-ssl@2.0.0: {}
+=======
+  /xtend@4.0.2:
+    resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
+    engines: {node: '>=0.4'}
+>>>>>>> 4539ab7 (refactor(error): subscribe)
 
   xss@1.0.15:
     dependencies:

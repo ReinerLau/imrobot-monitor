@@ -19,16 +19,10 @@
   "author": "ReinerLau",
   "license": "MIT",
   "devDependencies": {
-    "@types/md5": "^2.3.5",
-    "tsup": "^8.0.2",
-    "vue": "^3.4.15"
+    "tsup": "^8.0.2"
   },
   "dependencies": {
-    "@imrobot/monitor-helpers": "workspace:^",
-    "error-stack-parser": "^2.1.4",
-    "md5": "^2.3.0",
-    "socket.io-client": "^4.7.5",
-    "source-map-js": "^1.1.0"
+    "@imrobot/monitor-helpers": "workspace:^"
   },
   "files": [
     "dist"
