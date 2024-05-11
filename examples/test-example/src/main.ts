@@ -15,7 +15,7 @@ import router from './router'
 //   maxStackNum: 10
 // })
 // monitor.use(screen)
-monitor.use(error, { vue: true })
+monitor.use(error)
 
 createApp(App)
   .use(ElementPlus)
