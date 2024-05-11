@@ -1,5 +1,5 @@
 import monitor from '@imrobot/monitor'
-// import behavior from '@imrobot/monitor-behavior'
+import behavior from '@imrobot/monitor-behavior'
 import error from '@imrobot/monitor-error'
 // import screen from '@imrobot/monitor-screen'
 
@@ -11,9 +11,9 @@ import 'element-plus/dist/index.css'
 
 import router from './router'
 
-// monitor.use(behavior, {
-//   maxStackNum: 10
-// })
+monitor.use(behavior, {
+  maxStackNum: 5
+})
 // monitor.use(screen)
 monitor.use(error)
 
