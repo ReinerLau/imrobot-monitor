@@ -8,6 +8,7 @@ export const code = mysqlTable('code', {
   columnNumber: int('columnNumber').notNull(),
   lineNumber: int('lineNumber').notNull(),
   time: bigint('time', { mode: 'number' }).notNull(),
+  code: text('code').notNull(),
 });
 
 export const resource = mysqlTable('resource', {

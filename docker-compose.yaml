@@ -9,23 +9,24 @@ services:
       MYSQL_DATABASE: imrobot_monitor
     command: --default-authentication-plugin=mysql_native_password
     ports:
-      - "3308:3306"
+      - "4306:3306"
   redis:
     image: redis:5-alpine
     restart: always
     ports:
-      - 6381:6379
+      - 4379:6379
   client:
-    image: client
+    image: reinerlau/imrobot-monitor-client:latest
     restart: always
     ports:
-      - 3000:3000
-  serve:
-    image: serve
+      - 4000:3000
+  server:
+    image: reinerlau/imrobot-monitor-server:latest
     restart: always
     ports:
-      - 3001:3001
+      - 4001:3001
     depends_on:
       - mysql
       - redis
-  
+    environment:
+      - DATABASE_URL=mysql://root:password@host.docker.internal:4306/imrobot_monitor

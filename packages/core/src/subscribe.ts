@@ -1,5 +1,6 @@
-import { EventTypes, extensionInstallEvent } from "@imrobot/shared";
+import { extensionInstallEvent } from "@imrobot/monitor-helpers";
 import { App } from "vue";
+import { EventTypes } from "./helpers";
 import { xhrReplace } from "./replace";
 import { AfterErrorEvent } from "./types";
 

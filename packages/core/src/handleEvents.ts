@@ -1,32 +1,36 @@
-import {
-  ErrorEventTypes,
-  ErrorTypes,
-  getTimestamp,
-  reportData,
-} from "@imrobot/shared";
+import { getTimestamp, reportData } from "@imrobot/monitor-helpers";
 import errorStackParser from "error-stack-parser";
+import { parseSourceMap } from "./helpers";
 import type { ResourceErrorTarget, XHRData } from "./types";
 import { getErrorUid, hasHash } from "./utlis";
 
-export const handleError = (err: Error) => {
+export const handleError = async (err: Error) => {
   const { fileName, columnNumber, lineNumber } = errorStackParser.parse(err)[0];
 
+  const res = await fetch(`${fileName}.map`);
+  const sourceMap = await res.json();
+  const data = await parseSourceMap({
+    sourceMap,
+    lineNumber: lineNumber!,
+    columnNumber: columnNumber!,
+  });
+
   const errorData = {
-    type: ErrorEventTypes.ERROR,
-    fileName,
+    fileName: data.file,
     url: location.href,
     message: err.message,
-    lineNumber,
+    lineNumber: data.line,
     columnNumber,
     time: getTimestamp(),
+    code: data.code,
   };
+
   const hash = getErrorUid(
-    `${errorData.type}-${errorData.message}-${errorData.url}-${errorData.columnNumber}`
+    `${errorData.message}-${errorData.url}-${errorData.lineNumber}-${errorData.columnNumber}`
   );
 
   if (!hasHash(hash)) {
     reportData("/error/code", errorData);
-    return ErrorTypes.CODE;
   }
 };
 
@@ -41,18 +45,16 @@ export const handleResourceError = ({
 }: ResourceErrorTarget) => {
   const errorData = {
     url: location.href,
-    type: ErrorEventTypes.RESOURCE,
     source: src || href,
     target: localName,
     time: getTimestamp(),
   };
   const hash = getErrorUid(
-    `${errorData.type}-${errorData.source}-${errorData.url}-${errorData.target}`
+    `${errorData.source}-${errorData.url}-${errorData.target}`
   );
 
   if (!hasHash(hash)) {
     reportData("/error/resource", errorData);
-    return ErrorTypes.RESOURCE;
   }
 };
 
@@ -66,7 +68,6 @@ export const handleUnhandleRejection = (ev: PromiseRejectionEvent) => {
     ev.reason
   )[0];
   const errorData = {
-    type: ErrorEventTypes.UNHANDLEDREJECTION,
     fileName,
     url: location.href,
     message: ev.reason.message,
@@ -75,12 +76,11 @@ export const handleUnhandleRejection = (ev: PromiseRejectionEvent) => {
     time: getTimestamp(),
   };
   const hash = getErrorUid(
-    `${errorData.type}-${errorData.message}-${errorData.url}-${errorData.columnNumber}`
+    `${errorData.message}-${errorData.url}-${errorData.columnNumber}`
   );
 
   if (!hasHash(hash)) {
     reportData("/error/code", errorData);
-    return ErrorTypes.CODE;
   }
 };
 
@@ -93,7 +93,6 @@ export const handleHTTPRequest = (data: XHRData) => {
     data;
   if (status === 0 || status! >= 400) {
     const errorData = {
-      type: ErrorEventTypes.XHR,
       url: location.href,
       requestURL: url,
       time: sendTime,
@@ -104,12 +103,11 @@ export const handleHTTPRequest = (data: XHRData) => {
       requestData,
     };
     const hash = getErrorUid(
-      `${errorData.type}-${errorData.response}-${errorData.method}-${errorData.status}`
+      `${errorData.response}-${errorData.method}-${errorData.status}`
     );
 
     if (!hasHash(hash)) {
       reportData("/error/request", errorData);
-      return ErrorTypes.REQUEST;
     }
   }
 };

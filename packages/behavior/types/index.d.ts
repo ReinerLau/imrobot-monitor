@@ -6,7 +6,7 @@ import { BEHAVIORTYPES } from "@imrobot/shared";
 export interface Behavior {
   type: BEHAVIORTYPES;
   content: string;
-  time: string;
+  time: number;
 }
 
 /**

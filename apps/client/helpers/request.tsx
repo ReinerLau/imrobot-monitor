@@ -1,9 +1,6 @@
 import { dayjs, type Column } from "element-plus";
 
 export const generateRequestColumns = (): Column[] => {
-  const { showBehavior } = useBehavior();
-  const { showScreen } = useScreen();
-
   return [
     {
       dataKey: "url",

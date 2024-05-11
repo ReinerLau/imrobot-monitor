@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import axios from "axios";
+import { baseUrl } from "~/helpers";
 import { generateCodeColumns } from "~/helpers/code";
 import { generateRequestColumns } from "~/helpers/request";
 import { generateResourceColumns } from "~/helpers/resource";
@@ -13,7 +14,7 @@ const requestColumns = generateRequestColumns();
 const route = useRoute();
 
 async function getErrors(type: ErrorTypes) {
-  const res = await axios.get(`http://localhost:3001/error/${type}`, {
+  const res = await axios.get(`${baseUrl.value}/error/${type}`, {
     params: {
       startTime: route.query.startTime,
       endTime: route.query.endTime,

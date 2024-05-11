@@ -1,8 +1,6 @@
 import { dayjs, type Column } from "element-plus";
 
 export const generateResourceColumns = (): Column[] => {
-  const { showBehavior } = useBehavior();
-
   return [
     {
       dataKey: "url",

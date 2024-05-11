@@ -48,3 +48,5 @@ export const getColumns = (): Column[] => {
     },
   ];
 };
+
+export const baseUrl = ref("http://localhost:3001");

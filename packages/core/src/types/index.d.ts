@@ -1,5 +1,5 @@
-import { Extension } from "@imrobot/shared";
-import { Plugin } from "vue";
+import { Extension } from "@imrobot/monitor-helpers";
+import { App } from "vue";
 
 export interface ResourceErrorTarget {
   src?: string;
@@ -17,7 +17,7 @@ export interface XHRData {
   requestData?: string;
   response?: string;
   status?: number;
-  sendTime: string;
+  sendTime: number;
   elapsedTime?: number;
 }
 
@@ -28,7 +28,8 @@ export type Use = <T extends Extension>(
 
 export type Monitor = {
   use: Use;
-} & Plugin;
+  install: (app: App, options?: InstallOptions) => void;
+};
 
 export type AfterErrorEvent = (...args: any[]) => void;
 

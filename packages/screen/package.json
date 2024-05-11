@@ -1,17 +1,29 @@
 {
-  "name": "@imrobot/screen",
-  "version": "1.0.0",
+  "name": "@imrobot/monitor-screen",
+  "version": "0.1.2",
   "description": "",
   "main": "src/index.ts",
+  "publishConfig": {
+    "main": "dist/index.mjs",
+    "types": "dist/index.d.mts"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsup"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@imrobot/shared": "workspace:^",
+    "@imrobot/monitor-helpers": "workspace:^",
+    "js-base64": "^3.7.7",
+    "pako": "^2.1.0",
     "rrweb": "2.0.0-alpha.4",
     "rrweb-player": "1.0.0-alpha.4"
-  }
+  },
+  "devDependencies": {
+    "@types/pako": "^2.0.3"
+  },
+  "files": [
+    "dist"
+  ]
 }

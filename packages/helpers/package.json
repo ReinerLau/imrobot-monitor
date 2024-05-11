@@ -1,5 +1,5 @@
 {
-  "name": "@imrobot/monitor-behavior",
+  "name": "@imrobot/monitor-helpers",
   "version": "0.1.1",
   "description": "",
   "main": "src/index.ts",
@@ -14,7 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@imrobot/monitor-helpers": "workspace:^"
+    "dayjs": "^1.11.10"
   },
   "files": [
     "dist"

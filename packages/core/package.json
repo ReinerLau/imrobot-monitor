@@ -1,10 +1,13 @@
 {
   "name": "@imrobot/monitor",
-  "version": "0.2.0",
+  "version": "0.4.1",
   "description": "frontend monitor",
   "repository": "https://github.com/ReinerLau/imrobot-monitor/tree/main/packages/core",
-  "main": "dist/index.mjs",
-  "types": "dist/index.d.mts",
+  "main": "src/index.ts",
+  "publishConfig": {
+    "main": "dist/index.mjs",
+    "types": "dist/index.d.mts"
+  },
   "scripts": {
     "build": "tsup"
   },
@@ -21,12 +24,11 @@
     "vue": "^3.4.15"
   },
   "dependencies": {
-    "@imrobot/behavior": "workspace:^",
-    "@imrobot/screen": "workspace:^",
-    "@imrobot/shared": "workspace:^",
+    "@imrobot/monitor-helpers": "workspace:^",
     "error-stack-parser": "^2.1.4",
     "md5": "^2.3.0",
-    "socket.io-client": "^4.7.5"
+    "socket.io-client": "^4.7.5",
+    "source-map-js": "^1.1.0"
   },
   "files": [
     "dist"

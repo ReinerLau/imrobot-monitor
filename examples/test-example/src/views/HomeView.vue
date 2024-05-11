@@ -39,11 +39,14 @@ const onAxios = () => {
 }
 </script>
 <template>
-  <button @click="onClick">运行错误</button>
+  <el-button @click="onClick">运行错误</el-button>
   <button @click="visible = true">资源加载错误</button>
   <button @click="onAsync">异步错误</button>
   <button id="promise" class="promise" @click="onPromise">promise 错误</button>
   <button @click="onXHR">xhr 请求错误</button>
   <button @click="onAxios">axios 请求错误</button>
-  <img v-if="visible" src="http://www.abc.com/test.png" />
+  <div>
+    <img src="/images/test.jpg" />
+    <img v-if="visible" src="http://www.abc.com/test.png" />
+  </div>
 </template>

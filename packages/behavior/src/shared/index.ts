@@ -24,3 +24,10 @@ export const pushBehaviorStack = (data: Behavior) => {
  * 行为栈
  */
 export const behaviorStack: Behavior[] = [];
+
+export enum BEHAVIORTYPES {
+  CLICK = "click",
+  ERROR = "error",
+  XHR = "xhr",
+  NAVIGATION = "navigation",
+}
