@@ -1,7 +1,7 @@
 import type { App } from "vue";
 
 export class Monitor {
-  private baseURL: string = "";
+  public baseURL: string = "";
 
   public vueInstance: App;
 

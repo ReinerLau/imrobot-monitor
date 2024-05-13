@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { CreateScreenDto } from './model/screen.dto';
+import { CreateFullSnapshotDto, CreateScreenDto } from './model/screen.dto';
 import { ScreenService } from './screen.service';
 
 @Controller('screen')
@@ -14,5 +14,15 @@ export class ScreenController {
   @Post()
   async createOne(@Body() dto: CreateScreenDto) {
     await this.screenService.createOne(dto);
+  }
+
+  @Get('hasFull/:hash')
+  async hasFull(@Param('hash') hash: string) {
+    return await this.screenService.hasFull(hash);
+  }
+
+  @Post('full')
+  async createFull(@Body() dto: CreateFullSnapshotDto) {
+    await this.screenService.createFull(dto);
   }
 }

@@ -9,7 +9,7 @@ let hash = "";
 
 export const onScreen = (options: ScreenOptions) => {
   record({
-    emit(event, isCheckout) {
+    async emit(event, isCheckout) {
       if (isCheckout) {
         const time = getTimestamp();
         const data = { time, data: compress(JSON.stringify(events)), hash };
@@ -21,8 +21,19 @@ export const onScreen = (options: ScreenOptions) => {
         const newHash = getHash(JSON.stringify(newEvent));
         if (hash !== newHash) {
           hash = newHash;
-          // TODO: 校验 hash
-          // TODO: 上传压缩后的数据和 hash
+          const response = await fetch(
+            `${monitor.baseURL}/screen/hasFull/${hash}`,
+            {
+              method: "get",
+            }
+          );
+          const hasFull = await response.json();
+          if (!hasFull) {
+            monitor.reportData("/screen/full", {
+              hash,
+              data: compress(JSON.stringify(newEvent)),
+            });
+          }
         }
       } else {
         events.push(event);
