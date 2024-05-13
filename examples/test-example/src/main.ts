@@ -15,7 +15,7 @@ monitor.use(behavior, {
   maxStackNum: 5
 })
 monitor.use(screen, {
-  checkoutEveryNth: 30
+  checkoutEveryNth: 10
 })
 monitor.use(error)
 

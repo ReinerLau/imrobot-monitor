@@ -5,13 +5,16 @@ import rrwebPlayer from "rrweb-player";
  * https://github.com/rrweb-io/rrweb/tree/master/packages/rrweb-player/#installation
  */
 import "rrweb-player/dist/style.css";
+import { decompress } from "./helpers";
 
-export const playScreen = (
-  el: HTMLElement,
-  b64Data: string,
-  width?: number
-) => {
-  const events = unzip(b64Data);
+export const playScreen = (el: HTMLElement, data: string, width?: number) => {
+  const events = decompress(data);
+  // events.forEach((event: any) => {
+  //   if (event.type === EventType.FullSnapshot) {
+  //     event.timestamp = 1715578604288;
+  //   }
+  // });
+  // console.log(events);
   new rrwebPlayer({
     target: el,
     props: {

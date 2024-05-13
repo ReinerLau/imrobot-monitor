@@ -1,8 +1,8 @@
-import { getTimestamp } from "@imrobot/monitor-helpers";
+import { getHash, getTimestamp } from "@imrobot/monitor-helpers";
 import errorStackParser from "error-stack-parser";
 import { monitor, parseSourceMap } from ".";
 import { ResourceErrorTarget, XHRData } from "../../types";
-import { getErrorUid, hasHash } from "../utils";
+import { hasHash } from "../utils";
 
 export const handleError = async (err: Error) => {
   const { fileName, columnNumber, lineNumber } = errorStackParser.parse(err)[0];
@@ -25,7 +25,7 @@ export const handleError = async (err: Error) => {
     code: data.code,
   };
 
-  const hash = getErrorUid(
+  const hash = getHash(
     `${errorData.message}-${errorData.url}-${errorData.lineNumber}-${errorData.columnNumber}`
   );
   if (!hasHash(hash)) {
@@ -44,7 +44,7 @@ export const handleResourceError = ({
     target: localName,
     time: getTimestamp(),
   };
-  const hash = getErrorUid(
+  const hash = getHash(
     `${errorData.source}-${errorData.url}-${errorData.target}`
   );
 
@@ -77,7 +77,7 @@ export const handleUnhandleRejection = async (ev: PromiseRejectionEvent) => {
     code: data.code,
   };
 
-  const hash = getErrorUid(
+  const hash = getHash(
     `${errorData.message}-${errorData.url}-${errorData.columnNumber}`
   );
 
@@ -100,7 +100,7 @@ export const handleHTTPRequest = (data: XHRData) => {
       method,
       requestData,
     };
-    const hash = getErrorUid(
+    const hash = getHash(
       `${errorData.response}-${errorData.method}-${errorData.status}`
     );
 

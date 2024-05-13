@@ -1,3 +1,4 @@
+import md5 from "md5";
 import { Monitor } from "./monitor";
 export * from "./monitor";
 
@@ -11,3 +12,7 @@ export interface Extension {
   install: extensionInstallEvent;
   afterEvent?: Function;
 }
+
+export const getHash = (input: string): string => {
+  return md5(input);
+};

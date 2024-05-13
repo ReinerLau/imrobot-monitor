@@ -15,9 +15,13 @@
   "license": "ISC",
   "dependencies": {
     "dayjs": "^1.11.10",
+    "md5": "^2.3.0",
     "vue": "^3.4.27"
   },
   "files": [
     "dist"
-  ]
+  ],
+  "devDependencies": {
+    "@types/md5": "^2.3.5"
+  }
 }

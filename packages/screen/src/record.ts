@@ -1,35 +1,33 @@
-import { getTimestamp } from "@imrobot/monitor-helpers";
-import { Base64 } from "js-base64";
-import pako from "pako";
-import { record } from "rrweb";
+import { getHash, getTimestamp } from "@imrobot/monitor-helpers";
+import { EventType, record } from "rrweb";
 import { ScreenOptions } from "../types/index";
-import { monitor } from "./helpers";
+import { compress, monitor } from "./helpers";
 
 const events: any[] = [];
+
+let hash = "";
 
 export const onScreen = (options: ScreenOptions) => {
   record({
     emit(event, isCheckout) {
-      console.log(event);
-      events.push(event);
       if (isCheckout) {
         const time = getTimestamp();
-        const data = { time, data: zip(events) };
+        const data = { time, data: compress(JSON.stringify(events)), hash };
         events.length = 0;
         monitor.reportData("/screen", data);
+      }
+      if (event.type === EventType.FullSnapshot) {
+        const newEvent = { ...event, timestamp: null };
+        const newHash = getHash(JSON.stringify(newEvent));
+        if (hash !== newHash) {
+          hash = newHash;
+          // TODO: 校验 hash
+          // TODO: 上传压缩后的数据和 hash
+        }
+      } else {
+        events.push(event);
       }
     },
     ...options,
   });
 };
-
-function zip(data: any[]): string {
-  const base64Str = Base64.encode(JSON.stringify(data));
-  const zipData = pako.gzip(base64Str);
-  const zipDataArray = Array.from(zipData);
-  let result = "";
-  zipDataArray.forEach((item: any) => {
-    result += String.fromCharCode(item);
-  });
-  return Base64.btoa(result);
-}
