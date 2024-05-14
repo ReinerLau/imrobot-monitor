@@ -11,6 +11,9 @@ export default defineNuxtConfig({
     corsHandler: {
       origin: "*",
     },
+    headers: {
+      contentSecurityPolicy: false,
+    },
     xssValidator: false,
   },
 });

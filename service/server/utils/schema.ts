@@ -43,6 +43,7 @@ export const imEvents = sqliteTable("im_events", {
   id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
   projectId: integer("project_id").references(() => imProject.id),
   data: text("data").notNull(),
+  timestamp: integer("timestamp").notNull(),
   type: integer("type", { mode: "number" }).notNull(),
   createdAt: integer("created_at").notNull(),
 });
