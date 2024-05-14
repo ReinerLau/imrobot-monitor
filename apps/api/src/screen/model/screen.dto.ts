@@ -1,10 +1,12 @@
 export class CreateScreenDto {
-  time: number;
-  data: Record<string, any>;
-  hash: string;
+  timestamp: number;
+  type: number;
+  data: string;
+  hash?: string;
 }
 
 export class CreateFullSnapshotDto {
   hash: string;
-  data: Record<string, any>;
+  data: string;
+  timestamp: number;
 }

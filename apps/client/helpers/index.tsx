@@ -20,7 +20,7 @@ export const getColumns = (): Column[] => {
         <Fragment>
           <span>{dayjs(rowData.startTime).format("YYYY-MM-DDTHH:mm:ss")}</span>
           <span>-</span>
-          <span>{dayjs(rowData.time).format("YYYY-MM-DDTHH:mm:ss")}</span>
+          <span>{dayjs(rowData.endTime).format("YYYY-MM-DDTHH:mm:ss")}</span>
         </Fragment>
       ),
     },
@@ -33,14 +33,20 @@ export const getColumns = (): Column[] => {
         <Fragment>
           <el-button
             type="primary"
-            onClick={() => showError(rowData.startTime, rowData.time)}
+            onClick={() => showError(rowData.startTime, rowData.endTime)}
           >
             错误
           </el-button>
-          <el-button type="primary" onClick={() => showBehavior(rowData.time)}>
+          <el-button
+            type="primary"
+            onClick={() => showBehavior(rowData.endTime)}
+          >
             行为
           </el-button>
-          <el-button type="primary" onClick={() => showScreen(rowData.time)}>
+          <el-button
+            type="primary"
+            onClick={() => showScreen(rowData.startTime, rowData.endTime)}
+          >
             录屏
           </el-button>
         </Fragment>

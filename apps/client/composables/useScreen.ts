@@ -6,8 +6,13 @@ const dialogVisible = ref(false);
 const playerRef = ref<HTMLElement>();
 
 export const useScreen = () => {
-  const showScreen = async (time: number) => {
-    const res = await axios.get(`${baseUrl.value}/screen/${time}`);
+  const showScreen = async (startTime: number, endTime: number) => {
+    const res = await axios.get(`${baseUrl.value}/screen`, {
+      params: {
+        startTime,
+        endTime,
+      },
+    });
     if (res.data) {
       dialogVisible.value = true;
       nextTick(() => {

@@ -5,16 +5,11 @@ import rrwebPlayer from "rrweb-player";
 import "rrweb-player/dist/style.css";
 import { decompress } from "./helpers";
 
-export const playScreen = (
-  el: HTMLElement,
-  data: { full: string; increment: string },
-  width?: number
-) => {
-  const full = decompress(data.full);
-
-  const increment = decompress(data.increment);
-  full.timestamp = increment[0].timestamp;
-  const events = [full, ...increment];
+export const playScreen = (el: HTMLElement, data: any[], width?: number) => {
+  const events = data.map((item) => ({
+    ...item,
+    data: decompress(item.data),
+  }));
 
   new rrwebPlayer({
     target: el,

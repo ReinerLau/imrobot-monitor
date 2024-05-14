@@ -11,12 +11,11 @@ export class Monitor {
   }
 
   reportData(url: string, data: Record<string, any>) {
-    const headers = {
-      type: "application/json",
-    };
     const result = navigator.sendBeacon(
       `${this.baseURL}${url}`,
-      new Blob([JSON.stringify(data)], headers)
+      new Blob([JSON.stringify(data)], {
+        type: "application/json",
+      })
     );
     if (!result) {
       requestIdleCallback(() => {

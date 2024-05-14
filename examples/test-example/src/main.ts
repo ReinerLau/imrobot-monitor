@@ -14,9 +14,7 @@ import router from './router'
 monitor.use(behavior, {
   maxStackNum: 5
 })
-monitor.use(screen, {
-  checkoutEveryNth: 10
-})
+monitor.use(screen)
 monitor.use(error)
 
 createApp(App)

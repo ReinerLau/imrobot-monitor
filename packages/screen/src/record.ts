@@ -1,44 +1,43 @@
-import { getHash, getTimestamp } from "@imrobot/monitor-helpers";
+import { getHash } from "@imrobot/monitor-helpers";
 import { EventType, record } from "rrweb";
-import { ScreenOptions } from "../types/index";
 import { compress, monitor } from "./helpers";
 
-const events: any[] = [];
-
-let hash = "";
-
-export const onScreen = (options: ScreenOptions) => {
+export const onScreen = () => {
   record({
-    async emit(event, isCheckout) {
-      if (isCheckout) {
-        const time = getTimestamp();
-        const data = { time, data: compress(JSON.stringify(events)), hash };
-        events.length = 0;
-        monitor.reportData("/screen", data);
-      }
+    async emit(event) {
       if (event.type === EventType.FullSnapshot) {
-        const newEvent = { ...event, timestamp: null };
-        const newHash = getHash(JSON.stringify(newEvent));
-        if (hash !== newHash) {
-          hash = newHash;
-          const response = await fetch(
-            `${monitor.baseURL}/screen/hasFull/${hash}`,
-            {
-              method: "get",
-            }
-          );
-          const hasFull = await response.json();
-          if (!hasFull) {
-            monitor.reportData("/screen/full", {
-              hash,
-              data: compress(JSON.stringify(newEvent)),
-            });
+        const data = event.data;
+
+        const hash = getHash(JSON.stringify(data));
+        const response = await fetch(
+          `${monitor.baseURL}/screen/hasFull/${hash}`,
+          {
+            method: "get",
           }
+        );
+        const hasFull = await response.json();
+
+        if (hasFull) {
+          monitor.reportData("/screen", {
+            type: event.type,
+            data: hash,
+            timestamp: event.timestamp,
+          });
+        } else {
+          monitor.reportData("/screen", {
+            type: event.type,
+            hash,
+            data: compress(JSON.stringify(data)),
+            timestamp: event.timestamp,
+          });
         }
       } else {
-        events.push(event);
+        monitor.reportData("/screen", {
+          type: event.type,
+          data: compress(JSON.stringify(event.data)),
+          timestamp: event.timestamp,
+        });
       }
     },
-    ...options,
   });
 };

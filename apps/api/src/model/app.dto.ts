@@ -1,4 +1,4 @@
 export class AppCreateDto {
-  time: number;
+  endTime: number;
   startTime: number;
 }
