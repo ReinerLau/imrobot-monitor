@@ -51,7 +51,9 @@ const deleteConfirm = (id: number, event: MouseEvent) => {
 
 <template>
   <header class="h-16 flex items-center p-4 shadow-md">
-    <Button label="添加项目" />
+    <NuxtLink to="/">
+      <i class="pi pi-arrow-left text-2xl text-[#00af9d]"></i>
+    </NuxtLink>
   </header>
   <ScrollPanel class="h-[calc(100vh-96px)] m-4">
     <DataTable :value="data">
