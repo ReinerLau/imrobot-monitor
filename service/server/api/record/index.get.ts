@@ -1,16 +1,15 @@
 import { eq } from "drizzle-orm";
-import { record } from "~/server/db/schema";
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
 
-  const project = await db.query.project.findFirst({
-    where: (project, { eq }) => eq(project.token, String(query.token)),
+  const project = await db.query.imProject.findFirst({
+    where: (imProject, { eq }) => eq(imProject.token, String(query.token)),
   });
 
   if (project) {
-    const result = await db.query.record.findMany({
-      where: eq(record.projectId, project.id),
+    const result = await db.query.imRecord.findMany({
+      where: eq(imRecord.projectId, project.id),
     });
     return result;
   }

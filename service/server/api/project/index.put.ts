@@ -1,13 +1,12 @@
 import { eq } from "drizzle-orm";
-import { project } from "~/server/db/schema";
 
 export default defineEventHandler(async (event) => {
   const { id, name } = await readBody(event);
 
   const result = await db
-    .update(project)
+    .update(imProject)
     .set({ name })
-    .where(eq(project.id, id))
+    .where(eq(imProject.id, id))
     .returning();
 
   return result;
