@@ -1,12 +1,8 @@
 import { extensionInstallEvent, Monitor } from "@imrobot/monitor-helpers";
-import { ScreenOptions } from "../types";
 import { setupMonitor } from "./helpers";
 import { onScreen } from "./record";
 
-export const install: extensionInstallEvent = (
-  monitor: Monitor,
-  options: ScreenOptions
-) => {
+export const install: extensionInstallEvent = (monitor: Monitor) => {
   setupMonitor(monitor);
-  onScreen(options);
+  onScreen();
 };
