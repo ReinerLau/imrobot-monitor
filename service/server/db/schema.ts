@@ -30,3 +30,19 @@ export const record = sqliteTable("record", {
   type: integer("type", { mode: "number" }).notNull(),
   createdAt: integer("created_at").notNull(),
 });
+
+export const hash = sqliteTable("record", {
+  id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+  projectId: integer("project_id").references(() => project.id),
+  hash: text("hash").notNull(),
+  data: text("data").notNull(),
+  createdAt: integer("created_at").notNull(),
+});
+
+export const events = sqliteTable("record", {
+  id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+  projectId: integer("project_id").references(() => project.id),
+  data: text("data").notNull(),
+  type: integer("type", { mode: "number" }).notNull(),
+  createdAt: integer("created_at").notNull(),
+});
