@@ -5,7 +5,15 @@ import { desc } from 'drizzle-orm';
 import { AppGateway } from './app.gateway';
 import { DB, DBType } from './global/providers/db.provider';
 import { AppCreateDto } from './model/app.dto';
-import { app, behavior, code, request, resource, screen } from './schema';
+import {
+  app,
+  behavior,
+  code,
+  fullSnapshot,
+  request,
+  resource,
+  screen,
+} from './schema';
 
 @Injectable()
 export class AppService {
@@ -32,6 +40,7 @@ export class AppService {
     await this.db.delete(code);
     await this.db.delete(request);
     await this.db.delete(resource);
+    await this.db.delete(fullSnapshot);
   }
 
   @Cron(CronExpression.EVERY_MINUTE, {

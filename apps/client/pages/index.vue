@@ -1,21 +1,16 @@
 <script lang="ts" setup>
 import axios from "axios";
-import { baseUrl, getColumns } from "../helpers/index";
+import { baseUrl } from "../helpers/index";
 
-const data = ref<any[]>([]);
-
-const columns = getColumns();
-
-const { showTime } = useTime();
+const { showScreen } = useScreen();
 
 async function getList() {
-  const res = await axios.get(`${baseUrl.value}/api`);
-  data.value = res.data;
+  const res = await axios.get(`${baseUrl.value}/screen`);
+  console.log(res);
 }
 
 onMounted(() => {
   baseUrl.value = localStorage.getItem("base_url") || "http://localhost:3001";
-  getList();
 });
 
 const loading = ref(false);
@@ -59,6 +54,12 @@ async function clearData() {
     message: "删除成功",
   });
 }
+
+const dateRange = ref<[number, number]>([Date.now(), Date.now()]);
+
+const handleChange = (value: [Date, Date]) => {
+  showScreen(value[0].getTime(), value[1].getTime());
+};
 </script>
 
 <template>
@@ -70,12 +71,12 @@ async function clearData() {
           v-model="baseUrl"
           @input="changeBaseUrl"
         ></el-input>
-        <el-button type="primary" @click="() => showTime('report')"
-          >设置上报时间</el-button
-        >
-        <el-button type="primary" @click="() => showTime('clear')"
-          >设置清空时间</el-button
-        >
+        <el-date-picker
+          class="mr-3"
+          v-model="dateRange"
+          type="datetimerange"
+          @change="handleChange"
+        />
         <el-button type="primary" @click="clearData">清空数据</el-button>
       </div>
       <div class="flex">
@@ -96,21 +97,6 @@ async function clearData() {
         <el-button type="primary" @click="exportFile">导出</el-button>
       </div>
     </div>
-    <div class="flex-1 shadow-2xl rounded p-5">
-      <el-auto-resizer>
-        <template #default="{ height, width }">
-          <el-table-v2
-            :columns="columns"
-            :data="data"
-            :width="width"
-            :height="height"
-            fixed
-          />
-        </template>
-      </el-auto-resizer>
-    </div>
-    <BehaviorDialog />
     <ScreenDialog />
-    <TimeDialog />
   </div>
 </template>
