@@ -1,3 +1,3 @@
 export default defineEventHandler(async (event) => {
-  return await db.query.project.findMany();
+  return await db.query.imProject.findMany();
 });

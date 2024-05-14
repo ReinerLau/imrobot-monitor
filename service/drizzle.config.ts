@@ -3,9 +3,8 @@ import type { Config } from "drizzle-kit";
 
 export default {
   dialect: "sqlite",
-  out: "./server/db/migrations",
-  schema: "./server/db/schema.ts",
-  // driver: "better-sqlite",
+  out: "./migrations",
+  schema: "./server/utils/schema.ts",
   dbCredentials: {
     url: "sqlite.db",
   },
