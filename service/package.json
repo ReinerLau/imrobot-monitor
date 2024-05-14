@@ -8,7 +8,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "init-db": "drizzle-kit generate:sqlite && tsx server/scripts/migrate.ts",
+    "init-db": "drizzle-kit generate --name init_db && drizzle-kit migrate",
     "db-studio": "drizzle-kit studio",
     "clear-db": "rm -rf server/db/migrations sqlite.db"
   },
