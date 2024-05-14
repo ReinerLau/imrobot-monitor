@@ -23,18 +23,10 @@ export const imAction = sqliteTable("im_action", {
   createdAt: integer("created_at").notNull(),
 });
 
-export const imRecord = sqliteTable("im_record", {
-  id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
-  projectId: integer("project_id").references(() => imProject.id),
-  data: blob("data", { mode: "json" }).notNull(),
-  type: integer("type", { mode: "number" }).notNull(),
-  createdAt: integer("created_at").notNull(),
-});
-
 export const imHash = sqliteTable("im_hash", {
   id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
   projectId: integer("project_id").references(() => imProject.id),
-  hash: text("hash").notNull(),
+  md5: text("md5").notNull(),
   data: text("data").notNull(),
   timestamp: integer("timestamp").notNull(),
 });
