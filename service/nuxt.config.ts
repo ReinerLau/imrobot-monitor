@@ -12,6 +12,8 @@ export default defineNuxtConfig({
       origin: "*",
     },
     headers: {
+      originAgentCluster: false,
+      crossOriginOpenerPolicy: false,
       contentSecurityPolicy: false,
     },
     xssValidator: false,

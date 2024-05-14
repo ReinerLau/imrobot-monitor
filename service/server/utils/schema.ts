@@ -36,7 +36,7 @@ export const imHash = sqliteTable("im_hash", {
   projectId: integer("project_id").references(() => imProject.id),
   hash: text("hash").notNull(),
   data: text("data").notNull(),
-  createdAt: integer("created_at").notNull(),
+  timestamp: integer("timestamp").notNull(),
 });
 
 export const imEvents = sqliteTable("im_events", {
@@ -45,5 +45,4 @@ export const imEvents = sqliteTable("im_events", {
   data: text("data").notNull(),
   timestamp: integer("timestamp").notNull(),
   type: integer("type", { mode: "number" }).notNull(),
-  createdAt: integer("created_at").notNull(),
 });
