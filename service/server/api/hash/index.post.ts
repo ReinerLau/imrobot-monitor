@@ -2,7 +2,7 @@ export default defineEventHandler(async (event) => {
   const { token } = getHeaders(event);
 
   if (token) {
-    const { hash, data, timestamp } = await readBody(event);
+    const { md5, data, timestamp } = await readBody(event);
 
     const project = await db.query.imProject.findFirst({
       where: (imProject, { eq }) => eq(imProject.token, token),
@@ -13,8 +13,8 @@ export default defineEventHandler(async (event) => {
         .insert(imHash)
         .values({
           projectId: project.id,
+          md5,
           data,
-          hash,
           timestamp,
         })
         .returning();
