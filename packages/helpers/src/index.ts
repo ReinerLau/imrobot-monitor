@@ -1,5 +1,6 @@
 import md5 from "md5";
 import { Monitor } from "./monitor";
+export * from "../types/index.d";
 export * from "./monitor";
 
 export const getTimestamp = () => {

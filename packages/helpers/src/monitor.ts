@@ -1,30 +1,35 @@
 import type { App } from "vue";
+import { InstallOptions } from "../types";
 
 export class Monitor {
-  public baseURL: string = "";
-
   public vueInstance: App;
+  public baseURL: string = "";
+  public appId: string = "";
 
-  constructor(baseURL: string, vueInstance: App) {
-    this.baseURL = baseURL;
+  constructor(vueInstance: App, options: InstallOptions) {
     this.vueInstance = vueInstance;
+    this.baseURL = options.baseURL;
+    this.appId = options.appId;
   }
 
   reportData(url: string, data: Record<string, any>) {
+    const headers: any = {
+      "Content-Type": "application/json",
+    };
+    const payload = {
+      ...data,
+      token: this.appId,
+    };
     const result = navigator.sendBeacon(
       `${this.baseURL}${url}`,
-      new Blob([JSON.stringify(data)], {
-        type: "application/json",
-      })
+      new Blob([JSON.stringify(payload)], headers)
     );
     if (!result) {
       requestIdleCallback(() => {
         fetch(`${this.baseURL}${url}`, {
           method: "post",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-          },
+          body: JSON.stringify(payload),
+          headers,
         });
       });
     }
