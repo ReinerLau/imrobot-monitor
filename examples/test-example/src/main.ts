@@ -19,6 +19,9 @@ monitor.use(error)
 
 createApp(App)
   .use(ElementPlus)
-  .use(monitor, { baseURL: 'http://localhost:3001' })
+  .use(monitor, {
+    baseURL: 'http://localhost:3000/api',
+    appId: ''
+  })
   .use(router)
   .mount('#app')

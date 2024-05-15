@@ -10,7 +10,3 @@ export type Monitor = {
   use: Use;
   install: (app: App, options?: InstallOptions) => void;
 };
-
-export interface InstallOptions {
-  baseURL: string;
-}
