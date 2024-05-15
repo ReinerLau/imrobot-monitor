@@ -11,6 +11,7 @@ export const imError = sqliteTable("im_error", {
   id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
   projectId: integer("project_id").references(() => imProject.id),
   data: text("data").notNull(),
+  type: integer("type", { mode: "number" }).notNull(),
   timestamp: integer("timestamp").notNull(),
 });
 
@@ -18,6 +19,7 @@ export const imAction = sqliteTable("im_action", {
   id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
   projectId: integer("project_id").references(() => imProject.id),
   data: text("data").notNull(),
+  type: integer("type", { mode: "number" }).notNull(),
   timestamp: integer("timestamp").notNull(),
 });
 

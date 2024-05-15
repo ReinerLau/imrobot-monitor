@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event) => {
-  const { token } = getHeaders(event);
+  const { token, data, type, timestamp } = await readBody(event);
 
   if (token) {
     const project = await db.query.imProject.findFirst({
@@ -7,12 +7,11 @@ export default defineEventHandler(async (event) => {
     });
 
     if (project) {
-      const { data, timestamp } = await readBody(event);
-
       const result = await db
         .insert(imError)
         .values({
           projectId: project.id,
+          type,
           data,
           timestamp,
         })
