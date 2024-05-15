@@ -6,6 +6,8 @@ import { compress, monitor } from "./helpers";
 export const onScreen = (options?: ScreenOptions) => {
   const reportNum = options?.reportNum || 1;
 
+  console.log("test");
+
   const events: Event[] = [];
 
   record({
