@@ -1,4 +1,3 @@
-import { getTimestamp } from "@imrobot/monitor-helpers";
 import { Behavior } from "../types";
 import { BEHAVIORTYPES, pushBehaviorStack } from "./helpers";
 
@@ -7,8 +6,8 @@ export const onClick = () => {
     const htmlString = elementToString(ev.target);
     const data: Behavior = {
       type: BEHAVIORTYPES.CLICK,
-      content: htmlString,
-      time: getTimestamp(),
+      data: htmlString,
+      timestamp: Date.now(),
     };
     pushBehaviorStack(data);
   });
