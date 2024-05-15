@@ -14,7 +14,9 @@ import router from './router'
 monitor.use(behavior, {
   maxStackNum: 5
 })
-monitor.use(screen)
+monitor.use(screen, {
+  reportNum: 20
+})
 monitor.use(error)
 
 createApp(App)
