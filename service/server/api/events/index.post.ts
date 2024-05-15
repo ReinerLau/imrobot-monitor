@@ -1,9 +1,7 @@
 export default defineEventHandler(async (event) => {
-  const { token } = getHeaders(event);
+  const { type, data, timestamp, token } = await readBody(event);
 
   if (token) {
-    const { type, data, timestamp } = await readBody(event);
-
     const project = await db.query.imProject.findFirst({
       where: (imProject, { eq }) => eq(imProject.token, token),
     });
