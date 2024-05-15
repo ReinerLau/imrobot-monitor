@@ -1,4 +1,3 @@
-import { getTimestamp } from "@imrobot/monitor-helpers";
 import { Behavior } from "../types";
 import { BEHAVIORTYPES, pushBehaviorStack } from "./helpers";
 
@@ -17,8 +16,8 @@ const replacePopstate = () => {
 
     const data: Behavior = {
       type: BEHAVIORTYPES.NAVIGATION,
-      content: `${from} - ${to}`,
-      time: getTimestamp(),
+      data: `${from} - ${to}`,
+      timestamp: Date.now(),
     };
 
     pushBehaviorStack(data);
@@ -37,8 +36,8 @@ const replacePushstate = () => {
 
     const data: Behavior = {
       type: BEHAVIORTYPES.NAVIGATION,
-      content: `${from} - ${to}`,
-      time: getTimestamp(),
+      data: `${from} - ${to}`,
+      timestamp: Date.now(),
     };
 
     pushBehaviorStack(data);

@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event) => {
-  const { token } = getHeaders(event);
+  const { token, data } = await readBody(event);
 
   if (token) {
     const project = await db.query.imProject.findFirst({
@@ -7,16 +7,14 @@ export default defineEventHandler(async (event) => {
     });
 
     if (project) {
-      const { data, timestamp } = await readBody(event);
-
-      const result = await db
-        .insert(imAction)
-        .values({
+      const newData = data.map((item: any) => {
+        return {
+          ...item,
           projectId: project.id,
-          data,
-          timestamp,
-        })
-        .returning();
+        };
+      });
+
+      const result = await db.insert(imAction).values(newData).returning();
 
       return result;
     }

@@ -1,4 +1,4 @@
-import { getTimestamp, Monitor } from "@imrobot/monitor-helpers";
+import { Monitor } from "@imrobot/monitor-helpers";
 import { Behavior } from "../types";
 
 export let monitor: Monitor;
@@ -6,8 +6,8 @@ export let maxStackNum: number;
 export const behaviorStack: Behavior[] = [];
 
 export enum BEHAVIORTYPES {
-  CLICK = "click",
-  NAVIGATION = "navigation",
+  CLICK = 1,
+  NAVIGATION = 2,
 }
 
 export const setupMonitor = (instance: Monitor) => {
@@ -21,9 +21,7 @@ export const setMaxStackNum = (val?: number) => {
 export const pushBehaviorStack = (data: Behavior) => {
   behaviorStack.push(data);
   if (behaviorStack.length > maxStackNum) {
-    const time = getTimestamp();
-    const data = { time, data: { ...behaviorStack } };
-    monitor.reportData("/behavior", data);
+    monitor.reportData("/action", { data: behaviorStack });
     behaviorStack.length = 0;
   }
 };
