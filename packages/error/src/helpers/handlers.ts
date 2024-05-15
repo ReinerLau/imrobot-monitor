@@ -21,7 +21,6 @@ export const handleError = async (err: Error) => {
     message: err.message,
     lineNumber: data.line,
     columnNumber,
-    time: getTimestamp(),
     code: data.code,
   };
 
@@ -29,7 +28,11 @@ export const handleError = async (err: Error) => {
     `${errorData.message}-${errorData.url}-${errorData.lineNumber}-${errorData.columnNumber}`
   );
   if (!hasHash(hash)) {
-    monitor.reportData("/error/code", errorData);
+    monitor.reportData("/error", {
+      type: 1,
+      data: JSON.stringify(errorData),
+      timestamp: Date.now(),
+    });
   }
 };
 
@@ -49,7 +52,11 @@ export const handleResourceError = ({
   );
 
   if (!hasHash(hash)) {
-    monitor.reportData("/error/resource", errorData);
+    monitor.reportData("/error", {
+      type: 2,
+      data: JSON.stringify(errorData),
+      timestamp: Date.now(),
+    });
   }
 };
 
@@ -73,7 +80,6 @@ export const handleUnhandleRejection = async (ev: PromiseRejectionEvent) => {
     message: ev.reason.message,
     lineNumber,
     columnNumber,
-    time: getTimestamp(),
     code: data.code,
   };
 
@@ -82,7 +88,11 @@ export const handleUnhandleRejection = async (ev: PromiseRejectionEvent) => {
   );
 
   if (!hasHash(hash)) {
-    monitor.reportData("/error/code", errorData);
+    monitor.reportData("/error", {
+      type: 1,
+      data: JSON.stringify(errorData),
+      timestamp: Date.now(),
+    });
   }
 };
 
@@ -105,7 +115,11 @@ export const handleHTTPRequest = (data: XHRData) => {
     );
 
     if (!hasHash(hash)) {
-      monitor.reportData("/error/request", errorData);
+      monitor.reportData("/error", {
+        type: 3,
+        data: JSON.stringify(errorData),
+        timestamp: Date.now(),
+      });
     }
   }
 };
