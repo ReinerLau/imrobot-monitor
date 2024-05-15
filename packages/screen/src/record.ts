@@ -9,30 +9,25 @@ export const onScreen = () => {
         const data = event.data;
 
         const hash = getHash(JSON.stringify(data));
-        const response = await fetch(
-          `${monitor.baseURL}/screen/hasFull/${hash}`,
-          {
-            method: "get",
-          }
-        );
+        const response = await fetch(`${monitor.baseURL}/hash?md5=${hash}`, {
+          method: "get",
+        });
         const hasFull = await response.json();
 
-        if (hasFull) {
-          monitor.reportData("/screen", {
-            type: event.type,
-            data: hash,
-            timestamp: event.timestamp,
-          });
-        } else {
-          monitor.reportData("/screen", {
-            type: event.type,
-            hash,
+        if (!hasFull) {
+          monitor.reportData("/hash", {
+            md5: hash,
             data: compress(JSON.stringify(data)),
             timestamp: event.timestamp,
           });
         }
+        monitor.reportData("/events", {
+          type: event.type,
+          data: hash,
+          timestamp: event.timestamp,
+        });
       } else {
-        monitor.reportData("/screen", {
+        monitor.reportData("/events", {
           type: event.type,
           data: compress(JSON.stringify(event.data)),
           timestamp: event.timestamp,
