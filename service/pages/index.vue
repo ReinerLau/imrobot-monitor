@@ -26,7 +26,8 @@ const copyToken = async (token: string) => {
   });
 };
 
-const { screenDialogVisible, showScreenDialog } = useScreen();
+const { screenDialogVisible, showScreenDialog, currentScreenInfo } =
+  useScreen();
 
 const toggleBehavior = async (token: string) => {
   await getData({
@@ -65,7 +66,7 @@ const toggleBehavior = async (token: string) => {
       <Column header="数据">
         <template #body="{ data }">
           <div class="flex gap-2">
-            <Button label="录屏" @click="showScreenDialog" />
+            <Button label="录屏" @click="() => showScreenDialog(data)" />
             <Button @click="toggleBehavior(data.token)" label="动作" />
             <Button label="错误" />
           </div>
@@ -107,6 +108,9 @@ const toggleBehavior = async (token: string) => {
   </Dialog>
   <Toast />
   <ConfirmPopup />
-  <ScreenDialog v-model:visible="screenDialogVisible" />
+  <ScreenDialog
+    v-model:visible="screenDialogVisible"
+    v-bind="currentScreenInfo"
+  />
   <BehaviorDialog v-model="behaviorVisible" :behavior-data="behaviorData" />
 </template>

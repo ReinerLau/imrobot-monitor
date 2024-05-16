@@ -15,6 +15,7 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@imrobot/monitor-screen": "workspace:^",
     "better-sqlite3": "^9.6.0",
     "drizzle-orm": "^0.30.10",
     "nuxt": "^3.11.2",
