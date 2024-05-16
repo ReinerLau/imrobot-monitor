@@ -36,7 +36,7 @@ const replacePushstate = () => {
 
     const data: Behavior = {
       type: BEHAVIORTYPES.NAVIGATION,
-      data: `${from} - ${to}`,
+      data: JSON.stringify({ from, to }),
       timestamp: Date.now(),
     };
 
