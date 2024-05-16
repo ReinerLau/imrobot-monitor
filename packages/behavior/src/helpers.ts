@@ -25,3 +25,46 @@ export const pushBehaviorStack = (data: Behavior) => {
     behaviorStack.length = 0;
   }
 };
+
+/**
+ * 将 DOM 元素转换为 JSON 格式
+ * @param domElement
+ */
+export function domToJson(domElement: HTMLElement) {
+  /**
+   * 创建一个对象来保存 DOM 元素的信息
+   */
+  const elementJson: any = {
+    tagName: domElement.tagName.toLowerCase(),
+    attributes: {},
+    children: [],
+  };
+
+  /**
+   * 遍历 DOM 元素的属性，并添加到 attributes 对象中
+   */
+  for (let i = 0; i < domElement.attributes.length; i++) {
+    const attr = domElement.attributes[i];
+    elementJson.attributes[attr.name] = attr.value;
+  }
+
+  /**
+   * 遍历 DOM 元素的子节点，并递归调用 domToJson 函数处理子节点
+   */
+  for (let i = 0; i < domElement.childNodes.length; i++) {
+    const childNode = domElement.childNodes[i] as HTMLElement;
+    if (childNode.nodeType === 1) {
+      /**
+       * 元素节点
+       */
+      elementJson.children.push(domToJson(childNode));
+    } else if (childNode.nodeType === 3 && childNode.nodeValue?.trim() !== "") {
+      /**
+       * 文本节点
+       */
+      elementJson.children.push(childNode.nodeValue);
+    }
+  }
+
+  return elementJson;
+}
