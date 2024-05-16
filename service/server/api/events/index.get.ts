@@ -16,7 +16,5 @@ export default defineEventHandler(async (event) => {
       });
       return result;
     }
-  } else {
-    return "Not Found Token";
   }
 });
