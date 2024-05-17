@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { playScreen } from "@imrobot/monitor-screen";
 
-const props = defineProps<{ visible: boolean; name: string; token: string }>();
+const props = defineProps<{ name: string; token: string }>();
 
-const emit = defineEmits(["update:visible"]);
+const visible = defineModel<boolean>("visible", { required: true });
 
 const dates = ref<[Date, Date] | undefined>();
 
@@ -42,7 +42,7 @@ const init = () => {
 };
 
 const handleHide = () => {
-  emit("update:visible", false);
+  visible.value = false;
 };
 
 const playerRef = ref<HTMLElement>();
