@@ -86,7 +86,9 @@ const handleExport = async () => {
           <div class="flex gap-2">
             <Button label="录屏" @click="() => showScreenDialog(data)" />
             <Button @click="toggleBehavior(data.token)" label="动作" />
-            <Button label="错误" />
+            <NuxtLink :to="`/error/${data.token}`">
+              <Button label="错误" />
+            </NuxtLink>
           </div>
         </template>
       </Column>
