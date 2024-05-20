@@ -1,5 +1,5 @@
 import { getHash } from "@imrobot/monitor-helpers";
-import { EventType, record } from "rrweb";
+import { EventType, IncrementalSource, record } from "rrweb";
 import { Event, ScreenOptions } from "../types";
 import { compress, monitor } from "./helpers";
 
@@ -10,6 +10,19 @@ export const onScreen = (options?: ScreenOptions) => {
 
   record({
     async emit(event) {
+      if (
+        event.type === EventType.IncrementalSnapshot &&
+        event.data.source === IncrementalSource.Mutation
+      ) {
+        const imgs = event.data.adds.filter(
+          (add) => (add.node as any).tagName === "img"
+        );
+        imgs.forEach((img) => {
+          (img.node as any).attributes.src = (
+            img.node as any
+          ).attributes.src.replace(/http:\/\/[^\/]+/, monitor.appId);
+        });
+      }
       if (event.type === EventType.FullSnapshot) {
         const hash = getHash(JSON.stringify(event.data));
         const response = await fetch(`${monitor.baseURL}/hash?md5=${hash}`, {
