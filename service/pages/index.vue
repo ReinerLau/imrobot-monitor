@@ -37,21 +37,11 @@ const toggleBehavior = async (token: string) => {
   });
   behaviorVisible.value = true;
 };
-
-const onUpload = (ev: any) => {
-  console.log(ev);
-};
 </script>
 
 <template>
   <header class="h-16 flex items-center p-4 shadow-md">
-    <Button class="mr-2" @click="projectVisible = true" label="添加项目" />
-    <FileUpload
-      mode="basic"
-      name="file"
-      url="/api/file/import"
-      @upload="onUpload"
-    />
+    <Button @click="projectVisible = true" label="添加项目" />
   </header>
   <ScrollPanel class="h-[calc(100vh-96px)] m-4">
     <DataTable :value="projectData">
@@ -92,6 +82,13 @@ const onUpload = (ev: any) => {
               label="编辑"
             />
             <Button @click="_delete(data.id, $event)" label="删除" />
+            <FileUpload
+              mode="basic"
+              name="file"
+              :url="`/api/file/import/?token=${data.token}`"
+              chooseLabel="导入"
+              :auto="true"
+            />
           </div>
         </template>
       </Column>
