@@ -82,7 +82,6 @@ const handlePlay = async () => {
         v-model="dates"
         selectionMode="range"
         :manualInput="false"
-        touchUI
         showTime
         showSeconds
         :minDate="minDate"
