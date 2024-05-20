@@ -85,8 +85,8 @@ const toggleBehavior = async (token: string) => {
             <FileUpload
               mode="basic"
               name="file"
-              :url="`/api/file/import/?token=${data.token}`"
-              chooseLabel="导入"
+              :url="`/api/file/resource/?token=${data.token}`"
+              chooseLabel="导入资源"
               :auto="true"
             />
           </div>
