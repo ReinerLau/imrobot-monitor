@@ -37,11 +37,29 @@ const toggleBehavior = async (token: string) => {
   });
   behaviorVisible.value = true;
 };
+
+const handleExport = async () => {
+  const res = await useFetch("/api/file/export");
+  const jsonStr = JSON.stringify(res.data.value);
+  const a = document.createElement("a");
+  const file = new Blob([jsonStr], { type: "application/json" });
+  a.href = URL.createObjectURL(file);
+  a.download = Date.now() + ".json";
+  a.click();
+};
 </script>
 
 <template>
-  <header class="h-16 flex items-center p-4 shadow-md">
+  <header class="h-16 gap-2 flex items-center p-4 shadow-md">
     <Button @click="projectVisible = true" label="添加项目" />
+    <Button @click="handleExport" label="导出" />
+    <FileUpload
+      mode="basic"
+      name="file"
+      url="/api/file/import"
+      :auto="true"
+      chooseLabel="导入"
+    />
   </header>
   <ScrollPanel class="h-[calc(100vh-96px)] m-4">
     <DataTable :value="projectData">
